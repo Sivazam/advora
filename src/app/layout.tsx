@@ -26,7 +26,14 @@ export const metadata: Metadata = {
     description: "Your Trusted Partner in Tax & Business Services",
   },
   icons: {
-    icon: "/advora-logo.jpg",
+    icon: [
+      { url: '/advora-logo.jpg', sizes: 'any' },
+      { url: '/favicon-16x16.jpg', sizes: '16x16', type: 'image/jpeg' },
+      { url: '/favicon-32x32.jpg', sizes: '32x32', type: 'image/jpeg' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.jpg', sizes: '180x180', type: 'image/jpeg' },
+    ],
   },
 };
 
