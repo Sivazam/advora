@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import Navbar from '@/components/Navbar';
 
-import Footer from '@/components/Footer';
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
 import ImageHeroBanner from '@/components/ImageHeroBanner';
@@ -357,7 +356,6 @@ export default function ServicesPage() {
         </section>
       </main>
       
-      <Footer />
       <ScrollToTop />
     </div>
   );

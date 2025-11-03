@@ -1,13 +1,5 @@
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Building,
-  Globe
-} from 'lucide-react';
-import { memo } from 'react';
+import { Globe, MapPin, Phone, Building } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -15,19 +7,10 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center overflow-hidden">
-                <img 
-                  src="/advora-logo.jpg" 
-                  alt="Advora Services LLP" 
-                  className="w-full h-full object-cover"
-                />
+                <img src="/advora-logo.jpg" alt="Advora Services LLP" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Advora Services LLP</h3>
@@ -37,15 +20,10 @@ export default function Footer() {
             <p className="text-sm text-white/80">
               Your trusted partner in tax filing and business services across the USA and India.
             </p>
-          </motion.div>
+          </div>
 
-          {/* USA Address */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-4"
-          >
+          {/* USA Office */}
+          <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Globe className="h-5 w-5 text-brand-200" />
               <h4 className="font-semibold">USA Office</h4>
@@ -63,15 +41,10 @@ export default function Footer() {
                 <span>+1 (502) 718-0460</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* India Address */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-4"
-          >
+          {/* India Office */}
+          <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <Building className="h-5 w-5 text-brand-200" />
               <h4 className="font-semibold">India Office</h4>
@@ -90,15 +63,10 @@ export default function Footer() {
                 <span>+91-9700113131</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             <h4 className="font-semibold">Quick Links</h4>
             <div className="space-y-2">
               <Link href="/" className="block text-sm text-white/80 hover:text-brand-200 transition-colors">
@@ -117,16 +85,11 @@ export default function Footer() {
                 FAQ
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Bottom Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12 pt-8 border-t border-white/20"
-        >
+        <div className="mt-12 pt-8 border-t border-white/20">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-4 text-sm text-white/80">
               <span>© 2025 Advora Services LLP. All rights reserved.</span>
@@ -141,7 +104,7 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

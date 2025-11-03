@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Navbar from '@/components/Navbar';
 
-import Footer from '@/components/Footer';
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
 import ImageHeroBanner from '@/components/ImageHeroBanner';
@@ -346,7 +345,6 @@ export default function FAQPage() {
         </section>
       </main>
       
-      <Footer />
       <ScrollToTop />
     </div>
   );
