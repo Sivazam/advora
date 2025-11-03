@@ -10,7 +10,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-20">
+    <footer className="bg-brand-600 text-white mt-20">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
@@ -30,10 +30,10 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold">Advora Services LLP</h3>
-                <p className="text-sm text-muted-foreground">Tax & Business Solutions</p>
+                <p className="text-sm text-white/80">Tax & Business Solutions</p>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/80">
               Your trusted partner in tax filing and business services across the USA and India.
             </p>
           </motion.div>
@@ -46,19 +46,19 @@ export default function Footer() {
             className="space-y-4"
           >
             <div className="flex items-center space-x-2">
-              <Globe className="h-5 w-5 text-brand-600" />
+              <Globe className="h-5 w-5 text-brand-200" />
               <h4 className="font-semibold">USA Office</h4>
             </div>
-            <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="space-y-2 text-sm text-white/80">
               <div className="flex items-start space-x-2">
-                <MapPin className="h-4 w-4 mt-0.5 text-brand-600" />
+                <MapPin className="h-4 w-4 mt-0.5 text-brand-200" />
                 <span>
                   1103 Hidden Ridge APT 1012<br />
                   Irving, Texas, 75038
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4 text-brand-600" />
+                <Phone className="h-4 w-4 text-brand-200" />
                 <span>+1 (502) 718-0460</span>
               </div>
             </div>
@@ -72,12 +72,12 @@ export default function Footer() {
             className="space-y-4"
           >
             <div className="flex items-center space-x-2">
-              <Building className="h-5 w-5 text-brand-600" />
+              <Building className="h-5 w-5 text-brand-200" />
               <h4 className="font-semibold">India Office</h4>
             </div>
-            <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="space-y-2 text-sm text-white/80">
               <div className="flex items-start space-x-2">
-                <MapPin className="h-4 w-4 mt-0.5 text-brand-600" />
+                <MapPin className="h-4 w-4 mt-0.5 text-brand-200" />
                 <span>
                   Plot No 19, 1st floor, Power Nagar<br />
                   Power Nagar Park Road, Moosapet<br />
@@ -85,7 +85,7 @@ export default function Footer() {
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4 text-brand-600" />
+                <Phone className="h-4 w-4 text-brand-200" />
                 <span>+91-9700113131</span>
               </div>
             </div>
@@ -100,19 +100,19 @@ export default function Footer() {
           >
             <h4 className="font-semibold">Quick Links</h4>
             <div className="space-y-2">
-              <Link href="/" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
+              <Link href="/" className="block text-sm text-white/80 hover:text-brand-200 transition-colors">
                 Home
               </Link>
-              <Link href="/services" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
+              <Link href="/services" className="block text-sm text-white/80 hover:text-brand-200 transition-colors">
                 Services
               </Link>
-              <Link href="/about" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
+              <Link href="/about" className="block text-sm text-white/80 hover:text-brand-200 transition-colors">
                 About Us
               </Link>
-              <Link href="/contact" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
+              <Link href="/contact" className="block text-sm text-white/80 hover:text-brand-200 transition-colors">
                 Contact
               </Link>
-              <Link href="/faq" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
+              <Link href="/faq" className="block text-sm text-white/80 hover:text-brand-200 transition-colors">
                 FAQ
               </Link>
             </div>
@@ -124,17 +124,17 @@ export default function Footer() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"
+          className="mt-12 pt-8 border-t border-white/20"
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+            <div className="flex items-center space-x-4 text-sm text-white/80">
               <span>© 2025 Advora Services LLP. All rights reserved.</span>
             </div>
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+            <div className="flex items-center space-x-2 text-sm text-white/80">
               <span>Built by</span>
               <Link 
                 href="#" 
-                className="text-brand-600 hover:text-brand-700 font-medium transition-colors"
+                className="text-brand-200 hover:text-brand-100 font-bold transition-colors"
               >
                 Harte Labs
               </Link>

@@ -94,8 +94,10 @@ export default function HeroCarousel() {
   };
 
   useEffect(() => {
-    // Preload images
-    heroSlides.forEach(slide => {
+    // Preload only current and next images for better performance
+    const currentSlide = heroSlides[0];
+    const nextSlide = heroSlides[1];
+    [currentSlide, nextSlide].forEach(slide => {
       const img = new Image();
       img.onload = () => handleImageLoad(slide.id);
       img.onerror = () => handleImageError(slide.id);
@@ -141,7 +143,7 @@ export default function HeroCarousel() {
               opacity: index === currentSlide ? 1 : 0 
             }}
             transition={{ 
-              duration: 1.5, 
+              duration: 0.8, 
               ease: 'easeInOut' 
             }}
           >
@@ -172,14 +174,14 @@ export default function HeroCarousel() {
               key={`content-${currentSlide}`}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
+              transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
               className="text-white"
             >
               <motion.h1 
                 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight font-luxury-heading"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.4, ease: 'easeOut' }}
+                transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
               >
                 {heroSlides[currentSlide].title}
               </motion.h1>
@@ -188,7 +190,7 @@ export default function HeroCarousel() {
                 className="text-lg md:text-xl text-gray-200 mb-8 mx-auto leading-relaxed font-luxury-body"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
+                transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
               >
                 {heroSlides[currentSlide].description}
               </motion.p>
@@ -196,7 +198,7 @@ export default function HeroCarousel() {
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.8, ease: 'easeOut' }}
+                transition={{ duration: 0.6, delay: 0.5, ease: 'easeOut' }}
               >
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -214,20 +216,7 @@ export default function HeroCarousel() {
         </div>
       </div>
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-3">
-        {heroSlides.map((_, index) => (
-          <motion.button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'bg-white' : 'bg-white/50'
-            }`}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.8 }}
-          />
-        ))}
-      </div>
+  
 
       {/* Progress Bar */}
       <motion.div

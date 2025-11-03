@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import Navbar from '@/components/Navbar';
-import MobileNavbar from '@/components/MobileNavbar';
+
 import Footer from '@/components/Footer';
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
@@ -93,21 +93,19 @@ export default function ServicesPage() {
     <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <TopStrip />
       <Navbar />
-      <MobileNavbar />
       
-      <main className="pb-16 md:pb-0">
+      <main>
         {/* Image with Centered Breadcrumb */}
         <ImageWithCenteredBreadcrumb
           breadcrumbItems={[
-            { label: "Home", href: "/" },
             { label: "Services" }
           ]}
           imageUrl="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
 
         {/* Services Content */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto space-y-8">
               {/* Tax Filing Services */}
               <Collapsible open={openSections.taxFiling} onOpenChange={() => toggleSection('taxFiling')}>

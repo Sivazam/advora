@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Raleway } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import RouteChangeHandler from "@/components/RouteChangeHandler";
+import WhatsAppFloating from "@/components/WhatsAppFloating";
 
-const inter = Inter({
+const raleway = Raleway({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-raleway",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -45,9 +48,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${raleway.variable} font-sans antialiased bg-background text-foreground`}
       >
-        {children}
+        <RouteChangeHandler>
+          {children}
+        </RouteChangeHandler>
+        <WhatsAppFloating />
         <Toaster />
       </body>
     </html>

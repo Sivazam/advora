@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Navbar from '@/components/Navbar';
-import MobileNavbar from '@/components/MobileNavbar';
+
 import Footer from '@/components/Footer';
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
@@ -145,21 +145,19 @@ export default function FAQPage() {
     <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <TopStrip />
       <Navbar />
-      <MobileNavbar />
       
-      <main className="pb-16 md:pb-0">
+      <main>
         {/* Image with Centered Breadcrumb */}
         <ImageWithCenteredBreadcrumb
           breadcrumbItems={[
-            { label: "Home", href: "/" },
             { label: "FAQ" }
           ]}
           imageUrl="https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
 
         {/* Search and Categories */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto space-y-8">
               {/* Search Bar */}
               <motion.div
@@ -211,8 +209,8 @@ export default function FAQPage() {
         </section>
 
         {/* FAQ Content */}
-        <section className="py-20 bg-white/50 dark:bg-gray-800/50">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               {filteredFAQs.length > 0 ? (
                 <motion.div
@@ -280,8 +278,8 @@ export default function FAQPage() {
         </section>
 
         {/* Still Have Questions */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-4xl mx-auto"
               initial={{ opacity: 0, y: 30 }}

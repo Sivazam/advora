@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -70,10 +70,12 @@
 }
 
 :root {
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'Raleway', sans-serif;
   --font-serif: 'Merriweather', serif;
   --font-mono: 'Space Grotesk', sans-serif;
   --font-accent: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-raleway: 'Raleway', sans-serif;
 }
 
 .dark {
@@ -121,13 +123,34 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sans);
+    font-family: var(--font-raleway);
+    font-optical-sizing: auto;
   }
 }
 
 /* Professional font classes - using CSS variables */
 .font-premium {
   font-family: var(--font-mono);
+}
+
+.font-raleway {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+}
+
+.font-raleway-heading {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.font-raleway-accent {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
 .font-premium-heading {
@@ -206,7 +229,7 @@
 
 .premium-text {
   @apply text-gray-600 dark:text-gray-300 leading-relaxed;
-  font-family: var(--font-sans);
+  font-family: 'Raleway', sans-serif;
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.6;
@@ -405,10 +428,7 @@
   50% { opacity: 0.8; }
 }
 
-/* Mobile-first responsive utilities */
-.mobile-bottom-nav {
-  padding-bottom: env(safe-area-inset-bottom, 4rem);
-}
+
 
 /* Smooth scrolling */
 html {

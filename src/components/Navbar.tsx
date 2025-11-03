@@ -59,9 +59,9 @@ export default function Navbar() {
           }}
           transition={{
             type: "spring",
-            stiffness: 100,
-            damping: 18,
-            mass: 1.5,
+            stiffness: 200,
+            damping: 25,
+            mass: 1,
             restDelta: 0.001,
             transformOrigin: "center center"
           }}
@@ -96,14 +96,14 @@ export default function Navbar() {
                   x: 0 
                 }}
                 transition={{ 
-                  duration: 0.8, 
+                  duration: 0.4, 
                   ease: [0.4, 0, 0.2, 1],
-                  width: { duration: 0.6, ease: "easeInOut" }
+                  width: { duration: 0.3, ease: "easeInOut" }
                 }}
               >
                 <div>
-                  <span className="text-lg font-bold text-gray-900" style={{ fontFamily: 'Poppins, sans-serif' }}>Advora</span>
-                  <span className="text-xs text-gray-500 block" style={{ fontFamily: 'Inter, sans-serif' }}>Services LLP</span>
+                  <span className="text-lg font-bold text-gray-900 font-raleway-heading">Advora</span>
+                  <span className="text-xs text-gray-500 block font-raleway">Services LLP</span>
                 </div>
               </motion.div>
             </Link>
@@ -111,7 +111,7 @@ export default function Navbar() {
             {/* Navigation Links */}
             <div className={`flex items-center ${isScrolled ? 'ml-8' : 'ml-0'} space-x-1`}>
               {navItems.map((item, index) => (
-                <Link key={item.name} href={item.href}>
+                <Link key={item.name} href={item.href} prefetch={true}>
                   <motion.div
                     className="relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 overflow-hidden"
                     whileHover={{ 
@@ -132,8 +132,8 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ 
-                      duration: 0.5, 
-                      delay: index * 0.1,
+                      duration: 0.3, 
+                      delay: index * 0.05,
                       ease: [0.25, 0.1, 0.25, 1] // Smooth cubic bezier
                     }}
                   >
@@ -145,21 +145,21 @@ export default function Navbar() {
                         initial={false}
                         transition={{ 
                           type: "spring",
-                          stiffness: 200,
-                          damping: 25,
-                          mass: 1.5,
+                          stiffness: 300,
+                          damping: 30,
+                          mass: 1,
                           restDelta: 0.001,
-                          duration: 0.8
+                          duration: 0.4
                         }}
                       />
                     )}
                     
                     {/* Text */}
-                    <span className={`relative z-10 transition-all duration-400 ${
+                    <span className={`relative z-10 transition-all duration-400 font-raleway-accent ${
                       pathname === item.href
                         ? 'text-brand-600 font-semibold'
                         : 'text-gray-700 hover:text-gray-900'
-                    }`} style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    }`}>
                       {item.name}
                     </span>
                   </motion.div>
@@ -183,8 +183,8 @@ export default function Navbar() {
               />
             </div>
             <div>
-              <span className="text-base font-bold text-gray-900 font-premium-accent">Advora</span>
-              <span className="text-xs text-gray-500 block font-premium-body">Services LLP</span>
+              <span className="text-base font-bold text-gray-900 font-raleway-heading">Advora</span>
+              <span className="text-xs text-gray-500 block font-raleway">Services LLP</span>
             </div>
           </Link>
 
@@ -219,7 +219,7 @@ export default function Navbar() {
             >
               <div className="px-4 py-2 space-y-1">
                 {navItems.map((item, index) => (
-                  <Link key={item.name} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link key={item.name} href={item.href} onClick={() => setIsMobileMenuOpen(false)} prefetch={true}>
                     <motion.div
                       className={`block px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                         pathname === item.href
@@ -249,7 +249,7 @@ export default function Navbar() {
                         ease: [0.25, 0.1, 0.25, 1]
                       }}
                     >
-                      <span style={{ fontFamily: 'Poppins, sans-serif' }}>{item.name}</span>
+                      <span className="font-raleway-accent">{item.name}</span>
                     </motion.div>
                   </Link>
                 ))}

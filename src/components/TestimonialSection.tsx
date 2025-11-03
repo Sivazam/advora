@@ -110,7 +110,7 @@ export default function TestimonialSection() {
           </div>
 
           {/* Content */}
-          <p className="text-gray-600 mb-6 leading-relaxed flex-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <p className="text-gray-600 mb-6 leading-relaxed flex-1 font-raleway">
             "{testimonial.content}"
           </p>
 
@@ -124,7 +124,7 @@ export default function TestimonialSection() {
               transition={{ duration: 0.3 }}
             />
             <div>
-              <h4 className="font-semibold text-gray-900" style={{ fontFamily: 'Merriweather, serif' }}>
+              <h4 className="font-semibold text-gray-900 font-raleway-heading">
                 {testimonial.name}
               </h4>
               <p className="text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -147,13 +147,13 @@ export default function TestimonialSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Merriweather, serif' }}>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-raleway-heading">
             What Our
             <span className="gradient-brand-text">
               {' '}Clients Say
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-raleway">>
             Don't just take our word for it - hear from our satisfied clients
           </p>
         </motion.div>

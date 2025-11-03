@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import Navbar from '@/components/Navbar';
-import MobileNavbar from '@/components/MobileNavbar';
+
 import Footer from '@/components/Footer';
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
@@ -88,21 +88,19 @@ export default function ContactPage() {
     <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <TopStrip />
       <Navbar />
-      <MobileNavbar />
       
-      <main className="pb-16 md:pb-0">
+      <main>
         {/* Image with Centered Breadcrumb */}
         <ImageWithCenteredBreadcrumb
           breadcrumbItems={[
-            { label: "Home", href: "/" },
             { label: "Contact" }
           ]}
           imageUrl="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
 
         {/* Contact Information */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
               {contactInfo.map((info, index) => (
                 <motion.div
@@ -190,8 +188,8 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Form */}
-        <section className="py-20 bg-white/50 dark:bg-gray-800/50">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 30 }}
@@ -334,8 +332,8 @@ export default function ContactPage() {
         </section>
 
         {/* Quick Contact */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-4xl mx-auto"
               initial={{ opacity: 0, y: 30 }}

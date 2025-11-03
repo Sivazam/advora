@@ -27,7 +27,7 @@ export default function TopStrip() {
               <div className="w-6 h-4 bg-brand-600 rounded-sm flex items-center justify-center">
                 <span className="text-xs font-bold text-white">US</span>
               </div>
-              <span className="font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>USA</span>
+              <span className="font-medium font-raleway-accent">USA</span>
             </div>
             <motion.button
               onClick={() => handlePhoneClick('+1234567890')}

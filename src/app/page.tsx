@@ -108,7 +108,7 @@ export default function Home() {
         <TopStrip />
         <Navbar />
         
-        <main className="pb-16 md:pb-0">
+        <main>
           {/* Hero Carousel */}
           <HeroCarousel />
 
@@ -129,13 +129,13 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Merriweather, serif' }}>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-raleway-heading">
                   Our
                   <span className="gradient-brand-text">
                     {' '}Services
                   </span>
                 </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-raleway">
                   Comprehensive tax and business solutions tailored to your needs
                 </p>
               </motion.div>
@@ -166,13 +166,13 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Merriweather, serif' }}>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-raleway-heading">
                   Why Choose
                   <span className="gradient-brand-text">
                     {' '}Advora
                   </span>
                 </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-raleway">
                   We combine expertise, technology, and personalized service
                 </p>
               </motion.div>
@@ -214,10 +214,10 @@ export default function Home() {
                         </motion.div>
                       </div>
                       <div className="p-6 flex-1 flex flex-col">
-                        <h3 className="text-xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Merriweather, serif' }}>
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 font-raleway-heading">
                           {feature.title}
                         </h3>
-                        <p className="text-gray-600 flex-1 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        <p className="text-gray-600 flex-1 leading-relaxed font-raleway">
                           {feature.description}
                         </p>
                       </div>
@@ -241,13 +241,13 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Merriweather, serif' }}>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-raleway-heading">
                   Meet Our
                   <span className="gradient-brand-text">
                     {' '}Director
                   </span>
                 </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-raleway">
                   Leadership with vision and expertise
                 </p>
               </motion.div>
@@ -293,16 +293,16 @@ export default function Home() {
                       </motion.div>
                       
                       <div className="space-y-4">
-                        <h3 className="text-3xl font-bold text-gray-900" style={{ fontFamily: 'Merriweather, serif' }}>
+                        <h3 className="text-3xl font-bold text-gray-900 font-raleway-heading">
                           Ramcharan Kotapati
                         </h3>
-                        <p className="text-xl text-brand-600 font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                        <p className="text-xl text-brand-600 font-medium font-raleway-accent">
                           Director & Founder
                         </p>
                         
                         <div className="flex flex-wrap justify-center gap-2">
                           <motion.span 
-                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-50 text-brand-700"
+                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-600 text-white"
                             style={{ fontFamily: 'Inter, sans-serif' }}
                             whileHover={{ 
                               scale: 1.05,
@@ -313,7 +313,7 @@ export default function Home() {
                             Tax Expert
                           </motion.span>
                           <motion.span 
-                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-100 text-brand-700"
+                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-600 text-white"
                             style={{ fontFamily: 'Inter, sans-serif' }}
                             whileHover={{ 
                               scale: 1.05,
@@ -324,7 +324,7 @@ export default function Home() {
                             Business Consultant
                           </motion.span>
                           <motion.span 
-                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-purple-100 text-purple-700"
+                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-600 text-white"
                             style={{ fontFamily: 'Inter, sans-serif' }}
                             whileHover={{ 
                               scale: 1.05,
@@ -346,15 +346,15 @@ export default function Home() {
                       viewport={{ once: true }}
                     >
                       <div>
-                        <h4 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Merriweather, serif' }}>
+                        <h4 className="text-2xl font-bold text-gray-900 mb-4 font-raleway-heading">
                           Vision & Leadership
                         </h4>
-                        <p className="text-gray-600 mb-6 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        <p className="text-gray-600 mb-6 leading-relaxed font-raleway">
                           Ramcharan Kotapati brings over a decade of expertise in taxation and business services. 
                           His leadership has been instrumental in establishing Advora Services LLP as a trusted 
                           partner for businesses and individuals across the USA and India.
                         </p>
-                        <p className="text-gray-600 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+                        <p className="text-gray-600 leading-relaxed font-raleway">
                           With a deep understanding of both US and Indian tax systems, Ramcharan has successfully 
                           guided numerous clients through complex tax matters, business registrations, and 
                           compliance requirements. His commitment to excellence and client satisfaction has 
@@ -366,8 +366,8 @@ export default function Home() {
                         <div className="flex items-start space-x-3">
                           <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <h5 className="font-semibold text-gray-900" style={{ fontFamily: 'Inter, sans-serif' }}>Expertise</h5>
-                            <p className="text-gray-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <h5 className="font-semibold text-gray-900 font-raleway">Expertise</h5>
+                            <p className="text-gray-600 text-sm font-raleway">
                               Over 15 years of experience in taxation and business consulting
                             </p>
                           </div>
@@ -376,8 +376,8 @@ export default function Home() {
                         <div className="flex items-start space-x-3">
                           <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <h5 className="font-semibold text-gray-900" style={{ fontFamily: 'Inter, sans-serif' }}>Global Perspective</h5>
-                            <p className="text-gray-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <h5 className="font-semibold text-gray-900 font-raleway">Global Perspective</h5>
+                            <p className="text-gray-600 text-sm font-raleway">
                               Extensive knowledge of US and Indian tax systems and regulations
                             </p>
                           </div>
@@ -386,8 +386,8 @@ export default function Home() {
                         <div className="flex items-start space-x-3">
                           <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <h5 className="font-semibold text-gray-900" style={{ fontFamily: 'Inter, sans-serif' }}>Client Success</h5>
-                            <p className="text-gray-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                            <h5 className="font-semibold text-gray-900 font-raleway">Client Success</h5>
+                            <p className="text-gray-600 text-sm font-raleway">
                               Successfully served 1500+ clients with 99% success rate
                             </p>
                           </div>
@@ -409,10 +409,10 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Merriweather, serif' }}>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-raleway-heading">
                   Ready to Get Started?
                 </h2>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <p className="text-xl text-gray-600 mb-8 leading-relaxed font-raleway">
                   Let us help you navigate your tax and business needs with expert guidance and personalized service.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">

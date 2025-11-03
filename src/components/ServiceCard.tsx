@@ -89,7 +89,7 @@ export default function ServiceCard({
             <Button
               onClick={onLearnMore}
               variant="outline"
-              className="w-full border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white transition-all duration-300 group-hover:border-brand-700"
+              className="w-full border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white transition-all duration-300 group-hover:border-brand-700 hover:border-brand-600"
             >
               Learn More
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
