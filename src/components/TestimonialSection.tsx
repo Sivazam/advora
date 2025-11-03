@@ -127,7 +127,7 @@ export default function TestimonialSection() {
               <h4 className="font-semibold text-gray-900 font-raleway-heading">
                 {testimonial.name}
               </h4>
-              <p className="text-sm text-gray-600" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-sm text-gray-600 font-raleway">
                 {testimonial.role} at {testimonial.company}
               </p>
             </div>

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Merriweather:wght@300;400;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -71,10 +71,10 @@
 
 :root {
   --font-sans: 'Raleway', sans-serif;
-  --font-serif: 'Merriweather', serif;
-  --font-mono: 'Space Grotesk', sans-serif;
-  --font-accent: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-serif: 'Raleway', sans-serif;
+  --font-mono: 'Raleway', sans-serif;
+  --font-accent: 'Raleway', sans-serif;
+  --font-body: 'Raleway', sans-serif;
   --font-raleway: 'Raleway', sans-serif;
 }
 
@@ -130,7 +130,7 @@
 
 /* Professional font classes - using CSS variables */
 .font-premium {
-  font-family: var(--font-mono);
+  font-family: 'Raleway', sans-serif;
 }
 
 .font-raleway {
@@ -154,34 +154,34 @@
 }
 
 .font-premium-heading {
-  font-family: var(--font-serif);
+  font-family: 'Raleway', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 .font-premium-body {
-  font-family: var(--font-sans);
+  font-family: 'Raleway', sans-serif;
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.6;
 }
 
 .font-premium-accent {
-  font-family: var(--font-accent);
+  font-family: 'Raleway', sans-serif;
   font-weight: 500;
   letter-spacing: 0.05em;
 }
 
 /* Luxury font classes - enhanced styling */
 .font-luxury {
-  font-family: var(--font-mono);
+  font-family: 'Raleway', sans-serif;
   font-weight: 300;
   letter-spacing: 0.02em;
 }
 
 .font-luxury-heading {
-  font-family: var(--font-serif);
+  font-family: 'Raleway', sans-serif;
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -189,14 +189,14 @@
 }
 
 .font-luxury-body {
-  font-family: var(--font-sans);
+  font-family: 'Raleway', sans-serif;
   font-weight: 300;
   letter-spacing: 0.02em;
   line-height: 1.7;
 }
 
 .font-luxury-accent {
-  font-family: var(--font-accent);
+  font-family: 'Raleway', sans-serif;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -214,7 +214,7 @@
 
 .premium-heading {
   @apply text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6;
-  font-family: var(--font-serif);
+  font-family: 'Raleway', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
@@ -222,7 +222,7 @@
 
 .premium-subheading {
   @apply text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4;
-  font-family: var(--font-accent);
+  font-family: 'Raleway', sans-serif;
   font-weight: 500;
   letter-spacing: 0.05em;
 }
@@ -260,7 +260,7 @@
 }
 
 .premium-button {
-  font-family: var(--font-accent);
+  font-family: 'Raleway', sans-serif;
   font-weight: 500;
   letter-spacing: 0.05em;
 }
@@ -273,7 +273,7 @@
   font-size: 0.875rem;
   background-color: var(--brand-200);
   color: var(--brand-700);
-  font-family: var(--font-accent);
+  font-family: 'Raleway', sans-serif;
   font-weight: 500;
   letter-spacing: 0.05em;
 }

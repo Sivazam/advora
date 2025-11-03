@@ -36,7 +36,7 @@ export default function TopStrip() {
               whileTap={{ scale: 0.95 }}
             >
               <Phone className="h-4 w-4" />
-              <span className="font-mono" style={{ fontFamily: 'Inter, sans-serif' }}>+1 (234) 567-890</span>
+              <span className="font-raleway">+1 (234) 567-890</span>
             </motion.button>
           </motion.div>
 
@@ -47,7 +47,7 @@ export default function TopStrip() {
             transition={{ duration: 0.2 }}
           >
             <Clock className="h-4 w-4" />
-            <span className="font-medium" style={{ fontFamily: 'Inter, sans-serif' }}>Mon-Fri (9am to 5pm CST)</span>
+            <span className="font-raleway-accent">Mon-Fri (9am to 5pm CST)</span>
           </motion.div>
 
           {/* Right side - India contact */}
@@ -60,7 +60,7 @@ export default function TopStrip() {
               <div className="w-6 h-4 bg-orange-500 rounded-sm flex items-center justify-center">
                 <span className="text-xs font-bold text-white">IN</span>
               </div>
-              <span className="font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>India</span>
+              <span className="font-raleway-accent">India</span>
             </div>
             <motion.button
               onClick={() => handlePhoneClick('+919876543210')}
@@ -69,7 +69,7 @@ export default function TopStrip() {
               whileTap={{ scale: 0.95 }}
             >
               <Phone className="h-4 w-4" />
-              <span className="font-mono" style={{ fontFamily: 'Inter, sans-serif' }}>+91 98765 43210</span>
+              <span className="font-raleway">+91 98765 43210</span>
             </motion.button>
           </motion.div>
         </div>

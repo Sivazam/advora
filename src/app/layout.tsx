@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${raleway.variable} font-sans antialiased bg-background text-foreground`}
+        className={`${raleway.variable} font-raleway antialiased bg-background text-foreground`}
       >
         <RouteChangeHandler>
           {children}

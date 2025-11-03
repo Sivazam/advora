@@ -71,10 +71,10 @@ const config: Config = {
                         sm: 'calc(var(--radius) - 4px)'
                 },
                 fontFamily: {
-                        premium: ['var(--font-mono)', 'sans-serif'],
-                        'premium-heading': ['var(--font-serif)', 'serif'],
-                        'premium-body': ['var(--font-sans)', 'sans-serif'],
-                        'premium-accent': ['var(--font-accent)', 'sans-serif']
+                        premium: ['Raleway', 'sans-serif'],
+                        'premium-heading': ['Raleway', 'sans-serif'],
+                        'premium-body': ['Raleway', 'sans-serif'],
+                        'premium-accent': ['Raleway', 'sans-serif']
                 }
         }
   },

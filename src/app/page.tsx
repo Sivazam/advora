@@ -303,7 +303,7 @@ export default function Home() {
                         <div className="flex flex-wrap justify-center gap-2">
                           <motion.span 
                             className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-600 text-white"
-                            style={{ fontFamily: 'Inter, sans-serif' }}
+
                             whileHover={{ 
                               scale: 1.05,
                               y: -2,
@@ -314,7 +314,7 @@ export default function Home() {
                           </motion.span>
                           <motion.span 
                             className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-600 text-white"
-                            style={{ fontFamily: 'Inter, sans-serif' }}
+
                             whileHover={{ 
                               scale: 1.05,
                               y: -2,
@@ -325,7 +325,7 @@ export default function Home() {
                           </motion.span>
                           <motion.span 
                             className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-600 text-white"
-                            style={{ fontFamily: 'Inter, sans-serif' }}
+
                             whileHover={{ 
                               scale: 1.05,
                               y: -2,
