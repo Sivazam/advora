@@ -11,7 +11,7 @@ export default function TopStrip() {
 
   return (
     <motion.div 
-      className="bg-brand-900 text-white py-3 px-4 border-b border-brand-800 fixed top-0 left-0 right-0 z-40 md:z-50"
+      className="bg-brand-900 text-white py-3 px-4 border-b border-brand-800 relative z-40 md:z-50"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -43,7 +43,7 @@ export default function TopStrip() {
 
           {/* Center - Business hours */}
           <motion.div 
-            className="flex items-center gap-2 text-brand-100"
+            className="flex items-center gap-2 text-white"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >

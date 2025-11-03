@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import Navbar from '@/components/Navbar';
+import SimpleUSPBanner from '@/components/SimpleUSPBanner';
 
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
@@ -87,81 +88,6 @@ export default function ContactPage() {
     <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <TopStrip />
       
-      {/* USP Banner */}
-      <div className="relative bg-gradient-to-r from-[#916f2a] via-brand-600 to-[#916f2a]">
-        {/* Background decorative elements */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-full h-full bg-white/20"></div>
-        </div>
-        
-        <div className="relative py-6">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              className="text-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              viewport={{ once: true }}
-            >
-              <div className="flex flex-col items-center gap-2">
-                {/* Our Commitment Badge */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  viewport={{ once: true }}
-                  className="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/30"
-                >
-                  <svg className="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                  <span className="text-white font-bold tracking-wide uppercase text-xs">Our Commitment</span>
-                </motion.div>
-
-                {/* Main USP Text */}
-                <motion.h1 
-                  className="text-lg md:text-xl lg:text-2xl font-bold text-white leading-tight"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  viewport={{ once: true }}
-                >
-                  "We will be readily available for 24/7 to our clients"
-                </motion.h1>
-
-                {/* Contact-specific Trust Indicators */}
-                <motion.div 
-                  className="flex flex-wrap justify-center gap-2 mt-3"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.8 }}
-                  viewport={{ once: true }}
-                >
-                  <div className="flex items-center space-x-1 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 text-white">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span className="text-xs font-medium">Always Available</span>
-                  </div>
-                  <div className="flex items-center space-x-1 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 text-white">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-xs font-medium">Quick Response</span>
-                  </div>
-                  <div className="flex items-center space-x-1 px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 text-white">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0l7.89-5.26a2 2 0 000-3.12L13.11 0a2 2 0 00-2.22 0L3 8z" />
-                    </svg>
-                    <span className="text-xs font-medium">Reach Us Anytime</span>
-                  </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-      
       <Navbar />
       
       <main>
@@ -172,6 +98,9 @@ export default function ContactPage() {
           ]}
           imageUrl="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
+
+        {/* Simple USP Banner */}
+        <SimpleUSPBanner />
 
         {/* Contact Information */}
         <section className="py-20 bg-white">
