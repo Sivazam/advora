@@ -83,7 +83,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <TopStrip />
       <Navbar />
       <MobileNavbar />
@@ -134,15 +134,15 @@ export default function AboutPage() {
                       <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 font-luxury-heading">
                         Ramcharan Kotapati
                       </h2>
-                      <p className="text-xl text-blue-600 dark:text-blue-400 font-medium mb-4 font-luxury-body">
+                      <p className="text-xl text-brand-600 dark:text-brand-400 font-medium mb-4 font-luxury-body">
                         Director & Founder
                       </p>
                       
                       <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6">
-                        <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-sm font-medium">
+                        <span className="px-3 py-1 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-400 rounded-full text-sm font-medium">
                           Tax Expert
                         </span>
-                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-sm font-medium">
+                        <span className="px-3 py-1 bg-brand-100 dark:bg-brand-900/30 text-brand-700 dark:text-brand-400 rounded-full text-sm font-medium">
                           Business Consultant
                         </span>
                         <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded-full text-sm font-medium">
@@ -177,19 +177,19 @@ export default function AboutPage() {
                     
                     <div className="space-y-3">
                       <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">15+ Years in Tax & Business Services</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">Expert in US & Indian Tax Systems</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">1000+ Satisfied Clients</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">Strategic Business Advisor</span>
                       </div>
                     </div>
@@ -234,15 +234,15 @@ export default function AboutPage() {
                     </p>
                     <div className="mt-6 space-y-3">
                       <div className="flex items-center space-x-3">
-                        <Star className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">Client-Centric Approach</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <Star className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">Excellence in Service</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <Star className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">Innovation & Technology</span>
                       </div>
                     </div>
@@ -279,15 +279,15 @@ export default function AboutPage() {
                     </p>
                     <div className="mt-6 space-y-3">
                       <div className="flex items-center space-x-3">
-                        <Star className="h-4 w-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                        <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">Global Leadership</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <Star className="h-4 w-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                        <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">Technological Innovation</span>
                       </div>
                       <div className="flex items-center space-x-3">
-                        <Star className="h-4 w-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                        <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span className="text-gray-700 dark:text-gray-300">Sustainable Growth</span>
                       </div>
                     </div>
@@ -370,7 +370,7 @@ export default function AboutPage() {
             
             <div className="max-w-6xl mx-auto">
               <div className="relative">
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-600 to-blue-400"></div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-brand-600 to-brand-400"></div>
                 
                 {timeline.map((item, index) => (
                   <motion.div
@@ -410,7 +410,7 @@ export default function AboutPage() {
                     </div>
                     
                     <motion.div
-                      className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-600 rounded-full border-4 border-white dark:border-gray-800 z-10"
+                      className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-brand-600 rounded-full border-4 border-white dark:border-gray-800 z-10"
                       whileHover={{ scale: 1.2 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     />
@@ -418,7 +418,7 @@ export default function AboutPage() {
                     <div className="w-1/2 pl-8">
                       <div className="text-right">
                         <motion.span
-                          className="text-3xl font-bold text-blue-600 dark:text-blue-400 inline-block"
+                          className="text-3xl font-bold text-brand-600 dark:text-brand-400 inline-block"
                           whileHover={{ scale: 1.1 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >

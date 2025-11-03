@@ -39,29 +39,29 @@
   
   --radius: 0.625rem;
   
-  /* Blue gradient theme colors */
-  --blue-50: #eff6ff;
-  --blue-100: #dbeafe;
-  --blue-200: #bfdbfe;
-  --blue-300: #93c5fd;
-  --blue-400: #60a5fa;
-  --blue-500: #3b82f6;
-  --blue-600: #2563eb;
-  --blue-700: #1d4ed8;
-  --blue-800: #1e40af;
-  --blue-900: #1e3a8a;
+  /* Brand color theme */
+  --brand-50: #fefdf9;
+  --brand-100: #fcf9f0;
+  --brand-200: #f7f4c8;
+  --brand-300: #f0e89a;
+  --brand-400: #e4d35f;
+  --brand-500: #9c6d1e;
+  --brand-600: #916f2a;
+  --brand-700: #7a5d24;
+  --brand-800: #634e1f;
+  --brand-900: #454543;
   
-  /* Navy blue colors */
-  --navy-50: #f0f9ff;
-  --navy-100: #e0f2fe;
-  --navy-200: #bae6fd;
-  --navy-300: #7dd3fc;
-  --navy-400: #38bdf8;
-  --navy-500: #0ea5e9;
-  --navy-600: #0284c7;
-  --navy-700: #0369a1;
-  --navy-800: #075985;
-  --navy-900: #0c4a6e;
+  /* Dark brand colors */
+  --brand-dark-50: #454543;
+  --brand-dark-100: #5a5a58;
+  --brand-dark-200: #6f6f6d;
+  --brand-dark-300: #848482;
+  --brand-dark-400: #999997;
+  --brand-dark-500: #aeaeac;
+  --brand-dark-600: #c3c3c1;
+  --brand-dark-700: #d8d8d6;
+  --brand-dark-800: #ededeb;
+  --brand-dark-900: #ffffff;
   
   /* Glassmorphism utilities */
   --glass-bg: rgba(255, 255, 255, 0.1);
@@ -213,17 +213,51 @@
 }
 
 .premium-button {
-  @apply bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+
+.premium-button:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: scale(1.05);
+}
+
+.premium-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--brand-500), 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.premium-button:active {
+  transform: scale(0.95);
+}
+
+.premium-button {
   font-family: var(--font-accent);
   font-weight: 500;
   letter-spacing: 0.05em;
 }
 
 .premium-badge {
-  @apply inline-flex items-center px-4 py-2 rounded-full text-sm bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  background-color: var(--brand-200);
+  color: var(--brand-700);
   font-family: var(--font-accent);
   font-weight: 500;
   letter-spacing: 0.05em;
+}
+
+.dark .premium-badge {
+  background-color: rgba(145, 111, 42, 0.2);
+  color: var(--brand-400);
 }
 
 /* Premium grid system */
@@ -287,53 +321,69 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Blue gradient utilities */
-.gradient-blue {
-  background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-700) 100%);
+/* Brand gradient utilities */
+.gradient-brand {
+  background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
 }
 
-.gradient-blue-light {
-  background: linear-gradient(135deg, var(--blue-400) 0%, var(--blue-600) 100%);
+.gradient-brand-light {
+  background: linear-gradient(135deg, var(--brand-400) 0%, var(--brand-600) 100%);
 }
 
-.gradient-blue-text {
-  background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-400) 100%);
+.gradient-brand-text {
+  background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-400) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.gradient-blue-dark {
-  background: linear-gradient(135deg, var(--blue-700) 0%, var(--blue-900) 100%);
+.gradient-brand-dark {
+  background: linear-gradient(135deg, var(--brand-700) 0%, var(--brand-900) 100%);
 }
 
-/* Navy blue utilities */
-.gradient-navy {
-  background: linear-gradient(135deg, var(--navy-800) 0%, var(--navy-900) 100%);
+/* Brand color utilities */
+.gradient-brand-main {
+  background: linear-gradient(135deg, var(--brand-800) 0%, var(--brand-900) 100%);
 }
 
-.gradient-navy-light {
-  background: linear-gradient(135deg, var(--navy-600) 0%, var(--navy-800) 100%);
+.gradient-brand-light-main {
+  background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-800) 100%);
 }
 
-.bg-navy-900 {
-  background-color: var(--navy-900);
+.bg-brand-900 {
+  background-color: var(--brand-900);
 }
 
-.bg-navy-800 {
-  background-color: var(--navy-800);
+.bg-brand-800 {
+  background-color: var(--brand-800);
 }
 
-.border-navy-800 {
-  border-color: var(--navy-800);
+.bg-brand-600 {
+  background-color: var(--brand-600);
 }
 
-.text-navy-100 {
-  color: var(--navy-100);
+.bg-brand-200 {
+  background-color: var(--brand-200);
 }
 
-.text-navy-300 {
-  color: var(--navy-300);
+.border-brand-800 {
+  border-color: var(--brand-800);
+}
+
+.text-brand-100 {
+  color: var(--brand-dark-100);
+}
+
+.text-brand-300 {
+  color: var(--brand-dark-300);
+}
+
+.text-brand-600 {
+  color: var(--brand-600);
+}
+
+.text-brand-700 {
+  color: var(--brand-700);
 }
 
 /* Animation utilities */
@@ -377,12 +427,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, var(--blue-500) 0%, var(--blue-600) 100%);
+  background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-700) 100%);
+  background: linear-gradient(135deg, var(--brand-700) 0%, var(--brand-800) 100%);
 }
 
 .dark ::-webkit-scrollbar-track {
@@ -391,12 +441,14 @@ html {
 
 /* Focus styles for accessibility */
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-background;
+  outline: none;
+  box-shadow: 0 0 0 2px var(--brand-600);
+  box-shadow: 0 0 0 2px var(--brand-600), 0 0 0 4px transparent;
 }
 
 /* Text selection */
 ::selection {
-  background-color: var(--blue-600);
+  background-color: var(--brand-600);
   color: white;
 }
 

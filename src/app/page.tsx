@@ -59,25 +59,25 @@ export default function Home() {
       value: 1500,
       label: 'Happy Clients',
       suffix: '+',
-      icon: <Users className="h-12 w-12 text-blue-600" />
+      icon: <Users className="h-12 w-12 text-brand-600" />
     },
     {
       value: 15,
       label: 'Years Experience',
       suffix: '+',
-      icon: <Award className="h-12 w-12 text-blue-600" />
+      icon: <Award className="h-12 w-12 text-brand-600" />
     },
     {
       value: 2,
       label: 'Countries',
       suffix: '',
-      icon: <Globe className="h-12 w-12 text-blue-600" />
+      icon: <Globe className="h-12 w-12 text-brand-600" />
     },
     {
       value: 99,
       label: 'Success Rate',
       suffix: '%',
-      icon: <Target className="h-12 w-12 text-blue-600" />
+      icon: <Target className="h-12 w-12 text-brand-600" />
     }
   ];
 
@@ -104,7 +104,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
+      <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50">
         <TopStrip />
         <Navbar />
         
@@ -120,7 +120,7 @@ export default function Home() {
           </section>
 
           {/* Services Section */}
-          <section className="py-20 bg-gradient-to-br from-blue-50 to-white">
+          <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 className="text-center mb-16"
@@ -131,7 +131,7 @@ export default function Home() {
               >
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Merriweather, serif' }}>
                   Our
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
+                  <span className="gradient-brand-text">
                     {' '}Services
                   </span>
                 </h2>
@@ -168,7 +168,7 @@ export default function Home() {
               >
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Merriweather, serif' }}>
                   Why Choose
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
+                  <span className="gradient-brand-text">
                     {' '}Advora
                   </span>
                 </h2>
@@ -203,7 +203,7 @@ export default function Home() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         <motion.div
-                          className="absolute top-4 left-4 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white"
+                          className="absolute top-4 left-4 w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center text-white"
                           whileHover={{ 
                             scale: 1.2, 
                             rotate: 10,
@@ -232,7 +232,7 @@ export default function Home() {
           <TestimonialSection />
 
           {/* Director Section */}
-          <section className="py-20 bg-gradient-to-br from-blue-50 to-white">
+          <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 className="text-center mb-16"
@@ -243,7 +243,7 @@ export default function Home() {
               >
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: 'Merriweather, serif' }}>
                   Meet Our
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
+                  <span className="gradient-brand-text">
                     {' '}Director
                   </span>
                 </h2>
@@ -296,13 +296,13 @@ export default function Home() {
                         <h3 className="text-3xl font-bold text-gray-900" style={{ fontFamily: 'Merriweather, serif' }}>
                           Ramcharan Kotapati
                         </h3>
-                        <p className="text-xl text-blue-600 font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                        <p className="text-xl text-brand-600 font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>
                           Director & Founder
                         </p>
                         
                         <div className="flex flex-wrap justify-center gap-2">
                           <motion.span 
-                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-blue-50 text-blue-700"
+                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-50 text-brand-700"
                             style={{ fontFamily: 'Inter, sans-serif' }}
                             whileHover={{ 
                               scale: 1.05,
@@ -313,7 +313,7 @@ export default function Home() {
                             Tax Expert
                           </motion.span>
                           <motion.span 
-                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-green-100 text-green-700"
+                            className="inline-flex items-center px-4 py-2 rounded-full text-sm bg-brand-100 text-brand-700"
                             style={{ fontFamily: 'Inter, sans-serif' }}
                             whileHover={{ 
                               scale: 1.05,
@@ -364,7 +364,7 @@ export default function Home() {
                       
                       <div className="space-y-4">
                         <div className="flex items-start space-x-3">
-                          <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
                             <h5 className="font-semibold text-gray-900" style={{ fontFamily: 'Inter, sans-serif' }}>Expertise</h5>
                             <p className="text-gray-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -374,7 +374,7 @@ export default function Home() {
                         </div>
                         
                         <div className="flex items-start space-x-3">
-                          <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
                             <h5 className="font-semibold text-gray-900" style={{ fontFamily: 'Inter, sans-serif' }}>Global Perspective</h5>
                             <p className="text-gray-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -384,7 +384,7 @@ export default function Home() {
                         </div>
                         
                         <div className="flex items-start space-x-3">
-                          <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                          <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
                             <h5 className="font-semibold text-gray-900" style={{ fontFamily: 'Inter, sans-serif' }}>Client Success</h5>
                             <p className="text-gray-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -417,13 +417,13 @@ export default function Home() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3 rounded-lg">
+                    <Button size="lg" className="bg-brand-600 hover:bg-brand-700 text-white font-medium px-8 py-3 rounded-lg">
                       Get Started Today
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button variant="outline" size="lg" className="border-blue-600 text-blue-600 hover:bg-blue-50 font-medium px-8 py-3 rounded-lg">
+                    <Button variant="outline" size="lg" className="border-brand-600 text-brand-600 hover:bg-brand-50 font-medium px-8 py-3 rounded-lg">
                       Contact Us
                     </Button>
                   </motion.div>

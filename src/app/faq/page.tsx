@@ -142,7 +142,7 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <TopStrip />
       <Navbar />
       <MobileNavbar />
@@ -174,7 +174,7 @@ export default function FAQPage() {
                     placeholder="Search questions..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 pr-4 py-3 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-full shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="pl-10 pr-4 py-3 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-full shadow-sm focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                   />
                 </div>
               </motion.div>
@@ -195,8 +195,8 @@ export default function FAQPage() {
                         onClick={() => setActiveCategory(category.id)}
                         className={`flex items-center space-x-2 rounded-full px-4 py-2 ${
                           activeCategory === category.id
-                            ? 'bg-blue-600 text-white hover:bg-blue-700'
-                            : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                            ? 'bg-brand-600 text-white hover:bg-brand-700'
+                            : 'border-gray-300 dark:border-gray-600 text-brand-700 dark:text-brand-400 hover:bg-brand-50 dark:hover:bg-brand-900/20'
                         }`}
                       >
                         <Icon className="h-4 w-4" />
@@ -229,18 +229,18 @@ export default function FAQPage() {
                           value={faq.id}
                           className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden"
                         >
-                          <AccordionTrigger className="hover:no-underline">
-                            <div className="flex items-center space-x-3 text-left">
-                              <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <Icon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                          <AccordionTrigger className="hover:no-underline px-6 py-4">
+                            <div className="flex items-center text-left">
+                              <div className="w-10 h-10 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Icon className="h-5 w-5 text-brand-600 dark:text-brand-400" />
                               </div>
-                              <span className="text-lg font-medium text-gray-900 dark:text-white">
+                              <span className="text-lg font-medium text-gray-900 dark:text-white ml-3">
                                 {faq.question}
                               </span>
                             </div>
                           </AccordionTrigger>
                           <AccordionContent className="text-gray-600 dark:text-gray-300">
-                            <div className="pl-13 pr-4 pb-4">
+                            <div className="px-6 pb-4 pt-2">
                               {faq.answer}
                             </div>
                           </AccordionContent>
@@ -269,7 +269,7 @@ export default function FAQPage() {
                       setActiveCategory('all');
                     }}
                     variant="outline"
-                    className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                    className="border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white"
                   >
                     Clear Filters
                   </Button>
@@ -289,11 +289,11 @@ export default function FAQPage() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <Card className="bg-gradient-to-r from-blue-600 to-blue-700 text-white border-0">
+              <Card className="gradient-brand text-white border-0">
                 <CardContent className="p-8">
                   <div className="text-center mb-8">
                     <h2 className="text-3xl font-bold mb-4">Still Have Questions?</h2>
-                    <p className="text-blue-100 text-lg">
+                    <p className="text-white text-lg">
                       Can't find the answer you're looking for? Our team is here to help.
                     </p>
                   </div>
@@ -304,10 +304,10 @@ export default function FAQPage() {
                         <MessageCircle className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="text-xl font-semibold mb-2">Live Chat</h3>
-                      <p className="text-blue-100 mb-4">Chat with our support team</p>
+                      <p className="text-white mb-4">Chat with our support team</p>
                       <Button
                         variant="secondary"
-                        className="bg-white text-blue-600 hover:bg-gray-100 rounded-full"
+                        className="bg-white text-brand-600 hover:bg-gray-100 rounded-full"
                       >
                         Start Chat
                       </Button>
@@ -318,10 +318,10 @@ export default function FAQPage() {
                         <Phone className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="text-xl font-semibold mb-2">Call Us</h3>
-                      <p className="text-blue-100 mb-4">Speak with our experts</p>
+                      <p className="text-white mb-4">Speak with our experts</p>
                       <Button
                         variant="secondary"
-                        className="bg-white text-blue-600 hover:bg-gray-100 rounded-full"
+                        className="bg-white text-brand-600 hover:bg-gray-100 rounded-full"
                       >
                         Call Now
                       </Button>
@@ -332,10 +332,10 @@ export default function FAQPage() {
                         <Mail className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-                      <p className="text-blue-100 mb-4">Send us a detailed message</p>
+                      <p className="text-white mb-4">Send us a detailed message</p>
                       <Button
                         variant="secondary"
-                        className="bg-white text-blue-600 hover:bg-gray-100 rounded-full"
+                        className="bg-white text-brand-600 hover:bg-gray-100 rounded-full"
                       >
                         Send Email
                       </Button>

@@ -59,7 +59,7 @@ export default function StatsCounter({ stats }: StatsCounterProps) {
           className="text-center bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
         >
           <motion.div
-            className="text-4xl md:text-5xl font-bold text-blue-600 mb-2"
+            className="text-4xl md:text-5xl font-bold text-brand-600 mb-2"
             initial={{ scale: 0 }}
             whileInView={{ scale: 1 }}
             transition={{ duration: 0.6, delay: index * 0.2, type: "spring" }}

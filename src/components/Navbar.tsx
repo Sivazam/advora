@@ -140,7 +140,7 @@ export default function Navbar() {
                     {/* Active indicator */}
                     {pathname === item.href && (
                       <motion.div
-                        className="absolute inset-0 bg-blue-100 rounded-lg"
+                        className="absolute inset-0 bg-brand-100 rounded-lg"
                         layoutId="navbar-fill"
                         initial={false}
                         transition={{ 
@@ -157,7 +157,7 @@ export default function Navbar() {
                     {/* Text */}
                     <span className={`relative z-10 transition-all duration-400 ${
                       pathname === item.href
-                        ? 'text-blue-600 font-semibold'
+                        ? 'text-brand-600 font-semibold'
                         : 'text-gray-700 hover:text-gray-900'
                     }`} style={{ fontFamily: 'Poppins, sans-serif' }}>
                       {item.name}
@@ -223,7 +223,7 @@ export default function Navbar() {
                     <motion.div
                       className={`block px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                         pathname === item.href
-                          ? 'bg-blue-50 text-blue-600'
+                          ? 'bg-brand-50 text-brand-600'
                           : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
                       }`}
                       whileHover={{ 

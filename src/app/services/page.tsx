@@ -90,7 +90,7 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <TopStrip />
       <Navbar />
       <MobileNavbar />
@@ -184,7 +184,7 @@ export default function ServicesPage() {
                                   {service.forms.map((form) => (
                                     <motion.span
                                       key={form}
-                                      className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full text-xs font-medium"
+                                      className="px-3 py-1 bg-brand-600 text-white rounded-full text-xs font-medium"
                                       whileHover={{ scale: 1.05 }}
                                       whileTap={{ scale: 0.95 }}
                                     >
@@ -205,7 +205,7 @@ export default function ServicesPage() {
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ duration: 0.3, delay: idx * 0.1 }}
                                     >
-                                      <CheckCircle className="h-3 w-3 text-green-600 dark:text-green-400 flex-shrink-0" />
+                                      <CheckCircle className="h-3 w-3 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                                       <span>{feature}</span>
                                     </motion.li>
                                   ))}
@@ -300,7 +300,7 @@ export default function ServicesPage() {
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ duration: 0.3, delay: idx * 0.1 }}
                                     >
-                                      <CheckCircle className="h-3 w-3 text-green-600 dark:text-green-400 flex-shrink-0" />
+                                      <CheckCircle className="h-3 w-3 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                                       <span>{item}</span>
                                     </motion.li>
                                   ))}
@@ -315,7 +315,7 @@ export default function ServicesPage() {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  className="w-full border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300"
+                                  className="w-full border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white transition-all duration-300"
                                 >
                                   Learn More
                                 </Button>
@@ -338,17 +338,17 @@ export default function ServicesPage() {
               viewport={{ once: true }}
               className="mt-16 text-center"
             >
-              <Card className="bg-gradient-to-r from-blue-600 to-blue-700 text-white border-0">
+              <Card className="gradient-brand text-white border-0">
                 <CardContent className="p-8">
                   <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
-                  <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+                  <p className="text-white mb-6 max-w-2xl mx-auto">
                     Let our expert team help you with your tax and business needs. 
                     Contact us today for a consultation.
                   </p>
                   <Button
                     size="lg"
                     variant="secondary"
-                    className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-full font-semibold"
+                    className="bg-white text-brand-600 hover:bg-gray-100 px-8 py-3 rounded-full font-semibold"
                   >
                     Contact Us Today
                   </Button>

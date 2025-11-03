@@ -97,7 +97,7 @@ export default function TestimonialSection() {
         <CardContent className="p-6 flex flex-col h-full">
           {/* Quote Icon */}
           <motion.div
-            className="mb-4 text-blue-600"
+            className="mb-4 text-brand-600"
             whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ duration: 0.3 }}
           >
@@ -138,7 +138,7 @@ export default function TestimonialSection() {
   );
 
   return (
-    <section className="py-20 bg-gradient-to-br from-blue-50 to-white overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-brand-50 to-white overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"
@@ -149,7 +149,7 @@ export default function TestimonialSection() {
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Merriweather, serif' }}>
             What Our
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
+            <span className="gradient-brand-text">
               {' '}Clients Say
             </span>
           </h2>
@@ -193,17 +193,17 @@ export default function TestimonialSection() {
         >
           <div className="inline-flex items-center space-x-8 bg-white px-8 py-4 rounded-full shadow-lg">
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">98%</div>
+              <div className="text-3xl font-bold text-brand-600">98%</div>
               <div className="text-sm text-gray-600">Client Satisfaction</div>
             </div>
             <div className="w-px h-8 bg-gray-300"></div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">24/7</div>
+              <div className="text-3xl font-bold text-brand-600">24/7</div>
               <div className="text-sm text-gray-600">Support Available</div>
             </div>
             <div className="w-px h-8 bg-gray-300"></div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">15+</div>
+              <div className="text-3xl font-bold text-brand-600">15+</div>
               <div className="text-sm text-gray-600">Years Experience</div>
             </div>
           </div>

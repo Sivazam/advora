@@ -36,7 +36,7 @@ export default function ScrollToTop() {
           onClick={scrollToTop}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 group"
+          className="fixed bottom-6 right-6 z-50 w-12 h-12 bg-brand-600 hover:bg-brand-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 group"
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -61,7 +61,7 @@ export default function ScrollToTop() {
           
           {/* Ripple effect on hover */}
           <motion.div
-            className="absolute inset-0 bg-blue-400 rounded-full opacity-0 group-hover:opacity-30"
+            className="absolute inset-0 bg-brand-400 rounded-full opacity-0 group-hover:opacity-30"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ 
               scale: isHovered ? 1.2 : 0.8,

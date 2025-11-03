@@ -201,7 +201,7 @@ export default function HeroCarousel() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 inline-flex items-center space-x-2"
+                  className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-full font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 inline-flex items-center space-x-2"
                 >
                   <span>{heroSlides[currentSlide].ctaText}</span>
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -231,7 +231,7 @@ export default function HeroCarousel() {
 
       {/* Progress Bar */}
       <motion.div
-        className="absolute bottom-0 left-0 h-1 bg-blue-600 z-20"
+        className="absolute bottom-0 left-0 h-1 bg-brand-600 z-20"
         initial={{ width: 0 }}
         animate={{ width: '100%' }}
         transition={{ 
@@ -246,7 +246,7 @@ export default function HeroCarousel() {
       {/* Scroll Animation Icon */}
       <motion.button
         onClick={scrollToNext}
-        className="absolute bottom-8 right-8 z-20 text-white hover:text-blue-300 transition-colors"
+        className="absolute bottom-8 right-8 z-20 text-white hover:text-brand-300 transition-colors"
         animate={{ 
           y: [0, 10, 0],
         }}

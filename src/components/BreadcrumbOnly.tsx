@@ -20,7 +20,7 @@ export default function BreadcrumbOnly({ breadcrumbItems }: BreadcrumbOnlyProps)
         >
           <motion.a
             href="/"
-            className="flex items-center text-gray-600 hover:text-blue-600 transition-colors duration-200"
+            className="flex items-center text-gray-600 hover:text-brand-600 transition-colors duration-200"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -40,14 +40,14 @@ export default function BreadcrumbOnly({ breadcrumbItems }: BreadcrumbOnlyProps)
               {item.href ? (
                 <motion.a
                   href={item.href}
-                  className="text-gray-600 hover:text-blue-600 transition-colors duration-200"
+                  className="text-gray-600 hover:text-brand-600 transition-colors duration-200"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   {item.label}
                 </motion.a>
               ) : (
-                <span className="text-blue-600 font-medium">
+                <span className="text-brand-600 font-medium">
                   {item.label}
                 </span>
               )}

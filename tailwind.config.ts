@@ -50,6 +50,19 @@ const config: Config = {
                                 '3': 'hsl(var(--chart-3))',
                                 '4': 'hsl(var(--chart-4))',
                                 '5': 'hsl(var(--chart-5))'
+                        },
+                        // Custom brand colors
+                        brand: {
+                                50: '#fefdf9',
+                                100: '#fcf9f0',
+                                200: '#f7f4c8',
+                                300: '#f0e89a',
+                                400: '#e4d35f',
+                                500: '#9c6d1e',
+                                600: '#916f2a',
+                                700: '#7a5d24',
+                                800: '#634e1f',
+                                900: '#454543',
                         }
                 },
                 borderRadius: {

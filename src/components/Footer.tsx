@@ -46,19 +46,19 @@ export default function Footer() {
             className="space-y-4"
           >
             <div className="flex items-center space-x-2">
-              <Globe className="h-5 w-5 text-blue-600" />
+              <Globe className="h-5 w-5 text-brand-600" />
               <h4 className="font-semibold">USA Office</h4>
             </div>
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex items-start space-x-2">
-                <MapPin className="h-4 w-4 mt-0.5 text-blue-600" />
+                <MapPin className="h-4 w-4 mt-0.5 text-brand-600" />
                 <span>
                   1103 Hidden Ridge APT 1012<br />
                   Irving, Texas, 75038
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4 text-blue-600" />
+                <Phone className="h-4 w-4 text-brand-600" />
                 <span>+1 (502) 718-0460</span>
               </div>
             </div>
@@ -72,12 +72,12 @@ export default function Footer() {
             className="space-y-4"
           >
             <div className="flex items-center space-x-2">
-              <Building className="h-5 w-5 text-blue-600" />
+              <Building className="h-5 w-5 text-brand-600" />
               <h4 className="font-semibold">India Office</h4>
             </div>
             <div className="space-y-2 text-sm text-muted-foreground">
               <div className="flex items-start space-x-2">
-                <MapPin className="h-4 w-4 mt-0.5 text-blue-600" />
+                <MapPin className="h-4 w-4 mt-0.5 text-brand-600" />
                 <span>
                   Plot No 19, 1st floor, Power Nagar<br />
                   Power Nagar Park Road, Moosapet<br />
@@ -85,7 +85,7 @@ export default function Footer() {
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4 text-blue-600" />
+                <Phone className="h-4 w-4 text-brand-600" />
                 <span>+91-9700113131</span>
               </div>
             </div>
@@ -100,19 +100,19 @@ export default function Footer() {
           >
             <h4 className="font-semibold">Quick Links</h4>
             <div className="space-y-2">
-              <Link href="/" className="block text-sm text-muted-foreground hover:text-blue-600 transition-colors">
+              <Link href="/" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
                 Home
               </Link>
-              <Link href="/services" className="block text-sm text-muted-foreground hover:text-blue-600 transition-colors">
+              <Link href="/services" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
                 Services
               </Link>
-              <Link href="/about" className="block text-sm text-muted-foreground hover:text-blue-600 transition-colors">
+              <Link href="/about" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
                 About Us
               </Link>
-              <Link href="/contact" className="block text-sm text-muted-foreground hover:text-blue-600 transition-colors">
+              <Link href="/contact" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
                 Contact
               </Link>
-              <Link href="/faq" className="block text-sm text-muted-foreground hover:text-blue-600 transition-colors">
+              <Link href="/faq" className="block text-sm text-muted-foreground hover:text-brand-600 transition-colors">
                 FAQ
               </Link>
             </div>
@@ -134,7 +134,7 @@ export default function Footer() {
               <span>Built by</span>
               <Link 
                 href="#" 
-                className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                className="text-brand-600 hover:text-brand-700 font-medium transition-colors"
               >
                 Harte Labs
               </Link>

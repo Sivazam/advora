@@ -10,7 +10,7 @@ export default function TopStrip() {
 
   return (
     <motion.div 
-      className="bg-navy-900 text-white py-3 px-4 border-b border-navy-800 fixed top-0 left-0 right-0 z-40 md:z-50"
+      className="bg-brand-900 text-white py-3 px-4 border-b border-brand-800 fixed top-0 left-0 right-0 z-40 md:z-50"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -24,14 +24,14 @@ export default function TopStrip() {
             transition={{ duration: 0.2 }}
           >
             <div className="flex items-center gap-2">
-              <div className="w-6 h-4 bg-blue-500 rounded-sm flex items-center justify-center">
+              <div className="w-6 h-4 bg-brand-600 rounded-sm flex items-center justify-center">
                 <span className="text-xs font-bold text-white">US</span>
               </div>
               <span className="font-medium" style={{ fontFamily: 'Poppins, sans-serif' }}>USA</span>
             </div>
             <motion.button
               onClick={() => handlePhoneClick('+1234567890')}
-              className="flex items-center gap-2 hover:text-blue-300 transition-colors duration-200"
+              className="flex items-center gap-2 hover:text-brand-300 transition-colors duration-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -42,7 +42,7 @@ export default function TopStrip() {
 
           {/* Center - Business hours */}
           <motion.div 
-            className="flex items-center gap-2 text-blue-100"
+            className="flex items-center gap-2 text-brand-100"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >

@@ -85,7 +85,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <TopStrip />
       <Navbar />
       <MobileNavbar />
@@ -138,7 +138,7 @@ export default function ContactPage() {
                     
                     <CardContent className="p-6 space-y-6">
                       <div className="flex items-start space-x-3">
-                        <MapPin className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-1 flex-shrink-0" />
+                        <MapPin className="h-5 w-5 text-brand-600 dark:text-brand-400 mt-1 flex-shrink-0" />
                         <div>
                           <h4 className="font-medium text-gray-900 dark:text-white mb-1">Address</h4>
                           <p className="text-gray-600 dark:text-gray-300">{info.address}</p>
@@ -146,7 +146,7 @@ export default function ContactPage() {
                       </div>
                       
                       <div className="flex items-center space-x-3">
-                        <Phone className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <Phone className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <div>
                           <h4 className="font-medium text-gray-900 dark:text-white mb-1">Phone</h4>
                           <p className="text-gray-600 dark:text-gray-300">{info.phone}</p>
@@ -154,7 +154,7 @@ export default function ContactPage() {
                       </div>
                       
                       <div className="flex items-center space-x-3">
-                        <Mail className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <Mail className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <div>
                           <h4 className="font-medium text-gray-900 dark:text-white mb-1">Email</h4>
                           <p className="text-gray-600 dark:text-gray-300">{info.email}</p>
@@ -162,7 +162,7 @@ export default function ContactPage() {
                       </div>
                       
                       <div className="flex items-center space-x-3">
-                        <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                        <Clock className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <div>
                           <h4 className="font-medium text-gray-900 dark:text-white mb-1">Business Hours</h4>
                           <p className="text-gray-600 dark:text-gray-300">{info.hours}</p>
@@ -175,7 +175,7 @@ export default function ContactPage() {
                       >
                         <Button
                           variant="outline"
-                          className="w-full mt-4 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                          className="w-full mt-4 border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white"
                         >
                           <MessageCircle className="h-4 w-4 mr-2" />
                           Get Directions
@@ -224,8 +224,8 @@ export default function ContactPage() {
                       animate={{ opacity: 1, scale: 1 }}
                       className="text-center py-8"
                     >
-                      <div className="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
+                      <div className="w-16 h-16 bg-brand-100 dark:bg-brand-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <CheckCircle className="h-8 w-8 text-brand-600 dark:text-brand-400" />
                       </div>
                       <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                         Message Sent Successfully!
@@ -236,7 +236,7 @@ export default function ContactPage() {
                       <Button
                         onClick={() => setIsSubmitted(false)}
                         variant="outline"
-                        className="border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
+                        className="border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white"
                       >
                         Send Another Message
                       </Button>
@@ -311,7 +311,7 @@ export default function ContactPage() {
                       <Button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                        className="w-full gradient-brand hover:gradient-brand-dark text-white py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                       >
                         {isSubmitting ? (
                           <>
@@ -343,34 +343,34 @@ export default function ContactPage() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <Card className="bg-gradient-to-r from-blue-600 to-blue-700 text-white border-0">
+              <Card className="gradient-brand text-white border-0">
                 <CardContent className="p-8">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     <div>
                       <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                         <Phone className="h-8 w-8 text-white" />
                       </div>
-                      <h3 className="text-xl font-semibold mb-2">Call Us</h3>
-                      <p className="text-blue-100 mb-2">USA: +1 (502) 718-0460</p>
-                      <p className="text-blue-100">India: +91-9700113131</p>
+                      <h3 className="text-xl font-semibold mb-2 text-white">Call Us</h3>
+                      <p className="text-white mb-2">USA: +1 (502) 718-0460</p>
+                      <p className="text-white">India: +91-9700113131</p>
                     </div>
                     
                     <div>
                       <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                         <Mail className="h-8 w-8 text-white" />
                       </div>
-                      <h3 className="text-xl font-semibold mb-2">Email Us</h3>
-                      <p className="text-blue-100 mb-2">usa@advoraservices.com</p>
-                      <p className="text-blue-100">india@advoraservices.com</p>
+                      <h3 className="text-xl font-semibold mb-2 text-white">Email Us</h3>
+                      <p className="text-white mb-2">usa@advoraservices.com</p>
+                      <p className="text-white">india@advoraservices.com</p>
                     </div>
                     
                     <div>
                       <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                         <Clock className="h-8 w-8 text-white" />
                       </div>
-                      <h3 className="text-xl font-semibold mb-2">Business Hours</h3>
-                      <p className="text-blue-100 mb-2">USA: Mon-Fri 9AM-6PM EST</p>
-                      <p className="text-blue-100">India: Mon-Sat 10AM-7PM IST</p>
+                      <h3 className="text-xl font-semibold mb-2 text-white">Business Hours</h3>
+                      <p className="text-white mb-2">USA: Mon-Fri 9AM-6PM EST</p>
+                      <p className="text-white">India: Mon-Sat 10AM-7PM IST</p>
                     </div>
                   </div>
                 </CardContent>

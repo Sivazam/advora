@@ -35,7 +35,7 @@ export default function MobileNavbar() {
                 <motion.div
                   className={`flex flex-col items-center justify-center p-2 rounded-lg min-w-[60px] transition-all ${
                     isActive
-                      ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
+                      ? 'text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-900/20'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                   whileHover={{ 
@@ -57,7 +57,7 @@ export default function MobileNavbar() {
                   <motion.div
                     className={`p-2 rounded-lg ${
                       isActive
-                        ? 'bg-blue-100 dark:bg-blue-900/30'
+                        ? 'bg-brand-100 dark:bg-brand-900/30'
                         : 'hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                     whileHover={{ 
@@ -78,13 +78,13 @@ export default function MobileNavbar() {
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
                   >
-                    <Icon className={`h-5 w-5 ${isActive ? 'text-blue-600 dark:text-blue-400' : ''}`} />
+                    <Icon className={`h-5 w-5 ${isActive ? 'text-brand-600 dark:text-brand-400' : ''}`} />
                   </motion.div>
                   <span className="text-xs mt-1 font-medium">{item.name}</span>
                   
                   {isActive && (
                     <motion.div
-                      className="absolute bottom-0 w-1 h-1 bg-blue-600 dark:bg-blue-400 rounded-full"
+                      className="absolute bottom-0 w-1 h-1 bg-brand-600 dark:bg-brand-400 rounded-full"
                       layoutId="mobile-nav-indicator"
                       initial={false}
                       transition={{ 

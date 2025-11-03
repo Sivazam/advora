@@ -52,7 +52,7 @@ export default function ServiceCard({
         </div>
 
         <CardHeader className="pb-4">
-          <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors">
+          <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-brand-600 transition-colors">
             {title}
           </CardTitle>
           <CardDescription className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
@@ -75,7 +75,7 @@ export default function ServiceCard({
                   whileHover={{ scale: 1.2, rotate: 360 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />
+                  <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                 </motion.div>
                 <span className="text-gray-700 dark:text-gray-300 text-sm">{feature}</span>
               </motion.div>
@@ -89,7 +89,7 @@ export default function ServiceCard({
             <Button
               onClick={onLearnMore}
               variant="outline"
-              className="w-full border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 group-hover:border-blue-700"
+              className="w-full border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white transition-all duration-300 group-hover:border-brand-700"
             >
               Learn More
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
