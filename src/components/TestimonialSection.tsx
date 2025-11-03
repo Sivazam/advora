@@ -153,7 +153,7 @@ export default function TestimonialSection() {
               {' '}Clients Say
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-raleway">>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-raleway">
             Don't just take our word for it - hear from our satisfied clients
           </p>
         </motion.div>

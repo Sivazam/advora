@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Clock, Flag } from 'lucide-react';
+import { memo } from 'react';
 
 export default function TopStrip() {
   const handlePhoneClick = (phoneNumber: string) => {

@@ -2,10 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import TopStrip from '@/components/TopStrip';
-import ScrollToTop from '@/components/ScrollToTop';
 import HeroCarousel from '@/components/HeroCarousel';
 import ServiceCard from '@/components/ServiceCard';
 import StatsCounter from '@/components/StatsCounter';
@@ -104,24 +100,19 @@ export default function Home() {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50">
-        <TopStrip />
-        <Navbar />
-        
-        <main>
-          {/* Hero Carousel */}
-          <HeroCarousel />
+      {/* Hero Carousel */}
+      <HeroCarousel />
 
-          {/* Stats Section */}
-          <section className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <StatsCounter stats={stats} />
-            </div>
-          </section>
+      {/* Stats Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <StatsCounter stats={stats} />
+        </div>
+      </section>
 
-          {/* Services Section */}
-          <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Services Section */}
+      <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 className="text-center mb-16"
                 initial={{ opacity: 0, y: 30 }}
@@ -431,11 +422,6 @@ export default function Home() {
               </motion.div>
             </div>
           </section>
-        </main>
-        
-        <Footer />
-        <ScrollToTop />
-      </div>
     </>
   );
 }

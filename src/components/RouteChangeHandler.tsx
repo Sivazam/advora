@@ -11,12 +11,17 @@ export default function RouteChangeHandler({ children }: { children: React.React
 
   useEffect(() => {
     if (pathname !== previousPath) {
+      // Scroll to top immediately
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      
+      // Instant transition - no visible loading
       setIsLoading(true);
-      // Minimal loading time for better UX
+      setPreviousPath(pathname);
+      
+      // Immediately show new content
       const timer = setTimeout(() => {
         setIsLoading(false);
-        setPreviousPath(pathname);
-      }, 300);
+      }, 50); // Almost instant
       
       return () => clearTimeout(timer);
     }
@@ -24,8 +29,13 @@ export default function RouteChangeHandler({ children }: { children: React.React
 
   return (
     <>
+      {/* PageLoading is invisible but kept for structure */}
       {isLoading && <PageLoading />}
-      <div style={{ opacity: isLoading ? 0.7 : 1, transition: 'opacity 0.2s ease-in-out' }}>
+      <div style={{ 
+        opacity: isLoading ? 0.95 : 1, 
+        transition: 'opacity 0.05s ease-in-out',
+        transform: 'translateZ(0)' // Hardware acceleration
+      }}>
         {children}
       </div>
     </>

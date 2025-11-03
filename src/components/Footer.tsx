@@ -7,6 +7,7 @@ import {
   Building,
   Globe
 } from 'lucide-react';
+import { memo } from 'react';
 
 export default function Footer() {
   return (

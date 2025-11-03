@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 
@@ -19,6 +19,12 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleNavigation = (href: string) => {
+    // Scroll to top when navigating
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    setIsMobileMenuOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,31 +93,18 @@ export default function Navbar() {
                   className="w-full h-full object-cover"
                 />
               </motion.div>
-              <motion.div
-                className="ml-3 overflow-hidden"
-                initial={{ opacity: 0, width: 0, x: -20 }}
-                animate={{ 
-                  opacity: 1, 
-                  width: 'auto', 
-                  x: 0 
-                }}
-                transition={{ 
-                  duration: 0.4, 
-                  ease: [0.4, 0, 0.2, 1],
-                  width: { duration: 0.3, ease: "easeInOut" }
-                }}
-              >
+              <div className="ml-3">
                 <div>
                   <span className="text-lg font-bold text-gray-900 font-raleway-heading">Advora</span>
                   <span className="text-xs text-gray-500 block font-raleway">Services LLP</span>
                 </div>
-              </motion.div>
+              </div>
             </Link>
 
             {/* Navigation Links */}
             <div className={`flex items-center ${isScrolled ? 'ml-8' : 'ml-0'} space-x-1`}>
               {navItems.map((item, index) => (
-                <Link key={item.name} href={item.href} prefetch={true}>
+                <Link key={item.name} href={item.href} prefetch={true} onClick={() => handleNavigation(item.href)}>
                   <motion.div
                     className="relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 overflow-hidden"
                     whileHover={{ 
@@ -128,13 +121,6 @@ export default function Navbar() {
                     whileTap={{ 
                       scale: 0.96,
                       transition: { duration: 0.15, ease: "easeIn" }
-                    }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      duration: 0.3, 
-                      delay: index * 0.05,
-                      ease: [0.25, 0.1, 0.25, 1] // Smooth cubic bezier
                     }}
                   >
                     {/* Active indicator */}
@@ -192,7 +178,7 @@ export default function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            onClick={toggleMobileMenu}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100"
           >
             {isMobileMenuOpen ? (
@@ -219,7 +205,7 @@ export default function Navbar() {
             >
               <div className="px-4 py-2 space-y-1">
                 {navItems.map((item, index) => (
-                  <Link key={item.name} href={item.href} onClick={() => setIsMobileMenuOpen(false)} prefetch={true}>
+                  <Link key={item.name} href={item.href} onClick={() => handleNavigation(item.href)} prefetch={true}>
                     <motion.div
                       className={`block px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                         pathname === item.href
@@ -240,13 +226,6 @@ export default function Navbar() {
                       whileTap={{ 
                         scale: 0.97,
                         transition: { duration: 0.1, ease: "easeIn" }
-                      }}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ 
-                        duration: 0.3, 
-                        delay: index * 0.05,
-                        ease: [0.25, 0.1, 0.25, 1]
                       }}
                     >
                       <span className="font-raleway-accent">{item.name}</span>
