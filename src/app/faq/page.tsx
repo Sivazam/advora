@@ -95,14 +95,14 @@ export default function FAQPage() {
       id: 'q8',
       category: 'general',
       question: 'What makes Advora Services LLP different from other tax services?',
-      answer: 'We differentiate ourselves through personalized service, expertise in both US and Indian tax systems, competitive pricing, and a commitment to client education. Our director, Ramcharan Kotapati, brings over 15 years of experience and a client-centric approach to every engagement.',
+      answer: 'We differentiate ourselves through personalized service, expertise in both US and Indian tax systems, competitive pricing, and a commitment to client education. Our director, Ram Chowdhary, brings over 15 years of experience and a client-centric approach to every engagement.',
       icon: Star
     },
     {
       id: 'q9',
       category: 'contact',
       question: 'How can I reach customer support?',
-      answer: 'You can reach our customer support team through multiple channels: phone (USA: +1 (502) 718-0460, India: +91-9700113131), email (usa@advoraservices.com or india@advoraservices.com), or through our website\'s contact form. We\'re available during business hours and typically respond within 24 hours.',
+      answer: 'You can reach our customer support team through multiple channels: phone (USA: +1 (502) 718-0460, India: +91-9491941299), email (usa@advoraservices.com or india@advoraservices.com), or through our website\'s contact form. We\'re available during business hours and typically respond within 24 hours.',
       icon: Phone
     },
     {
@@ -155,7 +155,7 @@ export default function FAQPage() {
         />
 
         {/* Search and Categories */}
-        <section className="py-20 bg-white">
+        <section className="py-10 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto space-y-8">
               {/* Search Bar */}
@@ -208,7 +208,7 @@ export default function FAQPage() {
         </section>
 
         {/* FAQ Content */}
-        <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+        <section className="py-10 bg-gradient-to-br from-brand-50 to-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               {filteredFAQs.length > 0 ? (

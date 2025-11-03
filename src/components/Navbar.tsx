@@ -59,33 +59,32 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop Navbar */}
-      <nav className={`hidden md:block fixed z-50 transition-all duration-500 ease-out ${
+      <nav className={`hidden md:block fixed z-50 transition-all duration-700 ease-in-out ${
         isScrolled 
           ? 'top-6 left-0 right-0' 
           : 'top-12 left-0 right-0'
       }`}>
         <motion.div
-          className={`relative mx-auto transition-all duration-500 ease-out ${
+          className={`relative mx-auto transition-all duration-700 ease-in-out ${
             isScrolled 
               ? 'bg-white/95 backdrop-blur-md border border-gray-200/50 rounded-full px-8 py-4 shadow-2xl max-w-5xl'
               : 'bg-white/95 backdrop-blur-md border-b border-gray-200/50 px-6 py-5'
           }`}
           initial={false}
           animate={{
-            borderRadius: isScrolled ? 9999 : 12,
+            borderRadius: isScrolled ? 9999 : 0,
             scale: isScrolled ? [0.95, 1] : [1, 1],
             y: isScrolled ? [10, 0] : [0, 0],
           }}
           transition={{
-            type: "spring",
-            stiffness: 100,
-            damping: 20,
-            mass: 0.8,
-            restDelta: 0.001,
+            duration: 0.7,
+            ease: [0.25, 0.46, 0.45, 0.94], // Custom ease-in-out curve
+            scale: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+            y: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }
           }}
           whileHover={{
             scale: 1.02,
-            transition: { duration: 0.3, ease: "easeOut" }
+            transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
           }}
         >
           <div className="flex items-center justify-between">
@@ -123,7 +122,7 @@ export default function Navbar() {
             </Link>
 
             {/* Navigation Links */}
-            <div className={`flex items-center space-x-2 transition-all duration-500 ${
+            <div className={`flex items-center space-x-2 transition-all duration-700 ease-in-out ${
               isScrolled ? 'ml-12' : 'ml-8'
             }`}>
               {navItems.map((item, index) => (

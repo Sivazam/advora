@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 import HeroCarousel from '@/components/HeroCarousel';
 import ServiceCard from '@/components/ServiceCard';
 import StatsCounter from '@/components/StatsCounter';
@@ -23,43 +24,44 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
+  const router = useRouter();
 
   const services = [
     {
       title: 'Tax Filing Services',
       description: 'Professional tax filing for individuals and businesses with maximum accuracy and compliance.',
-      image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd8c?w=600&h=400&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1560523159-6b8e8c1a6e2e?w=600&h=400&fit=crop&crop=center',
       features: ['Individual Tax Returns', 'Business Tax Returns', 'International Tax Services']
     },
     {
       title: 'Business Registrations',
       description: 'Complete business registration services with expert guidance and documentation.',
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&h=400&fit=crop&crop=center',
       features: ['Company Formation', 'LLC Registration', 'Partnership Setup']
     },
     {
       title: 'Accounting Services',
       description: 'Comprehensive bookkeeping and accounting solutions for your business needs.',
-      image: 'https://images.unsplash.com/photo-1554224155-26072cf3008e?w=600&h=400&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&crop=center',
       features: ['Bookkeeping', 'Financial Statements', 'Payroll Services']
     },
     {
       title: 'Legal Representation',
       description: 'Expert legal representation for tax matters and business compliance.',
-      image: 'https://images.unsplash.com/photo-1450101499163-c8848c71ca85?w=600&h=400&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&crop=center',
       features: ['Tax Disputes', 'Legal Compliance', 'Business Advisory']
     }
   ];
 
   const stats = [
     {
-      value: 1500,
+      value: 600,
       label: 'Happy Clients',
       suffix: '+',
       icon: <Users className="h-12 w-12 text-brand-600" />
     },
     {
-      value: 15,
+      value: 5,
       label: 'Years Experience',
       suffix: '+',
       icon: <Award className="h-12 w-12 text-brand-600" />
@@ -144,7 +146,7 @@ export default function Home() {
                     image={service.image}
                     features={service.features}
                     index={index}
-                    onLearnMore={() => console.log('Learn more about', service.title)}
+                    onLearnMore={() => router.push('/services')}
                   />
                 ))}
               </div>
@@ -254,8 +256,7 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-8 lg:p-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-8 lg:p-12">
                     <motion.div
                       className="flex flex-col items-center text-center"
                       initial={{ opacity: 0, x: -60, rotateY: -20 }}
@@ -289,7 +290,7 @@ export default function Home() {
                       
                       <div className="space-y-4">
                         <h3 className="text-3xl font-bold text-gray-900 font-raleway-heading">
-                          Ramcharan Kotapati
+                          Ram Chowdhary
                         </h3>
                         <p className="text-xl text-brand-600 font-medium font-raleway-accent">
                           Director & Founder
@@ -345,12 +346,12 @@ export default function Home() {
                           Vision & Leadership
                         </h4>
                         <p className="text-gray-600 mb-6 leading-relaxed font-raleway">
-                          Ramcharan Kotapati brings over a decade of expertise in taxation and business services. 
+                          Ram Chowdhary brings over a decade of expertise in taxation and business services. 
                           His leadership has been instrumental in establishing Advora Services LLP as a trusted 
                           partner for businesses and individuals across the USA and India.
                         </p>
                         <p className="text-gray-600 leading-relaxed font-raleway">
-                          With a deep understanding of both US and Indian tax systems, Ramcharan has successfully 
+                          With a deep understanding of both US and Indian tax systems, Ram Chowdhary has successfully 
                           guided numerous clients through complex tax matters, business registrations, and 
                           compliance requirements. His commitment to excellence and client satisfaction has 
                           made Advora Services LLP a preferred choice for tax and business services.
@@ -383,14 +384,13 @@ export default function Home() {
                           <div>
                             <h5 className="font-semibold text-gray-900 font-raleway">Client Success</h5>
                             <p className="text-gray-600 text-sm font-raleway">
-                              Successfully served 1500+ clients with 99% success rate
+                              Successfully served 600+ clients with 99% success rate
                             </p>
                           </div>
                         </div>
                       </div>
                     </motion.div>
                   </div>
-                </div>
               </motion.div>
             </div>
           </section>
@@ -412,14 +412,13 @@ export default function Home() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button size="lg" className="bg-brand-600 hover:bg-brand-700 text-white font-medium px-8 py-3 rounded-lg">
+                    <Button 
+                      size="lg" 
+                      className="bg-brand-600 hover:bg-brand-700 text-white font-medium px-8 py-3 rounded-lg"
+                      onClick={() => router.push('/contact')}
+                    >
                       Get Started Today
                       <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button variant="outline" size="lg" className="border-brand-600 text-brand-600 hover:bg-brand-50 font-medium px-8 py-3 rounded-lg">
-                      Contact Us
                     </Button>
                   </motion.div>
                 </div>

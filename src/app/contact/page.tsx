@@ -77,7 +77,7 @@ export default function ContactPage() {
     {
       title: 'India Office',
       address: 'Plot No 19, 1st floor, Power Nagar, Power Nagar Park Road, Moosapet, Hyderabad, 500018',
-      phone: '+91-9700113131',
+      phone: '+91-9491941299',
       email: 'india@advoraservices.com',
       hours: 'Mon-Sat: 10:00 AM - 7:00 PM IST',
       icon: Building
@@ -170,19 +170,6 @@ export default function ContactPage() {
                           <p className="text-gray-600 dark:text-gray-300">{info.hours}</p>
                         </div>
                       </div>
-                      
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Button
-                          variant="outline"
-                          className="w-full mt-4 border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white"
-                        >
-                          <MessageCircle className="h-4 w-4 mr-2" />
-                          Get Directions
-                        </Button>
-                      </motion.div>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -192,7 +179,7 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Form */}
-        <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+        {/* <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-2xl mx-auto"
@@ -333,7 +320,7 @@ export default function ContactPage() {
               </Card>
             </motion.div>
           </div>
-        </section>
+        </section> */}
 
         {/* Quick Contact */}
         <section className="py-20 bg-white">
@@ -354,7 +341,7 @@ export default function ContactPage() {
                       </div>
                       <h3 className="text-xl font-semibold mb-2 text-white">Call Us</h3>
                       <p className="text-white mb-2">USA: +1 (502) 718-0460</p>
-                      <p className="text-white">India: +91-9700113131</p>
+                      <p className="text-white">India: +91-9491941299</p>
                     </div>
                     
                     <div>

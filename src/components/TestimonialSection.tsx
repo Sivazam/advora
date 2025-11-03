@@ -138,7 +138,7 @@ export default function TestimonialSection() {
   );
 
   return (
-    <section className="py-20 bg-gradient-to-br from-brand-50 to-white overflow-hidden">
+    <section className="py-20 pb-24 bg-gradient-to-br from-brand-50 to-white overflow-hidden">
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"
@@ -160,28 +160,35 @@ export default function TestimonialSection() {
 
         {/* Scrolling Testimonials */}
         <div 
-          className="relative mb-12"
+          className="relative mb-16 overflow-hidden"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           {/* Single Row - Left to Right */}
-          <motion.div
-            className="flex"
-            animate={{
-              x: isPaused ? 0 : [-2000, 2000]
-            }}
-            transition={{
-              duration: 60, // Very slow speed for reading
-              repeat: Infinity,
-              ease: "linear",
-              repeatType: "loop"
+          <div
+            className="flex py-4"
+            style={{
+              animation: `scroll-left 60s linear infinite`,
+              animationPlayState: isPaused ? 'paused' : 'running'
             }}
           >
             {testimonials.map((testimonial, index) => renderTestimonialCard(testimonial, index))}
             {/* Duplicate for seamless loop */}
             {testimonials.map((testimonial, index) => renderTestimonialCard(testimonial, index + testimonials.length))}
-          </motion.div>
+          </div>
         </div>
+
+        {/* Add CSS animation keyframes */}
+        <style jsx>{`
+          @keyframes scroll-left {
+            from {
+              transform: translateX(0);
+            }
+            to {
+              transform: translateX(-50%);
+            }
+          }
+        `}</style>
 
         {/* Additional Stats */}
         <motion.div
@@ -203,7 +210,7 @@ export default function TestimonialSection() {
             </div>
             <div className="w-px h-8 bg-gray-300"></div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-brand-600">15+</div>
+              <div className="text-3xl font-bold text-brand-600">5+</div>
               <div className="text-sm text-gray-600">Years Experience</div>
             </div>
           </div>

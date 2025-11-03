@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface HeroSlide {
   id: number;
@@ -19,8 +20,8 @@ const heroSlides: HeroSlide[] = [
     id: 1,
     title: 'Expert Tax Filing Services',
     description: 'Professional tax preparation for individuals and businesses with maximum accuracy and compliance. Serving both USA and India.',
-    image: 'https://images.unsplash.com/photo-1554224154-2607263b7a2f?w=1920&h=800&fit=crop&crop=center&q=80',
-    fallbackImage: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd14?w=1920&h=800&fit=crop&crop=center&q=80',
+    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd14?w=1920&h=800&fit=crop&crop=top&q=80',
+    fallbackImage: 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1920&h=800&fit=crop&crop=center&q=80',
     ctaText: 'Learn More',
     ctaLink: '/services'
   },
@@ -28,7 +29,7 @@ const heroSlides: HeroSlide[] = [
     id: 2,
     title: 'Business Registration Solutions',
     description: 'Complete business formation and registration services with expert guidance. Start your business journey with confidence.',
-    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1920&h=800&fit=crop&crop=center&q=80',
+    image: 'https://images.unsplash.com/photo-1560523159-6b8e8c1a6e2e?w=1920&h=800&fit=crop&crop=center&q=80',
     fallbackImage: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1920&h=800&fit=crop&crop=center&q=80',
     ctaText: 'Get Started',
     ctaLink: '/services'
@@ -37,7 +38,7 @@ const heroSlides: HeroSlide[] = [
     id: 3,
     title: 'International Tax Expertise',
     description: 'Specialized tax services for US-India cross-border taxation. Navigate complex international tax laws with ease.',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c71ca85?w=1920&h=800&fit=crop&crop=center&q=80',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&h=800&fit=crop&crop=center&q=80',
     fallbackImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1920&h=800&fit=crop&crop=center&q=80',
     ctaText: 'Explore Services',
     ctaLink: '/services'
@@ -46,8 +47,8 @@ const heroSlides: HeroSlide[] = [
     id: 4,
     title: 'Comprehensive Accounting',
     description: 'Full-service accounting and bookkeeping solutions for your business. Focus on growth while we handle the numbers.',
-    image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd8c?w=1920&h=800&fit=crop&crop=center&q=80',
-    fallbackImage: 'https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1920&h=800&fit=crop&crop=center&q=80',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1920&h=800&fit=crop&crop=center&q=80',
+    fallbackImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=800&fit=crop&crop=center&q=80',
     ctaText: 'Contact Us',
     ctaLink: '/contact'
   },
@@ -55,7 +56,7 @@ const heroSlides: HeroSlide[] = [
     id: 5,
     title: 'Legal Tax Representation',
     description: 'Expert legal representation for tax disputes and compliance matters with proven track record.',
-    image: 'https://images.unsplash.com/photo-1589829545866-10a7ed019b38?w=1920&h=800&fit=crop&crop=center&q=80',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&h=800&fit=crop&crop=center&q=80',
     fallbackImage: 'https://images.unsplash.com/photo-1560523159-6b8e8c1a6e2e?w=1920&h=800&fit=crop&crop=center&q=80',
     ctaText: 'Get Help',
     ctaLink: '/contact'
@@ -64,7 +65,7 @@ const heroSlides: HeroSlide[] = [
     id: 6,
     title: 'Payroll Processing Services',
     description: 'Efficient and accurate payroll processing with tax compliance and timely reporting.',
-    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1920&h=800&fit=crop&crop=center&q=80',
+    image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1920&h=800&fit=crop&crop=top&q=80',
     fallbackImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&h=800&fit=crop&crop=center&q=80',
     ctaText: 'View Details',
     ctaLink: '/services'
@@ -72,6 +73,7 @@ const heroSlides: HeroSlide[] = [
 ];
 
 export default function HeroCarousel() {
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
@@ -204,6 +206,7 @@ export default function HeroCarousel() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-full font-semibold text-base shadow-xl hover:shadow-2xl transition-all duration-300 inline-flex items-center space-x-2"
+                  onClick={() => router.push(heroSlides[currentSlide].ctaLink)}
                 >
                   <span>{heroSlides[currentSlide].ctaText}</span>
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -231,6 +234,22 @@ export default function HeroCarousel() {
         }}
         key={currentSlide}
       />
+
+      {/* Navigation Dots */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+        {heroSlides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide 
+                ? 'bg-white w-8' 
+                : 'bg-white/50 hover:bg-white/75'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
 
       {/* Scroll Animation Icon */}
       <motion.button

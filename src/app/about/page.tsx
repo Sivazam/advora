@@ -107,8 +107,7 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-8">
                   <div className="flex flex-col items-center text-center lg:text-left">
                     <motion.div
                       className="w-48 h-48 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 overflow-hidden"
@@ -131,7 +130,7 @@ export default function AboutPage() {
                       viewport={{ once: true }}
                     >
                       <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 font-luxury-heading">
-                        Ramcharan Kotapati
+                         Ram Chowdhary
                       </h2>
                       <p className="text-xl text-brand-600 dark:text-brand-400 font-medium mb-4 font-luxury-body">
                         Director & Founder
@@ -163,13 +162,13 @@ export default function AboutPage() {
                         Leadership & Vision
                       </h3>
                       <p className="text-gray-600 dark:text-gray-300 mb-4">
-                        Ramcharan Kotapati brings over a decade of expertise in taxation and business services. 
+                        Ram Chowdhary brings over a decade of expertise in taxation and business services. 
                         His leadership has been instrumental in establishing Advora Services LLP as a trusted 
                         partner for businesses and individuals across the USA and India.
                       </p>
                       <p className="text-gray-600 dark:text-gray-300">
                         With a deep understanding of international tax laws and business regulations, 
-                        Ramcharan has successfully guided numerous clients through complex tax situations 
+                        Ram Chowdhary has successfully guided numerous clients through complex tax situations 
                         and business challenges.
                       </p>
                     </div>
@@ -194,7 +193,6 @@ export default function AboutPage() {
                     </div>
                   </motion.div>
                 </div>
-              </Card>
             </motion.div>
           </div>
         </section>

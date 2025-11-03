@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 
 import TopStrip from '@/components/TopStrip';
@@ -28,6 +29,7 @@ import {
 } from 'lucide-react';
 
 export default function ServicesPage() {
+  const router = useRouter();
   const [openSections, setOpenSections] = useState<{[key: string]: boolean}>({
     taxFiling: true,
     businessServices: false
@@ -46,14 +48,14 @@ export default function ServicesPage() {
       description: 'Comprehensive individual tax filing services for US and Indian residents',
       forms: ['1040', '1040-NR'],
       features: ['Federal & State Returns', 'Maximum Refund Guarantee', 'Audit Support', 'Year-round Assistance'],
-      image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd14?w=600&h=400&fit=crop&crop=center'
     },
     {
       title: 'Business Tax Returns',
       description: 'Expert business tax preparation for all entity types',
       forms: ['1120 (Corporations)', '1120S (S-Corp)', '1065 (Partnership)', 'Schedule-C (SMLLC)', 'Trusts'],
       features: ['Multi-state Filing', 'Deduction Optimization', 'Compliance Review', 'Strategic Tax Planning'],
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1560523159-6b8e8c1a6e2e?w=600&h=400&fit=crop&crop=center'
     }
   ];
 
@@ -63,28 +65,28 @@ export default function ServicesPage() {
       description: 'Complete business formation and registration services',
       icon: Building2,
       services: ['Company Formation', 'LLC Registration', 'Partnership Setup', 'Sole Proprietorship', 'Non-profit Registration'],
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1560523159-6b8e8c1a6e2e?w=600&h=400&fit=crop&crop=center'
     },
     {
       title: 'Bookkeeping & Accounting',
       description: 'Professional accounting and bookkeeping solutions',
       icon: BookOpen,
       services: ['Maintaining Books of Accounts', 'Financial Statement Preparation', 'Accounts Payable/Receivable', 'Bank Reconciliation', 'Financial Reporting'],
-      image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd14?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&crop=center'
     },
     {
       title: 'Payroll Services',
       description: 'Comprehensive payroll processing and compliance',
       icon: Calculator,
       services: ['Payroll Processing', 'Tax Withholding', 'Direct Deposit', 'Payroll Tax Returns', 'Year-end W-2/1099'],
-      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&h=400&fit=crop&crop=center'
     },
     {
       title: 'Legal Representation',
       description: 'Expert legal services for tax and business matters',
       icon: Scale,
       services: ['Tax Dispute Resolution', 'IRS Representation', 'Business Compliance', 'Contract Review', 'Legal Advisory'],
-      image: 'https://images.unsplash.com/photo-1589829545866-10a7ed019b38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&crop=center'
     }
   ];
 
@@ -346,6 +348,7 @@ export default function ServicesPage() {
                     size="lg"
                     variant="secondary"
                     className="bg-white text-brand-600 hover:bg-gray-100 px-8 py-3 rounded-full font-semibold"
+                    onClick={() => router.push('/contact')}
                   >
                     Contact Us Today
                   </Button>
