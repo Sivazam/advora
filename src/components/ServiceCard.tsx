@@ -30,9 +30,9 @@ export default function ServiceCard({
       viewport={{ once: true }}
       className="group"
     >
-      <Card className="h-full bg-white dark:bg-gray-800 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:scale-105 border-0">
+      <div className="h-full overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:scale-105 border-0 rounded-2xl bg-white flex flex-col">
         {/* Image Section */}
-        <div className="relative h-48 overflow-hidden">
+        <div className="relative h-48 overflow-hidden rounded-t-2xl flex-shrink-0">
           <motion.img
             src={image}
             alt={title}
@@ -51,52 +51,41 @@ export default function ServiceCard({
           </motion.div>
         </div>
 
-        <CardHeader className="pb-4">
-          <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-brand-600 transition-colors">
-            {title}
-          </CardTitle>
-          <CardDescription className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+        <div className="pt-6 pb-4 px-6">
+          <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
             {description}
-          </CardDescription>
-        </CardHeader>
+          </p>
+        </div>
 
-        <CardContent className="flex-1 flex flex-col">
-          <div className="space-y-3 mb-6 flex-1">
+        <div className="flex-1 flex flex-col px-6 py-6">
+          <div className="space-y-3 mb-6">
             {features.map((feature, idx) => (
-              <motion.div
-                key={idx}
-                className="flex items-center space-x-3"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 * idx }}
-                viewport={{ once: true }}
-              >
-                <motion.div
-                  whileHover={{ scale: 1.2, rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
+              <div key={idx} className="flex items-center space-x-3">
+                <div>
                   <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                </motion.div>
+                </div>
                 <span className="text-gray-700 dark:text-gray-300 text-sm">{feature}</span>
-              </motion.div>
+              </div>
             ))}
           </div>
 
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Button
-              onClick={onLearnMore}
-              variant="outline"
-              className="w-full border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white transition-all duration-300 group-hover:border-brand-700 hover:border-brand-600"
+          <div className="mt-auto">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              Learn More
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </motion.div>
-        </CardContent>
-      </Card>
+              <Button
+                onClick={onLearnMore}
+                className="w-full transition-all duration-300 group-hover:scale-105"
+                style={{ backgroundColor: '#916f2a', color: 'white', border: 'none' }}
+              >
+                Learn More
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" style={{ color: 'white' }} />
+              </Button>
+            </motion.div>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }

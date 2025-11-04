@@ -138,7 +138,7 @@ export default function TestimonialSection() {
   );
 
   return (
-    <section className="py-20 pb-24 bg-gradient-to-br from-brand-50 to-white overflow-hidden">
+    <section className="py-20 pb-24 overflow-hidden" style={{ backgroundColor: '#f7f4c8' }}>
       <div className="container mx-auto px-4">
         <motion.div
           className="text-center mb-16"

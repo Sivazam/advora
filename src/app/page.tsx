@@ -107,7 +107,7 @@ export default function Home() {
       <HeroCarousel />
 
       {/* Stats Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <StatsCounter stats={stats} />
         </div>
@@ -117,7 +117,7 @@ export default function Home() {
       <SimpleUSPBanner />
 
       {/* Services Section */}
-      <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+      <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 className="text-center mb-16"
@@ -154,7 +154,7 @@ export default function Home() {
           </section>
 
           {/* Features Section */}
-          <section className="py-20 bg-white">
+          <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 className="text-center mb-16"
@@ -229,7 +229,7 @@ export default function Home() {
           <TestimonialSection />
 
           {/* Director Section */}
-          <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+          <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 className="text-center mb-16"
@@ -264,29 +264,15 @@ export default function Home() {
                       transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
                       viewport={{ once: true }}
                     >
-                      <motion.div
+                      <div
                         className="w-64 h-64 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mb-8 shadow-2xl overflow-hidden"
-                        whileHover={{ 
-                          scale: 1.1, 
-                          rotate: 10,
-                          transition: { duration: 0.6, ease: 'easeOut' }
-                        }}
-                        animate={{ 
-                          y: [0, -5, 0],
-                        }}
-                        transition={{ 
-                          duration: 4,
-                          ease: 'easeInOut',
-                          repeat: Infinity,
-                          repeatType: 'reverse'
-                        }}
                       >
                         <img 
                           src="/advora-logo.jpg" 
                           alt="Advora Services" 
                           className="w-full h-full object-cover"
                         />
-                      </motion.div>
+                      </div>
                       
                       <div className="space-y-4">
                         <h3 className="text-3xl font-bold text-gray-900 font-raleway-heading">
@@ -396,7 +382,7 @@ export default function Home() {
           </section>
 
           {/* CTA Section */}
-          <section className="py-20 bg-white">
+          <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}

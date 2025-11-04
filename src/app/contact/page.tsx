@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import Navbar from '@/components/Navbar';
 import SimpleUSPBanner from '@/components/SimpleUSPBanner';
 
 import TopStrip from '@/components/TopStrip';
@@ -85,10 +84,8 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <TopStrip />
-      
-      <Navbar />
+    <div className="min-h-screen" style={{ backgroundColor: '#f7f4c8' }}>
+      {/* <TopStrip /> */}
       
       <main>
         {/* Image with Centered Breadcrumb */}
@@ -103,7 +100,7 @@ export default function ContactPage() {
         <SimpleUSPBanner />
 
         {/* Contact Information */}
-        <section className="py-20 bg-white">
+        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
               {contactInfo.map((info, index) => (
@@ -323,7 +320,7 @@ export default function ContactPage() {
         </section> */}
 
         {/* Quick Contact */}
-        <section className="py-20 bg-white">
+        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-4xl mx-auto"

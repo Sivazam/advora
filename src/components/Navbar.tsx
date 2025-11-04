@@ -15,12 +15,10 @@ const navItems = [
   { name: 'FAQ', href: '/faq' },
 ];
 
-export default function Navbar() {
+const NavbarComponent = () => {
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('up');
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   const handleNavigation = (href: string) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -28,29 +26,16 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.pageYOffset;
-      const scrollThreshold = 100;
-      
-      // Determine scroll direction
-      if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
-        setScrollDirection('down');
-      } else {
-        setScrollDirection('up');
-      }
-      
-      // Trigger rounded navbar with smoother threshold
-      setIsScrolled(currentScrollY > scrollThreshold);
-      setLastScrollY(currentScrollY);
-    };
-
-    const throttledHandleScroll = () => {
-      requestAnimationFrame(handleScroll);
-    };
-
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', throttledHandleScroll);
-  }, [lastScrollY]);
+    // Simple logic: Only show animations on page refresh
+    // Check if this is a page refresh
+    const navigationEntries = performance.getEntriesByType('navigation');
+    const navigationType = navigationEntries[0]?.type;
+    
+    // Only allow animations on page refresh or back/forward
+    const isPageRefresh = navigationType === 'reload' || navigationType === 'back_forward';
+    
+    setHasAnimated(!isPageRefresh);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -59,33 +44,17 @@ export default function Navbar() {
   return (
     <>
       {/* Desktop Navbar */}
-      <nav className={`hidden md:block fixed z-50 transition-all duration-700 ease-in-out ${
-        isScrolled 
-          ? 'top-6 left-0 right-0' 
-          : 'top-12 left-0 right-0'
-      }`}>
-        <motion.div
-          className={`relative mx-auto transition-all duration-700 ease-in-out ${
-            isScrolled 
-              ? 'bg-white/95 backdrop-blur-md border border-gray-200/50 rounded-full px-8 py-4 shadow-2xl max-w-5xl'
-              : 'bg-white/95 backdrop-blur-md border-b border-gray-200/50 px-6 py-5'
-          }`}
-          initial={false}
-          animate={{
-            borderRadius: isScrolled ? 9999 : 0,
-            scale: isScrolled ? [0.95, 1] : [1, 1],
-            y: isScrolled ? [10, 0] : [0, 0],
-          }}
-          transition={{
-            duration: 0.7,
-            ease: [0.25, 0.46, 0.45, 0.94], // Custom ease-in-out curve
-            scale: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
-            y: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }
-          }}
-          whileHover={{
-            scale: 1.02,
-            transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }
-          }}
+      <motion.nav 
+        className="hidden md:block fixed z-50 top-6 left-0 right-0"
+        initial={!hasAnimated ? { y: -100, opacity: 0 } : false}
+        animate={!hasAnimated ? { y: 0, opacity: 1 } : false}
+        transition={{ 
+          duration: 0.8, 
+          ease: "easeOut"
+        }}
+      >
+        <div
+          className="relative mx-auto bg-white/95 backdrop-blur-md border border-gray-200/50 rounded-full px-8 py-4 shadow-2xl max-w-5xl"
         >
           <div className="flex items-center justify-between">
             {/* Logo */}
@@ -101,6 +70,9 @@ export default function Navbar() {
                   scale: 0.95,
                   transition: { duration: 0.2, ease: "easeOut" }
                 }}
+                initial={!hasAnimated ? { opacity: 0 } : false}
+                animate={!hasAnimated ? { opacity: 1 } : false}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
               >
                 <img 
                   src="/advora-logo.jpg" 
@@ -110,29 +82,27 @@ export default function Navbar() {
               </motion.div>
               <motion.div 
                 className="ml-4"
-                initial={{ x: -10, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
+                initial={!hasAnimated ? { x: -10, opacity: 0 } : false}
+                animate={!hasAnimated ? { x: 0, opacity: 1 } : false}
+                transition={{ delay: !hasAnimated ? 0.5 : 0, duration: 0.5 }}
               >
                 <div>
-                  <span className="text-xl font-bold text-gray-900 font-raleway-heading group-hover:text-brand-600 transition-colors duration-300">Advora</span>
-                  <span className="text-xs text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services</span>
+                  <span className="text-2xl font-black text-gray-900 font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase">Advora</span>
+                  <span className="text-sm text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services</span>
                 </div>
               </motion.div>
             </Link>
 
             {/* Navigation Links */}
-            <div className={`flex items-center space-x-2 transition-all duration-700 ease-in-out ${
-              isScrolled ? 'ml-12' : 'ml-8'
-            }`}>
+            <div className="flex items-center space-x-2 ml-12">
               {navItems.map((item, index) => (
                 <Link key={item.name} href={item.href} prefetch={true} onClick={() => handleNavigation(item.href)}>
                   <motion.div
                     className="relative px-5 py-3 rounded-2xl text-sm font-medium overflow-hidden group"
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={!hasAnimated ? { opacity: 0, y: -20 } : false}
+                    animate={!hasAnimated ? { opacity: 1, y: 0 } : false}
                     transition={{ 
-                      delay: index * 0.1,
+                      delay: !hasAnimated ? index * 0.1 + 0.8 : 0,
                       duration: 0.5,
                       ease: "easeOut"
                     }}
@@ -173,11 +143,27 @@ export default function Navbar() {
                       />
                     )}
                     
+                    {/* Badge that flows through menu items */}
+                    {pathname === item.href && (
+                      <motion.div
+                        className="absolute inset-0 bg-[#916f2a] rounded-2xl"
+                        layoutId="navbar-badge"
+                        initial={false}
+                        transition={{ 
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 30,
+                          mass: 0.8,
+                          restDelta: 0.001,
+                        }}
+                      />
+                    )}
+                    
                     {/* Text */}
-                    <span className={`relative z-10 transition-all duration-300 font-raleway-accent ${
+                    <span className={`relative z-10 transition-all duration-300 font-raleway-accent text-base font-semibold ${
                       pathname === item.href
-                        ? 'text-brand-700 font-semibold'
-                        : 'text-gray-700 group-hover:text-brand-600'
+                        ? 'text-white font-bold'
+                        : 'text-gray-700 group-hover:text-brand-600 font-semibold'
                     }`}>
                       {item.name}
                     </span>
@@ -186,11 +172,19 @@ export default function Navbar() {
               ))}
             </div>
           </div>
-        </motion.div>
-      </nav>
+        </div>
+      </motion.nav>
 
       {/* Mobile Navbar */}
-      <nav className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200/50 transition-all duration-300">
+      <motion.nav 
+        className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200/50 transition-all duration-300"
+        initial={!hasAnimated ? { y: -100, opacity: 0 } : false}
+        animate={!hasAnimated ? { y: 0, opacity: 1 } : false}
+        transition={{ 
+          duration: 0.8, 
+          ease: "easeOut"
+        }}
+      >
         <div className="flex items-center justify-between px-4 py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
@@ -209,7 +203,7 @@ export default function Navbar() {
               />
             </motion.div>
             <div>
-              <span className="text-base font-bold text-gray-900 font-raleway-heading group-hover:text-brand-600 transition-colors duration-300">Advora</span>
+              <span className="text-lg font-black text-gray-900 font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase">Advora</span>
               <span className="text-xs text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services</span>
             </div>
           </Link>
@@ -259,10 +253,10 @@ export default function Navbar() {
                 {navItems.map((item, index) => (
                   <Link key={item.name} href={item.href} onClick={() => handleNavigation(item.href)} prefetch={true}>
                     <motion.div
-                      className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all ${
+                      className={`block px-4 py-3 rounded-xl text-base font-semibold transition-all ${
                         pathname === item.href
-                          ? 'bg-gradient-to-r from-brand-50 to-brand-100 text-brand-700 font-semibold'
-                          : 'text-gray-700 hover:text-brand-600 hover:bg-gradient-to-r hover:from-brand-50 hover:to-brand-100'
+                          ? 'bg-gradient-to-r from-brand-50 to-brand-100 text-brand-700 font-bold'
+                          : 'text-gray-700 hover:text-brand-600 hover:bg-gradient-to-r hover:from-brand-50 hover:to-brand-100 font-semibold'
                       }`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -295,7 +289,10 @@ export default function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
-      </nav>
+      </motion.nav>
     </>
   );
-}
+};
+
+// Memoize the navbar to prevent remounting on route changes
+export default memo(NavbarComponent);

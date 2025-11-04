@@ -53,8 +53,8 @@ export default function RootLayout({
       <body
         className={`${raleway.variable} font-raleway antialiased bg-background text-foreground`}
       >
-        <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50">
-          <TopStrip />
+        <div className="min-h-screen" style={{ backgroundColor: '#f7f4c8' }}>
+          {/* <TopStrip /> */}
           <Navbar />
           <main className="flex-1">
             {children}

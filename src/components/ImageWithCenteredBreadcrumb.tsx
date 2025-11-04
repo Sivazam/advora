@@ -21,8 +21,8 @@ export default function ImageWithCenteredBreadcrumb({
           backgroundImage: `url(${imageUrl})`,
         }}
       >
-        {/* Same gradient tint as homepage hero */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/70"></div>
+        {/* Subtle overlay for readability */}
+        <div className="absolute inset-0 bg-black/40"></div>
       </div>
       
   
@@ -85,9 +85,6 @@ export default function ImageWithCenteredBreadcrumb({
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background to-transparent" />
     </div>
   );
 }

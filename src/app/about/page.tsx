@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import Navbar from '@/components/Navbar';
+import { useRouter } from 'next/navigation';
 
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
@@ -84,9 +84,8 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <TopStrip />
-      <Navbar />
+    <div className="min-h-screen" style={{ backgroundColor: '#f7f4c8' }}>
+      {/* <TopStrip /> */}
       
       <main>
         {/* Image with Centered Breadcrumb */}
@@ -98,7 +97,7 @@ export default function AboutPage() {
         />
 
         {/* Director Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-6xl mx-auto"
@@ -198,7 +197,7 @@ export default function AboutPage() {
         </section>
 
         {/* Mission & Vision */}
-        <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
               <motion.div
@@ -288,7 +287,7 @@ export default function AboutPage() {
         </section>
 
         {/* Core Values */}
-        <section className="py-20 bg-white">
+        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="text-center mb-16"
@@ -336,7 +335,7 @@ export default function AboutPage() {
         </section>
 
         {/* Timeline */}
-        <section className="py-20 bg-gradient-to-br from-brand-50 to-white">
+        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="text-center mb-16"

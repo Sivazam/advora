@@ -6,8 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import Navbar from '@/components/Navbar';
-
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
 import ImageHeroBanner from '@/components/ImageHeroBanner';
@@ -141,9 +139,8 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <TopStrip />
-      <Navbar />
+    <div className="min-h-screen" style={{ backgroundColor: '#f7f4c8' }}>
+      {/* <TopStrip /> */}
       
       <main>
         {/* Image with Centered Breadcrumb */}
@@ -155,7 +152,7 @@ export default function FAQPage() {
         />
 
         {/* Search and Categories */}
-        <section className="py-10 bg-white">
+        <section className="py-10" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto space-y-8">
               {/* Search Bar */}
@@ -208,7 +205,7 @@ export default function FAQPage() {
         </section>
 
         {/* FAQ Content */}
-        <section className="py-10 bg-gradient-to-br from-brand-50 to-white">
+        <section className="py-10" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
               {filteredFAQs.length > 0 ? (
@@ -277,7 +274,7 @@ export default function FAQPage() {
         </section>
 
         {/* Still Have Questions */}
-        <section className="py-20 bg-white">
+        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-4xl mx-auto"

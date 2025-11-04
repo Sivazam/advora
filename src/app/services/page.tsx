@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar';
 
 import TopStrip from '@/components/TopStrip';
 import SimpleHeroBanner from '@/components/SimpleHeroBanner';
@@ -98,9 +97,8 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <TopStrip />
-      <Navbar />
+    <div className="min-h-screen" style={{ backgroundColor: '#f7f4c8' }}>
+      {/* <TopStrip /> */}
       
       <main>
         {/* Image with Centered Breadcrumb */}
@@ -112,7 +110,7 @@ export default function ServicesPage() {
         />
 
         {/* Services Content */}
-        <section className="py-20 bg-white">
+        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto space-y-8">
               {/* Tax Filing Services */}
@@ -304,20 +302,6 @@ export default function ServicesPage() {
                                   ))}
                                 </ul>
                               </div>
-                              
-                              <motion.div
-                                className="mt-4"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                              >
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="w-full border-brand-600 text-brand-600 hover:bg-brand-600 hover:text-white transition-all duration-300"
-                                >
-                                  Learn More
-                                </Button>
-                              </motion.div>
                             </div>
                           </motion.div>
                         ))}

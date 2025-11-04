@@ -130,7 +130,7 @@ export default function HeroCarousel() {
   return (
     <div 
       id="hero-carousel"
-      className="relative w-full h-[100vh] overflow-hidden -mt-14"
+      className="relative w-full h-screen overflow-hidden"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -169,7 +169,7 @@ export default function HeroCarousel() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex items-center justify-center pt-[140px] pb-8">
+      <div className="relative z-10 h-full flex items-center justify-center">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl text-center mx-auto">
             <motion.div
@@ -189,7 +189,7 @@ export default function HeroCarousel() {
               </motion.h1>
               
               <motion.p 
-                className="text-lg md:text-xl text-gray-200 mb-8 mx-auto leading-relaxed font-luxury-body"
+                className="text-lg md:text-xl text-gray-200 mb-8 mx-auto leading-relaxed font-luxury-body max-w-3xl"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
