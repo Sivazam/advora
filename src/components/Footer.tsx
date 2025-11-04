@@ -10,10 +10,10 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center overflow-hidden">
-                <img src="/advora-logo.jpg" alt="Advora Services LLP" className="w-full h-full object-cover" />
+                <img src="/advora-logo.jpg" alt="Advora Services" className="w-full h-full object-cover" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold">Advora Services LLP</h3>
+                <h3 className="text-lg font-semibold">Advora Services</h3>
                 <p className="text-sm text-white/80">Tax & Business Solutions</p>
               </div>
             </div>
@@ -92,7 +92,7 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-white/20">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-4 text-sm text-white/80">
-              <span>© 2025 Advora Services LLP. All rights reserved.</span>
+              <span>© 2025 Advora Services. All rights reserved.</span>
             </div>
             <div className="flex items-center space-x-2 text-sm text-white/80">
               <span>Built by</span>

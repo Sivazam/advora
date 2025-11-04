@@ -96,7 +96,7 @@ export default function ContactPage() {
           breadcrumbItems={[
             { label: "Contact" }
           ]}
-          imageUrl="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1920&h=1080&fit=crop&crop=center&q=80"
+          imageUrl="https://images.unsplash.com/uploads/1413222992504f1b734a6/1928e537?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGNvbnRhY3R8ZW58MHx8MHx8fDA?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
 
         {/* Simple USP Banner */}
@@ -119,8 +119,8 @@ export default function ContactPage() {
                     <div className="relative h-48 overflow-hidden">
                       <img
                         src={info.title === 'USA Office' 
-                          ? 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
-                          : 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+                          ? 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b2ZmaWNlJTIwYnVpbGRpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=80'
+                          : 'https://images.unsplash.com/photo-1652503591857-0dbb07631692?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aW5kYWluJTIwb2ZmaWNlJTIwYnVpbGRpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=80'
                         }
                         alt={info.title}
                         className="w-full h-full object-cover"

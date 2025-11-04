@@ -25,7 +25,14 @@ import {
   BookOpen,
   TrendingUp,
   CheckCircle,
-  Star
+  Star,
+  Receipt,
+  Briefcase,
+  Rocket,
+  DollarSign,
+  PiggyBank,
+  ChartPie,
+  Target
 } from 'lucide-react';
 
 export default function ServicesPage() {
@@ -48,14 +55,14 @@ export default function ServicesPage() {
       description: 'Comprehensive individual tax filing services for US and Indian residents',
       forms: ['1040', '1040-NR'],
       features: ['Federal & State Returns', 'Maximum Refund Guarantee', 'Audit Support', 'Year-round Assistance'],
-      image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd14?w=600&h=400&fit=crop&crop=center'
+      image: 'https://plus.unsplash.com/premium_photo-1679784204532-b816d1b26ab2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHRheHxlbnwwfHwwfHx8MA%3D%3D?w=600&h=400&fit=crop&crop=center'
     },
     {
       title: 'Business Tax Returns',
       description: 'Expert business tax preparation for all entity types',
       forms: ['1120 (Corporations)', '1120S (S-Corp)', '1065 (Partnership)', 'Schedule-C (SMLLC)', 'Trusts'],
       features: ['Multi-state Filing', 'Deduction Optimization', 'Compliance Review', 'Strategic Tax Planning'],
-      image: 'https://images.unsplash.com/photo-1560523159-6b8e8c1a6e2e?w=600&h=400&fit=crop&crop=center'
+      image: 'https://plus.unsplash.com/premium_photo-1679496828825-5d479da38e07?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGJ1c2luZXNzJTIwdGF4fGVufDB8fDB8fHww?w=600&h=400&fit=crop&crop=center'
     }
   ];
 
@@ -65,14 +72,14 @@ export default function ServicesPage() {
       description: 'Complete business formation and registration services',
       icon: Building2,
       services: ['Company Formation', 'LLC Registration', 'Partnership Setup', 'Sole Proprietorship', 'Non-profit Registration'],
-      image: 'https://images.unsplash.com/photo-1560523159-6b8e8c1a6e2e?w=600&h=400&fit=crop&crop=center'
+      image: 'https://images.unsplash.com/photo-1562564055-71e051d33c19?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFwZXIlMjB3b3JrfGVufDB8fDB8fHww?w=600&h=400&fit=crop&crop=center'
     },
     {
       title: 'Bookkeeping & Accounting',
       description: 'Professional accounting and bookkeeping solutions',
       icon: BookOpen,
       services: ['Maintaining Books of Accounts', 'Financial Statement Preparation', 'Accounts Payable/Receivable', 'Bank Reconciliation', 'Financial Reporting'],
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&crop=center'
+      image: 'https://images.unsplash.com/photo-1707157284454-553ef0a4ed0d?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGFjY291bnRpbmd8ZW58MHx8MHx8fDA%3D?w=600&h=400&fit=crop&crop=center'
     },
     {
       title: 'Payroll Services',
@@ -86,7 +93,7 @@ export default function ServicesPage() {
       description: 'Expert legal services for tax and business matters',
       icon: Scale,
       services: ['Tax Dispute Resolution', 'IRS Representation', 'Business Compliance', 'Contract Review', 'Legal Advisory'],
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&crop=center'
+      image: 'https://images.unsplash.com/photo-1676312210846-104b89aafd81?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTN8fGxlZ2FsfGVufDB8fDB8fHwy?w=600&h=400&fit=crop&crop=center'
     }
   ];
 
@@ -101,7 +108,7 @@ export default function ServicesPage() {
           breadcrumbItems={[
             { label: "Services" }
           ]}
-          imageUrl="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&h=1080&fit=crop&crop=center&q=80"
+          imageUrl="https://images.unsplash.com/photo-1586486855514-8c633cc6fd38?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRheCUyMHNlcnZpY2VzfGVufDB8fDB8fHww?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
 
         {/* Services Content */}
@@ -115,12 +122,8 @@ export default function ServicesPage() {
                     <CardHeader className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center overflow-hidden">
-                            <img 
-                              src="/advora-logo.jpg" 
-                              alt="Advora Services LLP" 
-                              className="w-full h-full object-cover"
-                            />
+                          <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center">
+                            <Receipt className="h-6 w-6 text-white" />
                           </div>
                           <div className="text-left">
                             <CardTitle className="text-2xl text-gray-900 dark:text-white">
@@ -226,12 +229,8 @@ export default function ServicesPage() {
                     <CardHeader className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center overflow-hidden">
-                            <img 
-                              src="/advora-logo.jpg" 
-                              alt="Advora Services LLP" 
-                              className="w-full h-full object-cover"
-                            />
+                          <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center">
+                            <Rocket className="h-6 w-6 text-white" />
                           </div>
                           <div className="text-left">
                             <CardTitle className="text-2xl text-gray-900 dark:text-white">

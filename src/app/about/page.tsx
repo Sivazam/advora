@@ -54,7 +54,7 @@ export default function AboutPage() {
     {
       year: '2021',
       title: 'Founded',
-      description: 'Advora Services LLP was established with a vision to provide exceptional tax and business services.',
+      description: 'Advora Services was established with a vision to provide exceptional tax and business services.',
       image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
     },
     {
@@ -73,13 +73,13 @@ export default function AboutPage() {
       year: '2024',
       title: 'Global Reach',
       description: 'Strengthened presence in both USA and Indian markets.',
-      image: 'https://images.unsplash.com/photo-1526778548025-fa2f459cd5ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1630976263319-84ef8df5f8a4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Z2xvYmFsJTIwcmVhY2glMjB0YXh8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=600&q=80'
     },
     {
       year: '2025',
       title: 'Continued Growth',
       description: 'Continuing to expand services and client base with focus on innovation.',
-      image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1730382624709-81e52dd294d4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVzaW5lc3MlMjBncm93dGh8ZW58MHx8MHx8fDA%3D&&auto=format&fit=crop&w=600&q=80'
     }
   ];
 
@@ -94,7 +94,7 @@ export default function AboutPage() {
           breadcrumbItems={[
             { label: "About" }
           ]}
-          imageUrl="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=1920&h=1080&fit=crop&crop=center&q=80"
+          imageUrl="https://plus.unsplash.com/premium_photo-1679784204532-b816d1b26ab2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8VGF4JTIwc2VydmljZXN8ZW58MHx8MHx8fDA%3D?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
 
         {/* Director Section */}
@@ -118,7 +118,7 @@ export default function AboutPage() {
                     >
                       <img 
                         src="/advora-logo.jpg" 
-                        alt="Advora Services LLP" 
+                        alt="Advora Services" 
                         className="w-full h-full object-cover"
                       />
                     </motion.div>
@@ -163,7 +163,7 @@ export default function AboutPage() {
                       </h3>
                       <p className="text-gray-600 dark:text-gray-300 mb-4">
                         Ram Chowdhary brings over a decade of expertise in taxation and business services. 
-                        His leadership has been instrumental in establishing Advora Services LLP as a trusted 
+                        His leadership has been instrumental in establishing Advora Services as a trusted 
                         partner for businesses and individuals across the USA and India.
                       </p>
                       <p className="text-gray-600 dark:text-gray-300">

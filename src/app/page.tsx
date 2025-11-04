@@ -30,25 +30,25 @@ export default function Home() {
     {
       title: 'Tax Filing Services',
       description: 'Professional tax filing for individuals and businesses with maximum accuracy and compliance.',
-      image: 'https://images.unsplash.com/photo-1560523159-6b8e8c1a6e2e?w=600&h=400&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1579444741963-5ae219cfe27c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fFRheCUyMEZpbGluZ3xlbnwwfHwwfHx8Mg%3D%3D?w=600&h=400&fit=crop&crop=center',
       features: ['Individual Tax Returns', 'Business Tax Returns', 'International Tax Services']
     },
     {
       title: 'Business Registrations',
       description: 'Complete business registration services with expert guidance and documentation.',
-      image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&h=400&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cmVnaXN0cmF0aW9ufGVufDB8fDB8fHwy?w=600&h=400&fit=crop&crop=center',
       features: ['Company Formation', 'LLC Registration', 'Partnership Setup']
     },
     {
       title: 'Accounting Services',
       description: 'Comprehensive bookkeeping and accounting solutions for your business needs.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1707902665498-a202981fb5ac?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fEFjY291bnRpbmd8ZW58MHx8MHx8fDI%3D?w=600&h=400&fit=crop&crop=center',
       features: ['Bookkeeping', 'Financial Statements', 'Payroll Services']
     },
     {
       title: 'Legal Representation',
       description: 'Expert legal representation for tax matters and business compliance.',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&crop=center',
+      image: 'https://images.unsplash.com/photo-1676181739859-08330dea8999?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y291cnR8ZW58MHx8MHx8fDI%3D?w=600&h=400&fit=crop&crop=center',
       features: ['Tax Disputes', 'Legal Compliance', 'Business Advisory']
     }
   ];
@@ -283,7 +283,7 @@ export default function Home() {
                       >
                         <img 
                           src="/advora-logo.jpg" 
-                          alt="Advora Services LLP" 
+                          alt="Advora Services" 
                           className="w-full h-full object-cover"
                         />
                       </motion.div>
@@ -347,14 +347,14 @@ export default function Home() {
                         </h4>
                         <p className="text-gray-600 mb-6 leading-relaxed font-raleway">
                           Ram Chowdhary brings over a decade of expertise in taxation and business services. 
-                          His leadership has been instrumental in establishing Advora Services LLP as a trusted 
+                          His leadership has been instrumental in establishing Advora Services as a trusted 
                           partner for businesses and individuals across the USA and India.
                         </p>
                         <p className="text-gray-600 leading-relaxed font-raleway">
                           With a deep understanding of both US and Indian tax systems, Ram Chowdhary has successfully 
                           guided numerous clients through complex tax matters, business registrations, and 
                           compliance requirements. His commitment to excellence and client satisfaction has 
-                          made Advora Services LLP a preferred choice for tax and business services.
+                          made Advora Services a preferred choice for tax and business services.
                         </p>
                       </div>
                       

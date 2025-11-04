@@ -21,7 +21,7 @@ const testimonials: Testimonial[] = [
     name: "Sarah Johnson",
     role: "CEO",
     company: "TechStart Inc.",
-    content: "Advora Services LLP has been handling our business taxes for over 5 years. Their expertise in both US and Indian tax systems has saved us countless hours and significant money.",
+    content: "Advora Services has been handling our business taxes for over 5 years. Their expertise in both US and Indian tax systems has saved us countless hours and significant money.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face"
   },

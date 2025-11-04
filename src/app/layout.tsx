@@ -15,20 +15,20 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  title: "Advora Services LLP - Your Trusted Partner in Tax & Business Services",
-  description: "Advora Services LLP provides expert tax filing and business solutions across the USA & India. Professional tax services, business registrations, and financial consulting.",
-  keywords: ["tax services", "business services", "tax filing", "business registration", "Advora Services LLP", "Ram Chowdhary", "USA India tax services"],
-  authors: [{ name: "Advora Services LLP" }],
+  title: "Advora Services - Your Trusted Partner in Tax & Business Services",
+  description: "Advora Services provides expert tax filing and business solutions across the USA & India. Professional tax services, business registrations, and financial consulting.",
+  keywords: ["tax services", "business services", "tax filing", "business registration", "Advora Services", "Ram Chowdhary", "USA India tax services"],
+  authors: [{ name: "Advora Services" }],
   openGraph: {
-    title: "Advora Services LLP - Tax & Business Services",
+    title: "Advora Services - Tax & Business Services",
     description: "Expert tax filing and business solutions across the USA & India",
     url: "https://advoraservices.com",
-    siteName: "Advora Services LLP",
+    siteName: "Advora Services",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Advora Services LLP",
+    title: "Advora Services",
     description: "Your Trusted Partner in Tax & Business Services",
   },
   icons: {

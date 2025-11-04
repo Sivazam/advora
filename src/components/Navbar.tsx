@@ -104,7 +104,7 @@ export default function Navbar() {
               >
                 <img 
                   src="/advora-logo.jpg" 
-                  alt="Advora Services LLP" 
+                  alt="Advora Services" 
                   className="w-full h-full object-cover"
                 />
               </motion.div>
@@ -116,7 +116,7 @@ export default function Navbar() {
               >
                 <div>
                   <span className="text-xl font-bold text-gray-900 font-raleway-heading group-hover:text-brand-600 transition-colors duration-300">Advora</span>
-                  <span className="text-xs text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services LLP</span>
+                  <span className="text-xs text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services</span>
                 </div>
               </motion.div>
             </Link>
@@ -204,13 +204,13 @@ export default function Navbar() {
             >
               <img 
                 src="/advora-logo.jpg" 
-                alt="Advora Services LLP" 
+                alt="Advora Services" 
                 className="w-full h-full object-cover"
               />
             </motion.div>
             <div>
               <span className="text-base font-bold text-gray-900 font-raleway-heading group-hover:text-brand-600 transition-colors duration-300">Advora</span>
-              <span className="text-xs text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services LLP</span>
+              <span className="text-xs text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services</span>
             </div>
           </Link>
 
