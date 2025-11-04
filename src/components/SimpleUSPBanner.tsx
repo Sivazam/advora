@@ -17,7 +17,7 @@ const SimpleUSPBanner = () => {
         >
           <div className="flex items-start justify-center">
             <Quote className="w-14 h-14 md:w-24 md:h-24 text-brand-600 flex-shrink-0 -mt-2 md:-mt-4" />
-            <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal text-black leading-tight font-raleway">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-normal leading-tight font-raleway" style={{ color: '#424242' }}>
               We will be readily available{" "}
               <span className="inline-block px-2 md:px-3 py-1 -ml-2 text-white font-semibold" style={{ backgroundColor: '#916f2a' }}>
                 24/7 to our clients

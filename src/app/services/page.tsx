@@ -124,10 +124,10 @@ export default function ServicesPage() {
                             <Receipt className="h-6 w-6 text-white" />
                           </div>
                           <div className="text-left">
-                            <CardTitle className="text-2xl text-gray-900 dark:text-white">
+                            <CardTitle className="text-2xl font-luxury-heading" style={{ color: '#424242' }}>
                               Tax Filing Services
                             </CardTitle>
-                            <CardDescription className="text-gray-600 dark:text-gray-300">
+                            <CardDescription className="font-luxury-body" style={{ color: '#424242' }}>
                               Professional tax preparation for individuals and businesses
                             </CardDescription>
                           </div>
@@ -169,17 +169,17 @@ export default function ServicesPage() {
                             
                             <div className="p-6 flex-1 flex flex-col">
                               <div className="flex items-center space-x-3 mb-4">
-                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white font-luxury-heading">
+                                <h3 className="text-lg font-semibold font-luxury-heading" style={{ color: '#424242' }}>
                                   {service.title}
                                 </h3>
                               </div>
                               
-                              <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm font-luxury-body">
+                              <p className="mb-4 text-sm font-luxury-body" style={{ color: '#424242' }}>
                                 {service.description}
                               </p>
                               
                               <div className="mb-4">
-                                <h4 className="font-medium text-gray-900 dark:text-white mb-2 text-sm">Tax Forms:</h4>
+                                <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Tax Forms:</h4>
                                 <div className="flex flex-wrap gap-2">
                                   {service.forms.map((form) => (
                                     <motion.span
@@ -195,12 +195,13 @@ export default function ServicesPage() {
                               </div>
                               
                               <div className="mt-auto">
-                                <h4 className="font-medium text-gray-900 dark:text-white mb-2 text-sm">Features:</h4>
+                                <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Features:</h4>
                                 <ul className="space-y-1">
                                   {service.features.map((feature, idx) => (
                                     <motion.li 
                                       key={idx} 
-                                      className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-300 font-luxury-body"
+                                      className="flex items-center space-x-2 text-xs font-luxury-body"
+                                      style={{ color: '#424242' }}
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ duration: 0.3, delay: idx * 0.1 }}
@@ -231,10 +232,10 @@ export default function ServicesPage() {
                             <Rocket className="h-6 w-6 text-white" />
                           </div>
                           <div className="text-left">
-                            <CardTitle className="text-2xl text-gray-900 dark:text-white">
+                            <CardTitle className="text-2xl font-luxury-heading" style={{ color: '#424242' }}>
                               Business Services
                             </CardTitle>
-                            <CardDescription className="text-gray-600 dark:text-gray-300">
+                            <CardDescription className="font-luxury-body" style={{ color: '#424242' }}>
                               Comprehensive business solutions for growth and compliance
                             </CardDescription>
                           </div>
@@ -276,22 +277,23 @@ export default function ServicesPage() {
                             
                             <div className="p-6 flex-1 flex flex-col">
                               <div className="flex items-center space-x-3 mb-4">
-                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white font-luxury-heading">
+                                <h3 className="text-lg font-semibold font-luxury-heading" style={{ color: '#424242' }}>
                                   {service.title}
                                 </h3>
                               </div>
                               
-                              <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm font-luxury-body">
+                              <p className="mb-4 text-sm font-luxury-body" style={{ color: '#424242' }}>
                                 {service.description}
                               </p>
                               
                               <div className="mt-auto">
-                                <h4 className="font-medium text-gray-900 dark:text-white mb-2 text-sm">Services Include:</h4>
+                                <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Services Include:</h4>
                                 <ul className="space-y-1">
                                   {service.services.map((item, idx) => (
                                     <motion.li 
                                       key={idx} 
-                                      className="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-300 font-luxury-body"
+                                      className="flex items-center space-x-2 text-xs font-luxury-body"
+                                      style={{ color: '#424242' }}
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ duration: 0.3, delay: idx * 0.1 }}
@@ -322,7 +324,7 @@ export default function ServicesPage() {
             >
               <Card className="gradient-brand text-white border-0">
                 <CardContent className="p-8">
-                  <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+                  <h2 className="text-3xl font-bold mb-4 text-white">Ready to Get Started?</h2>
                   <p className="text-white mb-6 max-w-2xl mx-auto">
                     Let our expert team help you with your tax and business needs. 
                     Contact us today for a consultation.

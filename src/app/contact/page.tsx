@@ -139,32 +139,32 @@ export default function ContactPage() {
                       <div className="flex items-start space-x-3">
                         <MapPin className="h-5 w-5 text-brand-600 dark:text-brand-400 mt-1 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white mb-1">Address</h4>
-                          <p className="text-gray-600 dark:text-gray-300">{info.address}</p>
+                          <h4 className="font-medium mb-1" style={{ color: '#424242' }}>Address</h4>
+                          <p style={{ color: '#424242' }}>{info.address}</p>
                         </div>
                       </div>
                       
                       <div className="flex items-center space-x-3">
                         <Phone className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white mb-1">Phone</h4>
-                          <p className="text-gray-600 dark:text-gray-300">{info.phone}</p>
+                          <h4 className="font-medium mb-1" style={{ color: '#424242' }}>Phone</h4>
+                          <p style={{ color: '#424242' }}>{info.phone}</p>
                         </div>
                       </div>
                       
                       <div className="flex items-center space-x-3">
                         <Mail className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white mb-1">Email</h4>
-                          <p className="text-gray-600 dark:text-gray-300">{info.email}</p>
+                          <h4 className="font-medium mb-1" style={{ color: '#424242' }}>Email</h4>
+                          <p style={{ color: '#424242' }}>{info.email}</p>
                         </div>
                       </div>
                       
                       <div className="flex items-center space-x-3">
                         <Clock className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium text-gray-900 dark:text-white mb-1">Business Hours</h4>
-                          <p className="text-gray-600 dark:text-gray-300">{info.hours}</p>
+                          <h4 className="font-medium mb-1" style={{ color: '#424242' }}>Business Hours</h4>
+                          <p style={{ color: '#424242' }}>{info.hours}</p>
                         </div>
                       </div>
                     </CardContent>

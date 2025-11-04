@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, memo, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 
@@ -19,11 +19,174 @@ const NavbarComponent = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [flowingBadgePosition, setFlowingBadgePosition] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [targetPosition, setTargetPosition] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
+  const [instantActiveIndex, setInstantActiveIndex] = useState<number | null>(null);
+  const navRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const previousPathRef = useRef(pathname);
+  const animationRef = useRef<number | null>(null);
 
   const handleNavigation = (href: string) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     setIsMobileMenuOpen(false);
   };
+
+  // Get element position relative to viewport
+  const getElementPosition = (element: HTMLElement) => {
+    const rect = element.getBoundingClientRect();
+    return {
+      x: rect.left,
+      y: rect.top,
+      width: rect.width,
+      height: rect.height
+    };
+  };
+
+  // Rubber band animation function
+  const animateRubberBand = (startPos: { x: number; y: number; width: number; height: number }, 
+                            endPos: { x: number; y: number; width: number; height: number }) => {
+    const startTime = Date.now();
+    const duration = 800; // Total animation duration
+    const intermediatePositions: { x: number; y: number; width: number; height: number }[] = [];
+    
+    // Calculate intermediate positions (rubber band effect points)
+    const currentIndex = navItems.findIndex(item => item.href === previousPathRef.current);
+    const targetIndex = navItems.findIndex(item => item.href === pathname);
+    
+    if (currentIndex !== -1 && targetIndex !== -1) {
+      const direction = targetIndex > currentIndex ? 1 : -1;
+      
+      // Add intermediate menu positions for rubber band effect
+      for (let i = currentIndex + direction; i !== targetIndex + direction; i += direction) {
+        const intermediateElement = navRefs.current[i];
+        if (intermediateElement) {
+          const pos = getElementPosition(intermediateElement);
+          intermediatePositions.push(pos);
+        }
+      }
+    }
+    
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for rubber band effect
+      const easeOutElastic = (t: number) => {
+        const p = 0.3;
+        return Math.pow(2, -10 * t) * Math.sin((t - p / 4) * (2 * Math.PI) / p) + 1;
+      };
+      
+      const easedProgress = easeOutElastic(progress);
+      
+      if (progress <= 0.3) {
+        // First phase: stretch towards intermediate positions
+        const stretchProgress = progress / 0.3;
+        let currentPos = startPos;
+        
+        if (intermediatePositions.length > 0) {
+          // Calculate position along the rubber band path
+          const totalSegments = intermediatePositions.length + 1;
+          const currentSegment = Math.floor(stretchProgress * totalSegments);
+          const segmentProgress = (stretchProgress * totalSegments) % 1;
+          
+          if (currentSegment === 0) {
+            // From start to first intermediate
+            currentPos = {
+              x: startPos.x + (intermediatePositions[0].x - startPos.x) * segmentProgress,
+              y: startPos.y + (intermediatePositions[0].y - startPos.y) * segmentProgress,
+              width: startPos.width + (intermediatePositions[0].width - startPos.width) * segmentProgress,
+              height: startPos.height + (intermediatePositions[0].height - startPos.height) * segmentProgress
+            };
+          } else if (currentSegment < intermediatePositions.length) {
+            // Between intermediate positions
+            const fromPos = intermediatePositions[currentSegment - 1];
+            const toPos = intermediatePositions[currentSegment];
+            currentPos = {
+              x: fromPos.x + (toPos.x - fromPos.x) * segmentProgress,
+              y: fromPos.y + (toPos.y - fromPos.y) * segmentProgress,
+              width: fromPos.width + (toPos.width - fromPos.width) * segmentProgress,
+              height: fromPos.height + (toPos.height - fromPos.height) * segmentProgress
+            };
+          } else {
+            // From last intermediate to end
+            const lastIntermediate = intermediatePositions[intermediatePositions.length - 1];
+            currentPos = {
+              x: lastIntermediate.x + (endPos.x - lastIntermediate.x) * segmentProgress,
+              y: lastIntermediate.y + (endPos.y - lastIntermediate.y) * segmentProgress,
+              width: lastIntermediate.width + (endPos.width - lastIntermediate.width) * segmentProgress,
+              height: lastIntermediate.height + (endPos.height - lastIntermediate.height) * segmentProgress
+            };
+          }
+        }
+        
+        setFlowingBadgePosition(currentPos);
+      } else {
+        // Second phase: snap to final position with elastic effect
+        setFlowingBadgePosition(endPos);
+      }
+      
+      if (progress < 1) {
+        animationRef.current = requestAnimationFrame(animate);
+      } else {
+        // Animation complete
+        setTimeout(() => {
+          setFlowingBadgePosition(null);
+          setIsAnimating(false);
+          setInstantActiveIndex(null);
+          previousPathRef.current = pathname;
+        }, 50);
+      }
+    };
+    
+    animate();
+  };
+
+  // Handle rubber band animation
+  useEffect(() => {
+    const currentIndex = navItems.findIndex(item => item.href === pathname);
+    const previousIndex = navItems.findIndex(item => item.href === previousPathRef.current);
+    
+    if (currentIndex !== previousIndex && previousIndex !== -1 && currentIndex !== -1 && !isAnimating) {
+      setIsAnimating(true);
+      
+      // Reset any existing instant active index first
+      setInstantActiveIndex(null);
+      
+      // Set instant active index immediately for text color change
+      setTimeout(() => {
+        setInstantActiveIndex(currentIndex);
+      }, 10);
+      
+      const startElement = navRefs.current[previousIndex];
+      const endElement = navRefs.current[currentIndex];
+      
+      if (startElement && endElement) {
+        const startPos = getElementPosition(startElement);
+        const endPos = getElementPosition(endElement);
+        
+        setTargetPosition(endPos);
+        setFlowingBadgePosition(startPos);
+        
+        // Start rubber band animation
+        setTimeout(() => {
+          animateRubberBand(startPos, endPos);
+        }, 50);
+      }
+    } else if (currentIndex === -1) {
+      // Reset if no matching route
+      setFlowingBadgePosition(null);
+      setIsAnimating(false);
+      setInstantActiveIndex(null);
+      previousPathRef.current = pathname;
+    }
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [pathname, isAnimating]);
 
   useEffect(() => {
     // Simple logic: Only show animations on page refresh
@@ -59,120 +222,105 @@ const NavbarComponent = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center group">
-              <motion.div
-                className="w-12 h-12 rounded-2xl overflow-hidden bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center border border-brand-200 shadow-md group-hover:shadow-xl transition-all duration-300"
-                whileHover={{ 
-                  scale: 1.1,
-                  rotate: [0, 5, -5, 0],
-                  transition: { duration: 0.6, ease: "easeInOut" }
-                }}
-                whileTap={{ 
-                  scale: 0.95,
-                  transition: { duration: 0.2, ease: "easeOut" }
-                }}
-                initial={!hasAnimated ? { opacity: 0 } : false}
-                animate={!hasAnimated ? { opacity: 1 } : false}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.3 }}
+              <div
+                className="w-10 h-10 rounded-lg overflow-hidden bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center border border-brand-200 shadow-md"
               >
                 <img 
                   src="/advora-logo.jpg" 
                   alt="Advora Services" 
                   className="w-full h-full object-cover"
                 />
-              </motion.div>
-              <motion.div 
-                className="ml-4"
-                initial={!hasAnimated ? { x: -10, opacity: 0 } : false}
-                animate={!hasAnimated ? { x: 0, opacity: 1 } : false}
-                transition={{ delay: !hasAnimated ? 0.5 : 0, duration: 0.5 }}
-              >
+              </div>
+              <div className="ml-3 leading-tight">
                 <div>
-                  <span className="text-2xl font-black text-gray-900 font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase">Advora</span>
-                  <span className="text-sm text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services</span>
+                  <span className="text-xl font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
+                  <span className="text-sm font-raleway group-hover:text-brand-500 transition-colors duration-300 leading-none block" style={{ color: '#424242' }}>Services</span>
                 </div>
-              </motion.div>
+              </div>
             </Link>
 
             {/* Navigation Links */}
             <div className="flex items-center space-x-2 ml-12">
               {navItems.map((item, index) => (
-                <Link key={item.name} href={item.href} prefetch={true} onClick={() => handleNavigation(item.href)}>
-                  <motion.div
-                    className="relative px-5 py-3 rounded-2xl text-sm font-medium overflow-hidden group"
-                    initial={!hasAnimated ? { opacity: 0, y: -20 } : false}
-                    animate={!hasAnimated ? { opacity: 1, y: 0 } : false}
-                    transition={{ 
-                      delay: !hasAnimated ? index * 0.1 + 0.8 : 0,
-                      duration: 0.5,
-                      ease: "easeOut"
-                    }}
-                    whileHover={{ 
-                      scale: 1.05,
-                      y: -3,
-                      transition: { 
-                        duration: 0.3, 
-                        ease: "easeOut",
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 15
-                      }
-                    }}
-                    whileTap={{ 
-                      scale: 0.98,
-                      transition: { duration: 0.15, ease: "easeIn" }
-                    }}
-                  >
-                    {/* Background hover effect */}
+                <div key={item.name} ref={el => navRefs.current[index] = el}>
+                  <Link href={item.href} prefetch={true} onClick={() => handleNavigation(item.href)}>
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-brand-50 to-brand-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    />
-                    
-                    {/* Active indicator */}
-                    {pathname === item.href && (
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-brand-100 to-brand-200 rounded-2xl"
-                        layoutId="navbar-fill"
-                        initial={false}
-                        transition={{ 
+                      className="relative px-5 py-3 rounded-full text-sm font-medium overflow-hidden group"
+                      initial={!hasAnimated ? { opacity: 0, y: -20 } : false}
+                      animate={!hasAnimated ? { opacity: 1, y: 0 } : false}
+                      transition={{ 
+                        delay: !hasAnimated ? index * 0.1 + 0.8 : 0,
+                        duration: 0.5,
+                        ease: "easeOut"
+                      }}
+                      whileHover={{ 
+                        scale: 1.05,
+                        y: -3,
+                        transition: { 
+                          duration: 0.3, 
+                          ease: "easeOut",
                           type: "spring",
-                          stiffness: 300,
-                          damping: 30,
-                          mass: 0.8,
-                          restDelta: 0.001,
-                        }}
-                      />
-                    )}
-                    
-                    {/* Badge that flows through menu items */}
-                    {pathname === item.href && (
+                          stiffness: 400,
+                          damping: 15
+                        }
+                      }}
+                      whileTap={{ 
+                        scale: 0.98,
+                        transition: { duration: 0.15, ease: "easeIn" }
+                      }}
+                    >
+                      {/* Background hover effect */}
                       <motion.div
-                        className="absolute inset-0 bg-[#916f2a] rounded-2xl"
-                        layoutId="navbar-badge"
-                        initial={false}
-                        transition={{ 
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 30,
-                          mass: 0.8,
-                          restDelta: 0.001,
-                        }}
+                        className="absolute inset-0 bg-gradient-to-r from-brand-50 to-brand-100 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       />
-                    )}
-                    
-                    {/* Text */}
-                    <span className={`relative z-10 transition-all duration-300 font-raleway-accent text-base font-semibold ${
-                      pathname === item.href
-                        ? 'text-white font-bold'
-                        : 'text-gray-700 group-hover:text-brand-600 font-semibold'
-                    }`}>
-                      {item.name}
-                    </span>
-                  </motion.div>
-                </Link>
+                      
+                      {/* Static active badge (shown when not animating) */}
+                      {!isAnimating && pathname === item.href && (
+                        <div
+                          className="absolute inset-0 bg-gradient-to-r from-[#916f2a] to-[#7a5d24] rounded-full shadow-lg flex items-center justify-center"
+                        >
+                          <span className="text-white font-bold font-raleway-accent text-base">
+                            {item.name}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {/* Text (shown when not active) */}
+                      <span className={`relative z-10 font-raleway-accent text-base font-semibold transition-all duration-0 ${
+                        instantActiveIndex === index
+                          ? 'opacity-0 pointer-events-none'
+                          : pathname === item.href
+                          ? 'opacity-0 pointer-events-none'
+                          : 'font-semibold'
+                      }`} style={{ color: '#424242' }}>
+                        {item.name}
+                      </span>
+                    </motion.div>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
         </div>
+        
+        {/* Rubber band flowing badge */}
+        {flowingBadgePosition && (
+          <div
+            className="fixed z-50 pointer-events-none flex items-center justify-center"
+            style={{
+              left: flowingBadgePosition.x,
+              top: flowingBadgePosition.y,
+              width: flowingBadgePosition.width,
+              height: flowingBadgePosition.height,
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#916f2a] to-[#7a5d24] rounded-full shadow-lg flex items-center justify-center">
+              <span className="text-white font-bold font-raleway-accent text-base">
+                {navItems[instantActiveIndex !== null ? instantActiveIndex : navItems.findIndex(item => item.href === pathname)]?.name}
+              </span>
+            </div>
+          </div>
+        )}
       </motion.nav>
 
       {/* Mobile Navbar */}
@@ -188,23 +336,18 @@ const NavbarComponent = () => {
         <div className="flex items-center justify-between px-4 py-4">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <motion.div
-              className="w-10 h-10 rounded-xl overflow-hidden bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center border border-brand-200 shadow-md group-hover:shadow-lg transition-all duration-300"
-              whileHover={{ 
-                scale: 1.1,
-                rotate: [0, 5, -5, 0],
-                transition: { duration: 0.4, ease: "easeInOut" }
-              }}
+            <div
+              className="w-9 h-9 rounded-lg overflow-hidden bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center border border-brand-200 shadow-md"
             >
               <img 
                 src="/advora-logo.jpg" 
                 alt="Advora Services" 
                 className="w-full h-full object-cover"
               />
-            </motion.div>
-            <div>
-              <span className="text-lg font-black text-gray-900 font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase">Advora</span>
-              <span className="text-xs text-gray-500 block font-raleway group-hover:text-brand-500 transition-colors duration-300">Services</span>
+            </div>
+            <div className="leading-tight">
+              <span className="text-lg font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
+              <span className="text-sm font-raleway group-hover:text-brand-500 transition-colors duration-300 leading-none block" style={{ color: '#424242' }}>Services</span>
             </div>
           </Link>
 

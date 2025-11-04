@@ -110,7 +110,7 @@ export default function TestimonialSection() {
           </div>
 
           {/* Content */}
-          <p className="text-gray-600 mb-6 leading-relaxed flex-1 font-raleway">
+          <p className="mb-6 leading-relaxed flex-1 font-raleway" style={{ color: '#424242' }}>
             "{testimonial.content}"
           </p>
 
@@ -124,10 +124,10 @@ export default function TestimonialSection() {
               transition={{ duration: 0.3 }}
             />
             <div>
-              <h4 className="font-semibold text-gray-900 font-raleway-heading">
+              <h4 className="font-semibold font-raleway-heading" style={{ color: '#424242' }}>
                 {testimonial.name}
               </h4>
-              <p className="text-sm text-gray-600 font-raleway">
+              <p className="text-sm font-raleway" style={{ color: '#424242' }}>
                 {testimonial.role} at {testimonial.company}
               </p>
             </div>
@@ -147,13 +147,13 @@ export default function TestimonialSection() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-raleway-heading">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 font-raleway-heading" style={{ color: '#424242' }}>
             What Our
             <span className="gradient-brand-text">
               {' '}Clients Say
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-raleway">
+          <p className="text-xl max-w-2xl mx-auto font-raleway" style={{ color: '#424242' }}>
             Don't just take our word for it - hear from our satisfied clients
           </p>
         </motion.div>
@@ -201,17 +201,17 @@ export default function TestimonialSection() {
           <div className="inline-flex items-center space-x-8 bg-white px-8 py-4 rounded-full shadow-lg">
             <div className="text-center">
               <div className="text-3xl font-bold text-brand-600">98%</div>
-              <div className="text-sm text-gray-600">Client Satisfaction</div>
+              <div className="text-sm" style={{ color: '#424242' }}>Client Satisfaction</div>
             </div>
             <div className="w-px h-8 bg-gray-300"></div>
             <div className="text-center">
               <div className="text-3xl font-bold text-brand-600">24/7</div>
-              <div className="text-sm text-gray-600">Support Available</div>
+              <div className="text-sm" style={{ color: '#424242' }}>Support Available</div>
             </div>
             <div className="w-px h-8 bg-gray-300"></div>
             <div className="text-center">
               <div className="text-3xl font-bold text-brand-600">5+</div>
-              <div className="text-sm text-gray-600">Years Experience</div>
+              <div className="text-sm" style={{ color: '#424242' }}>Years Experience</div>
             </div>
           </div>
         </motion.div>

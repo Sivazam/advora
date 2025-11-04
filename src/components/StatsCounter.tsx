@@ -69,7 +69,8 @@ export default function StatsCounter({ stats }: StatsCounterProps) {
           </motion.div>
           
           <motion.p
-            className="text-gray-600 font-medium"
+            className="font-medium"
+            style={{ color: '#424242' }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: index * 0.3 }}

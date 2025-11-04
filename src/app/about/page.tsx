@@ -128,7 +128,7 @@ export default function AboutPage() {
                       transition={{ duration: 0.6, delay: 0.2 }}
                       viewport={{ once: true }}
                     >
-                      <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2 font-luxury-heading">
+                      <h2 className="text-3xl font-bold mb-2 font-luxury-heading" style={{ color: '#424242' }}>
                          Ram Chowdhary
                       </h2>
                       <p className="text-xl text-brand-600 dark:text-brand-400 font-medium mb-4 font-luxury-body">
@@ -157,15 +157,15 @@ export default function AboutPage() {
                     className="space-y-6"
                   >
                     <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                      <h3 className="text-2xl font-bold mb-4" style={{ color: '#424242' }}>
                         Leadership & Vision
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      <p className="mb-4" style={{ color: '#424242' }}>
                         Ram Chowdhary brings over a decade of expertise in taxation and business services. 
                         His leadership has been instrumental in establishing Advora Services as a trusted 
                         partner for businesses and individuals across the USA and India.
                       </p>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p style={{ color: '#424242' }}>
                         With a deep understanding of international tax laws and business regulations, 
                         Ram Chowdhary has successfully guided numerous clients through complex tax situations 
                         and business challenges.
@@ -175,19 +175,19 @@ export default function AboutPage() {
                     <div className="space-y-3">
                       <div className="flex items-center space-x-3">
                         <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">15+ Years in Tax & Business Services</span>
+                        <span style={{ color: '#424242' }}>15+ Years in Tax & Business Services</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">Expert in US & Indian Tax Systems</span>
+                        <span style={{ color: '#424242' }}>Expert in US & Indian Tax Systems</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">1000+ Satisfied Clients</span>
+                        <span style={{ color: '#424242' }}>1000+ Satisfied Clients</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">Strategic Business Advisor</span>
+                        <span style={{ color: '#424242' }}>Strategic Business Advisor</span>
                       </div>
                     </div>
                   </motion.div>
@@ -212,13 +212,13 @@ export default function AboutPage() {
                       <div className="w-12 h-12 bg-[#916f2a] rounded-xl flex items-center justify-center">
                         <MissionIcon className="w-6 h-6 text-white" />
                       </div>
-                      <CardTitle className="text-2xl text-gray-900 dark:text-white font-luxury-heading">
+                      <CardTitle className="text-2xl font-luxury-heading" style={{ color: '#424242' }}>
                         Our Mission
                       </CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed font-luxury-body">
+                    <p className="text-lg leading-relaxed font-luxury-body" style={{ color: '#424242' }}>
                       To provide exceptional tax and business services that empower our clients to achieve 
                       their financial goals. We are committed to delivering accurate, timely, and 
                       cost-effective solutions while maintaining the highest standards of integrity 
@@ -227,15 +227,15 @@ export default function AboutPage() {
                     <div className="mt-6 space-y-3">
                       <div className="flex items-center space-x-3">
                         <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">Client-Centric Approach</span>
+                        <span style={{ color: '#424242' }}>Client-Centric Approach</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">Excellence in Service</span>
+                        <span style={{ color: '#424242' }}>Excellence in Service</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">Innovation & Technology</span>
+                        <span style={{ color: '#424242' }}>Innovation & Technology</span>
                       </div>
                     </div>
                   </CardContent>
@@ -254,13 +254,13 @@ export default function AboutPage() {
                       <div className="w-12 h-12 bg-[#916f2a] rounded-xl flex items-center justify-center">
                         <VisionIcon className="w-6 h-6 text-white" />
                       </div>
-                      <CardTitle className="text-2xl text-gray-900 dark:text-white font-luxury-heading">
+                      <CardTitle className="text-2xl font-luxury-heading" style={{ color: '#424242' }}>
                         Our Vision
                       </CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed font-luxury-body">
+                    <p className="text-lg leading-relaxed font-luxury-body" style={{ color: '#424242' }}>
                       To be the leading tax and business services provider recognized for our expertise, 
                       innovation, and unwavering commitment to client success. We aim to bridge the gap 
                       between complex tax regulations and business growth opportunities.
@@ -268,15 +268,15 @@ export default function AboutPage() {
                     <div className="mt-6 space-y-3">
                       <div className="flex items-center space-x-3">
                         <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">Global Leadership</span>
+                        <span style={{ color: '#424242' }}>Global Leadership</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">Technological Innovation</span>
+                        <span style={{ color: '#424242' }}>Technological Innovation</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">Sustainable Growth</span>
+                        <span style={{ color: '#424242' }}>Sustainable Growth</span>
                       </div>
                     </div>
                   </CardContent>
@@ -296,10 +296,10 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-luxury-heading">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 font-luxury-heading" style={{ color: '#424242' }}>
                 Our Core Values
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-luxury-body">
+              <p className="text-xl max-w-2xl mx-auto font-luxury-body" style={{ color: '#424242' }}>
                 The principles that guide our actions and decisions
               </p>
             </motion.div>
@@ -318,12 +318,12 @@ export default function AboutPage() {
                       <div className="w-16 h-16 mx-auto mb-4 bg-[#916f2a] rounded-2xl flex items-center justify-center">
                         <value.icon className="w-8 h-8 text-white" />
                       </div>
-                      <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
+                      <CardTitle className="text-xl font-semibold" style={{ color: '#424242' }}>
                         {value.title}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p style={{ color: '#424242' }}>
                         {value.description}
                       </p>
                     </CardContent>
@@ -344,10 +344,10 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: '#424242' }}>
                 Our Journey
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              <p className="text-xl max-w-2xl mx-auto" style={{ color: '#424242' }}>
                 Key milestones in our growth and development
               </p>
             </motion.div>
@@ -389,10 +389,10 @@ export default function AboutPage() {
                               </div>
                             </div>
                             <div className="p-6">
-                              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                              <h3 className="text-lg font-semibold mb-2" style={{ color: '#424242' }}>
                                 {item.title}
                               </h3>
-                              <p className="text-gray-600 dark:text-gray-300 text-sm">
+                              <p className="text-sm" style={{ color: '#424242' }}>
                                 {item.description}
                               </p>
                             </div>
@@ -450,10 +450,10 @@ export default function AboutPage() {
                               </div>
                             </div>
                             <div className="p-6">
-                              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                              <h3 className="text-lg font-semibold mb-2" style={{ color: '#424242' }}>
                                 {item.title}
                               </h3>
-                              <p className="text-gray-600 dark:text-gray-300 text-sm">
+                              <p className="text-sm" style={{ color: '#424242' }}>
                                 {item.description}
                               </p>
                             </div>
@@ -513,10 +513,10 @@ export default function AboutPage() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         </div>
                         <div className="p-4">
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                          <h3 className="text-lg font-semibold mb-2" style={{ color: '#424242' }}>
                             {item.title}
                           </h3>
-                          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                          <p className="text-sm leading-relaxed" style={{ color: '#424242' }}>
                             {item.description}
                           </p>
                         </div>

@@ -126,13 +126,13 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-raleway-heading">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 font-raleway-heading" style={{ color: '#424242' }}>
                   Our
                   <span className="gradient-brand-text">
                     {' '}Services
                   </span>
                 </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-raleway">
+                <p className="text-xl mb-6 max-w-2xl mx-auto leading-relaxed font-raleway" style={{ color: '#424242' }}>
                   Comprehensive tax and business solutions tailored to your needs
                 </p>
               </motion.div>
@@ -163,13 +163,13 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-raleway-heading">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 font-raleway-heading" style={{ color: '#424242' }}>
                   Why Choose
                   <span className="gradient-brand-text">
                     {' '}Advora
                   </span>
                 </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-raleway">
+                <p className="text-xl mb-6 max-w-2xl mx-auto leading-relaxed font-raleway" style={{ color: '#424242' }}>
                   We combine expertise, technology, and personalized service
                 </p>
               </motion.div>
@@ -211,10 +211,10 @@ export default function Home() {
                         </motion.div>
                       </div>
                       <div className="p-6 flex-1 flex flex-col">
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 font-raleway-heading">
+                        <h3 className="text-xl font-bold mb-3 font-raleway-heading" style={{ color: '#424242' }}>
                           {feature.title}
                         </h3>
-                        <p className="text-gray-600 flex-1 leading-relaxed font-raleway">
+                        <p className="flex-1 leading-relaxed font-raleway" style={{ color: '#424242' }}>
                           {feature.description}
                         </p>
                       </div>
@@ -238,13 +238,13 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-raleway-heading">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 font-raleway-heading" style={{ color: '#424242' }}>
                   Meet Our
                   <span className="gradient-brand-text">
                     {' '}Director
                   </span>
                 </h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-raleway">
+                <p className="text-xl mb-6 max-w-2xl mx-auto leading-relaxed font-raleway" style={{ color: '#424242' }}>
                   Leadership with vision and expertise
                 </p>
               </motion.div>
@@ -275,7 +275,7 @@ export default function Home() {
                       </div>
                       
                       <div className="space-y-4">
-                        <h3 className="text-3xl font-bold text-gray-900 font-raleway-heading">
+                        <h3 className="text-3xl font-bold font-raleway-heading" style={{ color: '#424242' }}>
                           Ram Chowdhary
                         </h3>
                         <p className="text-xl text-brand-600 font-medium font-raleway-accent">
@@ -328,15 +328,15 @@ export default function Home() {
                       viewport={{ once: true }}
                     >
                       <div>
-                        <h4 className="text-2xl font-bold text-gray-900 mb-4 font-raleway-heading">
+                        <h4 className="text-2xl font-bold mb-4 font-raleway-heading" style={{ color: '#424242' }}>
                           Vision & Leadership
                         </h4>
-                        <p className="text-gray-600 mb-6 leading-relaxed font-raleway">
+                        <p className="mb-6 leading-relaxed font-raleway" style={{ color: '#424242' }}>
                           Ram Chowdhary brings over a decade of expertise in taxation and business services. 
                           His leadership has been instrumental in establishing Advora Services as a trusted 
                           partner for businesses and individuals across the USA and India.
                         </p>
-                        <p className="text-gray-600 leading-relaxed font-raleway">
+                        <p className="leading-relaxed font-raleway" style={{ color: '#424242' }}>
                           With a deep understanding of both US and Indian tax systems, Ram Chowdhary has successfully 
                           guided numerous clients through complex tax matters, business registrations, and 
                           compliance requirements. His commitment to excellence and client satisfaction has 
@@ -348,8 +348,8 @@ export default function Home() {
                         <div className="flex items-start space-x-3">
                           <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <h5 className="font-semibold text-gray-900 font-raleway">Expertise</h5>
-                            <p className="text-gray-600 text-sm font-raleway">
+                            <h5 className="font-semibold font-raleway" style={{ color: '#424242' }}>Expertise</h5>
+                            <p className="text-sm font-raleway" style={{ color: '#424242' }}>
                               Over 15 years of experience in taxation and business consulting
                             </p>
                           </div>
@@ -358,8 +358,8 @@ export default function Home() {
                         <div className="flex items-start space-x-3">
                           <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <h5 className="font-semibold text-gray-900 font-raleway">Global Perspective</h5>
-                            <p className="text-gray-600 text-sm font-raleway">
+                            <h5 className="font-semibold font-raleway" style={{ color: '#424242' }}>Global Perspective</h5>
+                            <p className="text-sm font-raleway" style={{ color: '#424242' }}>
                               Extensive knowledge of US and Indian tax systems and regulations
                             </p>
                           </div>
@@ -368,8 +368,8 @@ export default function Home() {
                         <div className="flex items-start space-x-3">
                           <CheckCircle className="h-5 w-5 text-brand-600 mt-0.5 flex-shrink-0" />
                           <div>
-                            <h5 className="font-semibold text-gray-900 font-raleway">Client Success</h5>
-                            <p className="text-gray-600 text-sm font-raleway">
+                            <h5 className="font-semibold font-raleway" style={{ color: '#424242' }}>Client Success</h5>
+                            <p className="text-sm font-raleway" style={{ color: '#424242' }}>
                               Successfully served 600+ clients with 99% success rate
                             </p>
                           </div>
@@ -390,10 +390,10 @@ export default function Home() {
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 font-raleway-heading">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 font-raleway-heading" style={{ color: '#424242' }}>
                   Ready to Get Started?
                 </h2>
-                <p className="text-xl text-gray-600 mb-8 leading-relaxed font-raleway">
+                <p className="text-xl mb-8 leading-relaxed font-raleway" style={{ color: '#424242' }}>
                   Let us help you navigate your tax and business needs with expert guidance and personalized service.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">

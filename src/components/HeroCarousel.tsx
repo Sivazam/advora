@@ -169,7 +169,7 @@ export default function HeroCarousel() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex items-center justify-center">
+      <div className="relative z-10 h-full flex items-center justify-center" style={{ paddingTop: '10vh' }}>
         <div className="container mx-auto px-4">
           <div className="max-w-6xl text-center mx-auto">
             <motion.div

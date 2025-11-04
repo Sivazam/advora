@@ -168,7 +168,8 @@ export default function FAQPage() {
                     placeholder="Search questions..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 pr-4 py-3 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-full shadow-sm focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                    className="pl-10 pr-4 py-3 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 rounded-full shadow-sm focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                    style={{ color: '#424242' }}
                   />
                 </div>
               </motion.div>
@@ -228,12 +229,12 @@ export default function FAQPage() {
                               <div className="w-10 h-10 bg-brand-100 dark:bg-brand-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
                                 <Icon className="h-5 w-5 text-brand-600 dark:text-brand-400" />
                               </div>
-                              <span className="text-lg font-medium text-gray-900 dark:text-white ml-3">
+                              <span className="text-lg font-medium ml-3" style={{ color: '#424242' }}>
                                 {faq.question}
                               </span>
                             </div>
                           </AccordionTrigger>
-                          <AccordionContent className="text-gray-600 dark:text-gray-300">
+                          <AccordionContent style={{ color: '#424242' }}>
                             <div className="px-6 pb-4 pt-2">
                               {faq.answer}
                             </div>
@@ -251,10 +252,10 @@ export default function FAQPage() {
                   className="text-center py-12"
                 >
                   <HelpCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-xl font-semibold mb-2" style={{ color: '#424242' }}>
                     No questions found
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="mb-4" style={{ color: '#424242' }}>
                     Try adjusting your search or category filter.
                   </p>
                   <Button

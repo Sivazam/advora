@@ -52,7 +52,7 @@ export default function ServiceCard({
         </div>
 
         <div className="pt-6 pb-4 px-6">
-          <p className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+          <p className="text-base leading-relaxed" style={{ color: '#424242' }}>
             {description}
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function ServiceCard({
                 <div>
                   <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                 </div>
-                <span className="text-gray-700 dark:text-gray-300 text-sm">{feature}</span>
+                <span className="text-sm" style={{ color: '#424242' }}>{feature}</span>
               </div>
             ))}
           </div>
