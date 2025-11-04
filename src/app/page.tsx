@@ -383,30 +383,37 @@ export default function Home() {
 
           {/* CTA Section */}
           <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true }}
+                className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden hover:shadow-3xl transition-all duration-500"
+                whileHover={{ 
+                  y: -5,
+                  transition: { duration: 0.3, ease: 'easeOut' }
+                }}
               >
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 font-raleway-heading" style={{ color: '#424242' }}>
-                  Ready to Get Started?
-                </h2>
-                <p className="text-xl mb-8 leading-relaxed font-raleway" style={{ color: '#424242' }}>
-                  Let us help you navigate your tax and business needs with expert guidance and personalized service.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button 
-                      size="lg" 
-                      className="bg-brand-600 hover:bg-brand-700 text-white font-medium px-8 py-3 rounded-lg"
-                      onClick={() => router.push('/contact')}
-                    >
-                      Get Started Today
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </motion.div>
+                <div className="p-8 md:p-12 text-center">
+                  <h2 className="text-4xl md:text-5xl font-bold mb-6 font-raleway-heading" style={{ color: '#424242' }}>
+                    Ready to Get Started?
+                  </h2>
+                  <p className="text-xl mb-8 leading-relaxed font-raleway" style={{ color: '#424242' }}>
+                    Let us help you navigate your tax and business needs with expert guidance and personalized service.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                      <Button 
+                        size="lg" 
+                        className="bg-brand-600 hover:bg-brand-700 text-white font-medium px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                        onClick={() => router.push('/contact')}
+                      >
+                        Get Started Today
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </motion.div>
+                  </div>
                 </div>
               </motion.div>
             </div>

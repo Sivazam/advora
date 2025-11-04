@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import TopStrip from "@/components/TopStrip";
 import ScrollToTop from "@/components/ScrollToTop";
 import WhatsAppFloating from "@/components/WhatsAppFloating";
+import { NavbarProvider } from "@/contexts/NavbarContext";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -53,17 +54,19 @@ export default function RootLayout({
       <body
         className={`${raleway.variable} font-raleway antialiased bg-background text-foreground`}
       >
-        <div className="min-h-screen" style={{ backgroundColor: '#f7f4c8' }}>
-          {/* <TopStrip /> */}
-          <Navbar />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <ScrollToTop />
-        </div>
-        <WhatsAppFloating />
-        <Toaster />
+        <NavbarProvider>
+          <div className="min-h-screen" style={{ backgroundColor: '#f7f4c8' }}>
+            {/* <TopStrip /> */}
+            <Navbar />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <ScrollToTop />
+          </div>
+          <WhatsAppFloating />
+          <Toaster />
+        </NavbarProvider>
       </body>
     </html>
   );

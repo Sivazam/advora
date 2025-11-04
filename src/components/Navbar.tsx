@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect, memo, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
+import { useNavbar } from '@/contexts/NavbarContext';
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -15,10 +16,17 @@ const navItems = [
   { name: 'FAQ', href: '/faq' },
 ];
 
+// Global flag to prevent navbar re-animation across the entire application
+declare global {
+  interface Window {
+    __NAVBAR_ANIMATED__?: boolean;
+  }
+}
+
 const NavbarComponent = () => {
   const pathname = usePathname();
+  const { hasAnimated, setHasAnimated } = useNavbar();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [flowingBadgePosition, setFlowingBadgePosition] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -191,30 +199,32 @@ const NavbarComponent = () => {
 
   // Animation state management
   useEffect(() => {
-    // Check if this is the first page load
-    const hasVisited = sessionStorage.getItem('navbar-has-visited');
-    
-    if (!hasVisited) {
-      // First visit - show animation
+    // Only animate on first load if not already animated
+    if (!hasAnimated) {
       const timer = setTimeout(() => {
         setHasAnimated(true);
         setIsInitialLoad(false);
-        sessionStorage.setItem('navbar-has-visited', 'true');
       }, 100);
       return () => clearTimeout(timer);
     } else {
-      // Subsequent visits/route changes - no animation
-      setHasAnimated(true);
       setIsInitialLoad(false);
     }
-  }, []);
+  }, [hasAnimated, setHasAnimated]);
 
-  // Ensure no re-animation on route changes
+  // Additional safeguard: always ensure hasAnimated is true on pathname changes
   useEffect(() => {
-    if (!isInitialLoad) {
-      setHasAnimated(true);
+    // Force hasAnimated to true on any route change after initial load
+    if (hasAnimated) {
+      return; // Already animated, no need to do anything
     }
-  }, [pathname, isInitialLoad]);
+    
+    // If somehow hasAnimated is false during navigation, set it to true immediately
+    const timer = setTimeout(() => {
+      setHasAnimated(true);
+    }, 10);
+    
+    return () => clearTimeout(timer);
+  }, [pathname, hasAnimated]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

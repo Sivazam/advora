@@ -114,232 +114,234 @@ export default function ServicesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto space-y-8">
               {/* Tax Filing Services */}
-              <Collapsible open={openSections.taxFiling} onOpenChange={() => toggleSection('taxFiling')}>
-                <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                  <CollapsibleTrigger className="w-full">
-                    <CardHeader className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center">
-                            <Receipt className="h-6 w-6 text-white" />
+              <div className="mb-12">
+                <Collapsible open={openSections.taxFiling} onOpenChange={() => toggleSection('taxFiling')}>
+                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <CollapsibleTrigger className="w-full">
+                      <CardHeader className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors pt-8">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center">
+                              <Receipt className="h-6 w-6 text-white" />
+                            </div>
+                            <div className="text-left">
+                              <CardTitle className="text-2xl font-luxury-heading" style={{ color: '#424242' }}>
+                                Tax Filing Services
+                              </CardTitle>
+                              <CardDescription className="font-luxury-body" style={{ color: '#424242' }}>
+                                Professional tax preparation for individuals and businesses
+                              </CardDescription>
+                            </div>
                           </div>
-                          <div className="text-left">
-                            <CardTitle className="text-2xl font-luxury-heading" style={{ color: '#424242' }}>
-                              Tax Filing Services
-                            </CardTitle>
-                            <CardDescription className="font-luxury-body" style={{ color: '#424242' }}>
-                              Professional tax preparation for individuals and businesses
-                            </CardDescription>
-                          </div>
+                          {openSections.taxFiling ? (
+                            <ChevronUp className="h-6 w-6 text-gray-500" />
+                          ) : (
+                            <ChevronDown className="h-6 w-6 text-gray-500" />
+                          )}
                         </div>
-                        {openSections.taxFiling ? (
-                          <ChevronUp className="h-6 w-6 text-gray-500" />
-                        ) : (
-                          <ChevronDown className="h-6 w-6 text-gray-500" />
-                        )}
-                      </div>
-                    </CardHeader>
-                  </CollapsibleTrigger>
-                  
-                  <CollapsibleContent>
-                    <CardContent className="pt-0">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
-                        {taxFilingServices.map((service, index) => (
-                          <motion.div
-                            key={service.title}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            whileHover={{ y: -5, scale: 1.02 }}
-                            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 h-full flex flex-col"
-                          >
-                            <div className="relative h-40 overflow-hidden">
-                              <img
-                                src={service.image}
-                                alt={service.title}
-                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                              <div className="absolute bottom-3 left-3">
-                                <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                                  <Star className="h-5 w-5 text-white" />
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <div className="p-6 flex-1 flex flex-col">
-                              <div className="flex items-center space-x-3 mb-4">
-                                <h3 className="text-lg font-semibold font-luxury-heading" style={{ color: '#424242' }}>
-                                  {service.title}
-                                </h3>
-                              </div>
-                              
-                              <p className="mb-4 text-sm font-luxury-body" style={{ color: '#424242' }}>
-                                {service.description}
-                              </p>
-                              
-                              <div className="mb-4">
-                                <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Tax Forms:</h4>
-                                <div className="flex flex-wrap gap-2">
-                                  {service.forms.map((form) => (
-                                    <motion.span
-                                      key={form}
-                                      className="px-3 py-1 bg-brand-600 text-white rounded-full text-xs font-medium"
-                                      whileHover={{ scale: 1.05 }}
-                                      whileTap={{ scale: 0.95 }}
-                                    >
-                                      {form}
-                                    </motion.span>
-                                  ))}
+                      </CardHeader>
+                    </CollapsibleTrigger>
+                    
+                    <CollapsibleContent>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-6 pb-6">
+                          {taxFilingServices.map((service, index) => (
+                            <motion.div
+                              key={service.title}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.5, delay: index * 0.1 }}
+                              whileHover={{ y: -5, scale: 1.02 }}
+                              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 h-full flex flex-col"
+                            >
+                              <div className="relative h-40 overflow-hidden">
+                                <img
+                                  src={service.image}
+                                  alt={service.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <div className="absolute bottom-3 left-3">
+                                  <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                                    <Star className="h-5 w-5 text-white" />
+                                  </div>
                                 </div>
                               </div>
                               
-                              <div className="mt-auto">
-                                <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Features:</h4>
-                                <ul className="space-y-1">
-                                  {service.features.map((feature, idx) => (
-                                    <motion.li 
-                                      key={idx} 
-                                      className="flex items-center space-x-2 text-xs font-luxury-body"
-                                      style={{ color: '#424242' }}
-                                      initial={{ opacity: 0, x: -10 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      transition={{ duration: 0.3, delay: idx * 0.1 }}
-                                    >
-                                      <CheckCircle className="h-3 w-3 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                                      <span>{feature}</span>
-                                    </motion.li>
-                                  ))}
-                                </ul>
+                              <div className="p-6 flex-1 flex flex-col">
+                                <div className="flex items-center space-x-3 mb-4">
+                                  <h3 className="text-lg font-semibold font-luxury-heading" style={{ color: '#424242' }}>
+                                    {service.title}
+                                  </h3>
+                                </div>
+                                
+                                <p className="mb-4 text-sm font-luxury-body" style={{ color: '#424242' }}>
+                                  {service.description}
+                                </p>
+                                
+                                <div className="mb-4">
+                                  <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Tax Forms:</h4>
+                                  <div className="flex flex-wrap gap-2">
+                                    {service.forms.map((form) => (
+                                      <motion.span
+                                        key={form}
+                                        className="px-3 py-1 bg-brand-600 text-white rounded-full text-xs font-medium"
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                      >
+                                        {form}
+                                      </motion.span>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                <div className="mt-auto">
+                                  <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Features:</h4>
+                                  <ul className="space-y-1">
+                                    {service.features.map((feature, idx) => (
+                                      <motion.li 
+                                        key={idx} 
+                                        className="flex items-center space-x-2 text-xs font-luxury-body"
+                                        style={{ color: '#424242' }}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ duration: 0.3, delay: idx * 0.1 }}
+                                      >
+                                        <CheckCircle className="h-3 w-3 text-brand-600 dark:text-brand-400 flex-shrink-0" />
+                                        <span>{feature}</span>
+                                      </motion.li>
+                                    ))}
+                                  </ul>
+                                </div>
                               </div>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </CollapsibleContent>
-                </Card>
-              </Collapsible>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
+              </div>
 
               {/* Business Services */}
-              <Collapsible open={openSections.businessServices} onOpenChange={() => toggleSection('businessServices')}>
-                <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                  <CollapsibleTrigger className="w-full">
-                    <CardHeader className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center">
-                            <Rocket className="h-6 w-6 text-white" />
+              <div className="mb-12">
+                <Collapsible open={openSections.businessServices} onOpenChange={() => toggleSection('businessServices')}>
+                  <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <CollapsibleTrigger className="w-full">
+                      <CardHeader className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors pt-8">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-12 h-12 bg-brand-600 rounded-xl flex items-center justify-center">
+                              <Rocket className="h-6 w-6 text-white" />
+                            </div>
+                            <div className="text-left">
+                              <CardTitle className="text-2xl font-luxury-heading" style={{ color: '#424242' }}>
+                                Business Services
+                              </CardTitle>
+                              <CardDescription className="font-luxury-body" style={{ color: '#424242' }}>
+                                Comprehensive business solutions for growth and compliance
+                              </CardDescription>
+                            </div>
                           </div>
-                          <div className="text-left">
-                            <CardTitle className="text-2xl font-luxury-heading" style={{ color: '#424242' }}>
-                              Business Services
-                            </CardTitle>
-                            <CardDescription className="font-luxury-body" style={{ color: '#424242' }}>
-                              Comprehensive business solutions for growth and compliance
-                            </CardDescription>
-                          </div>
+                          {openSections.businessServices ? (
+                            <ChevronUp className="h-6 w-6 text-gray-500" />
+                          ) : (
+                            <ChevronDown className="h-6 w-6 text-gray-500" />
+                          )}
                         </div>
-                        {openSections.businessServices ? (
-                          <ChevronUp className="h-6 w-6 text-gray-500" />
-                        ) : (
-                          <ChevronDown className="h-6 w-6 text-gray-500" />
-                        )}
-                      </div>
-                    </CardHeader>
-                  </CollapsibleTrigger>
-                  
-                  <CollapsibleContent>
-                    <CardContent className="pt-0">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
-                        {businessServices.map((service, index) => (
-                          <motion.div
-                            key={service.title}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
-                            whileHover={{ y: -5, scale: 1.02 }}
-                            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 h-full flex flex-col"
-                          >
-                            <div className="relative h-40 overflow-hidden">
-                              <img
-                                src={service.image}
-                                alt={service.title}
-                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                              <div className="absolute bottom-3 left-3">
-                                <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
-                                  <service.icon className="h-5 w-5 text-white" />
+                      </CardHeader>
+                    </CollapsibleTrigger>
+                    
+                    <CollapsibleContent>
+                      <CardContent>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-6 pb-6">
+                          {businessServices.map((service, index) => (
+                            <motion.div
+                              key={service.title}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              transition={{ duration: 0.5, delay: index * 0.1 }}
+                              whileHover={{ y: -5, scale: 1.02 }}
+                              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 h-full flex flex-col"
+                            >
+                              <div className="relative h-40 overflow-hidden">
+                                <img
+                                  src={service.image}
+                                  alt={service.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                <div className="absolute bottom-3 left-3">
+                                  <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-lg flex items-center justify-center">
+                                    <service.icon className="h-5 w-5 text-white" />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            
-                            <div className="p-6 flex-1 flex flex-col">
-                              <div className="flex items-center space-x-3 mb-4">
-                                <h3 className="text-lg font-semibold font-luxury-heading" style={{ color: '#424242' }}>
-                                  {service.title}
-                                </h3>
-                              </div>
                               
-                              <p className="mb-4 text-sm font-luxury-body" style={{ color: '#424242' }}>
-                                {service.description}
-                              </p>
-                              
-                              <div className="mt-auto">
-                                <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Services Include:</h4>
-                                <ul className="space-y-1">
-                                  {service.services.map((item, idx) => (
-                                    <motion.li 
-                                      key={idx} 
-                                      className="flex items-center space-x-2 text-xs font-luxury-body"
-                                      style={{ color: '#424242' }}
-                                      initial={{ opacity: 0, x: -10 }}
-                                      animate={{ opacity: 1, x: 0 }}
-                                      transition={{ duration: 0.3, delay: idx * 0.1 }}
-                                    >
-                                      <CheckCircle className="h-3 w-3 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                                      <span>{item}</span>
-                                    </motion.li>
-                                  ))}
-                                </ul>
+                              <div className="p-6 flex-1 flex flex-col">
+                                <div className="flex items-center space-x-3 mb-4">
+                                  <h3 className="text-lg font-semibold font-luxury-heading" style={{ color: '#424242' }}>
+                                    {service.title}
+                                  </h3>
+                                </div>
+                                
+                                <p className="mb-4 text-sm font-luxury-body" style={{ color: '#424242' }}>
+                                  {service.description}
+                                </p>
+                                
+                                <div className="mt-auto">
+                                  <h4 className="font-medium mb-2 text-sm" style={{ color: '#424242' }}>Services Include:</h4>
+                                  <ul className="space-y-1">
+                                    {service.services.map((item, idx) => (
+                                      <motion.li 
+                                        key={idx} 
+                                        className="flex items-center space-x-2 text-xs font-luxury-body"
+                                        style={{ color: '#424242' }}
+                                        initial={{ opacity: 0, x: -10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ duration: 0.3, delay: idx * 0.1 }}
+                                      >
+                                        <CheckCircle className="h-3 w-3 text-brand-600 dark:text-brand-400 flex-shrink-0" />
+                                        <span>{item}</span>
+                                      </motion.li>
+                                    ))}
+                                  </ul>
+                                </div>
                               </div>
-                            </div>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </CollapsibleContent>
-                </Card>
-              </Collapsible>
-            </div>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </CollapsibleContent>
+                  </Card>
+                </Collapsible>
+              </div>
 
-            {/* CTA Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="mt-16 text-center"
-            >
-              <Card className="gradient-brand text-white border-0">
-                <CardContent className="p-8">
-                  <h2 className="text-3xl font-bold mb-4 text-white">Ready to Get Started?</h2>
-                  <p className="text-white mb-6 max-w-2xl mx-auto">
-                    Let our expert team help you with your tax and business needs. 
-                    Contact us today for a consultation.
-                  </p>
-                  <Button
-                    size="lg"
-                    variant="secondary"
-                    className="bg-white text-brand-600 hover:bg-gray-100 px-8 py-3 rounded-full font-semibold"
-                    onClick={() => router.push('/contact')}
-                  >
-                    Contact Us Today
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
+              {/* CTA Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="mt-16 text-center"
+              >
+                <Card className="gradient-brand text-white border-0">
+                  <CardContent className="p-8">
+                    <h2 className="text-3xl font-bold mb-4 text-white">Ready to Get Started?</h2>
+                    <p className="text-xl mb-8 text-white/90">
+                      Let us help you with your tax and business needs. Contact us today for a consultation.
+                    </p>
+                    <Button
+                      size="lg"
+                      className="bg-white text-brand-600 hover:bg-gray-100 font-semibold px-8 py-3 rounded-full"
+                      onClick={() => router.push('/contact')}
+                    >
+                      Contact Us Today
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
           </div>
         </section>
       </main>
