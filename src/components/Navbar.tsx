@@ -19,6 +19,7 @@ const NavbarComponent = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [flowingBadgePosition, setFlowingBadgePosition] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
   const [targetPosition, setTargetPosition] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
@@ -188,17 +189,32 @@ const NavbarComponent = () => {
     };
   }, [pathname, isAnimating]);
 
+  // Animation state management
   useEffect(() => {
-    // Simple logic: Only show animations on page refresh
-    // Check if this is a page refresh
-    const navigationEntries = performance.getEntriesByType('navigation');
-    const navigationType = navigationEntries[0]?.type;
+    // Check if this is the first page load
+    const hasVisited = sessionStorage.getItem('navbar-has-visited');
     
-    // Only allow animations on page refresh or back/forward
-    const isPageRefresh = navigationType === 'reload' || navigationType === 'back_forward';
-    
-    setHasAnimated(!isPageRefresh);
+    if (!hasVisited) {
+      // First visit - show animation
+      const timer = setTimeout(() => {
+        setHasAnimated(true);
+        setIsInitialLoad(false);
+        sessionStorage.setItem('navbar-has-visited', 'true');
+      }, 100);
+      return () => clearTimeout(timer);
+    } else {
+      // Subsequent visits/route changes - no animation
+      setHasAnimated(true);
+      setIsInitialLoad(false);
+    }
   }, []);
+
+  // Ensure no re-animation on route changes
+  useEffect(() => {
+    if (!isInitialLoad) {
+      setHasAnimated(true);
+    }
+  }, [pathname, isInitialLoad]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

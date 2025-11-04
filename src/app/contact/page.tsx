@@ -135,7 +135,7 @@ export default function ContactPage() {
                       </div>
                     </div>
                     
-                    <CardContent className="p-6 space-y-6">
+                    <CardContent className="px-6 pb-6 space-y-6">
                       <div className="flex items-start space-x-3">
                         <MapPin className="h-5 w-5 text-brand-600 dark:text-brand-400 mt-1 flex-shrink-0" />
                         <div>
