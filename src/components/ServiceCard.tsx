@@ -37,8 +37,8 @@ export default function ServiceCard({
             src={image}
             alt={title}
             className="w-full h-full object-cover"
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.6 }}
+            // whileHover={{ scale: 1.1 }}
+            // transition={{ duration: 0.6 }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
           <motion.div
