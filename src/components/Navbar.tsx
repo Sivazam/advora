@@ -41,20 +41,31 @@ const NavbarComponent = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // Get element position relative to viewport
+  // Get element position relative to viewport with fallback
   const getElementPosition = (element: HTMLElement) => {
-    const rect = element.getBoundingClientRect();
-    return {
-      x: rect.left,
-      y: rect.top,
-      width: rect.width,
-      height: rect.height
-    };
+    try {
+      const rect = element.getBoundingClientRect();
+      return {
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height
+      };
+    } catch (error) {
+      console.warn('Failed to get element position:', error);
+      return {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+      };
+    }
   };
 
   // Rubber band animation function
   const animateRubberBand = (startPos: { x: number; y: number; width: number; height: number }, 
-                            endPos: { x: number; y: number; width: number; height: number }) => {
+                            endPos: { x: number; y: number; width: number; height: number },
+                            onSuccess?: () => void) => {
     const startTime = Date.now();
     const duration = 800; // Total animation duration
     const intermediatePositions: { x: number; y: number; width: number; height: number }[] = [];
@@ -71,7 +82,10 @@ const NavbarComponent = () => {
         const intermediateElement = navRefs.current[i];
         if (intermediateElement) {
           const pos = getElementPosition(intermediateElement);
-          intermediatePositions.push(pos);
+          // Validate intermediate position
+          if (pos.x !== 0 || pos.y !== 0) {
+            intermediatePositions.push(pos);
+          }
         }
       }
     }
@@ -144,11 +158,28 @@ const NavbarComponent = () => {
           setIsAnimating(false);
           setInstantActiveIndex(null);
           previousPathRef.current = pathname;
+          // Call success callback if provided
+          if (onSuccess) {
+            onSuccess();
+          }
         }, 50);
       }
     };
     
-    animate();
+    // Start animation with a fallback
+    try {
+      animate();
+    } catch (error) {
+      console.warn('Rubber band animation failed:', error);
+      // Fallback: just complete the animation
+      setFlowingBadgePosition(null);
+      setIsAnimating(false);
+      setInstantActiveIndex(null);
+      previousPathRef.current = pathname;
+      if (onSuccess) {
+        onSuccess();
+      }
+    }
   };
 
   // Handle rubber band animation
@@ -159,6 +190,16 @@ const NavbarComponent = () => {
     if (currentIndex !== previousIndex && previousIndex !== -1 && currentIndex !== -1 && !isAnimating) {
       setIsAnimating(true);
       
+      // Debug logging
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Rubber band animation triggered:', {
+          currentIndex,
+          previousIndex,
+          pathname,
+          previousPath: previousPathRef.current
+        });
+      }
+      
       // Reset any existing instant active index first
       setInstantActiveIndex(null);
       
@@ -167,20 +208,21 @@ const NavbarComponent = () => {
         setInstantActiveIndex(currentIndex);
       }, 10);
       
+      // Use a more reliable approach for getting element positions
       const startElement = navRefs.current[previousIndex];
       const endElement = navRefs.current[currentIndex];
       
       if (startElement && endElement) {
-        const startPos = getElementPosition(startElement);
-        const endPos = getElementPosition(endElement);
-        
-        setTargetPosition(endPos);
-        setFlowingBadgePosition(startPos);
-        
-        // Start rubber band animation
-        setTimeout(() => {
-          animateRubberBand(startPos, endPos);
-        }, 50);
+        // HYBRID APPROACH: Try rubber band first, fallback to simple if it fails
+        tryRubberBandAnimation(startElement, endElement);
+      } else {
+        // Elements not found
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Navigation elements not found:', { startElement, endElement });
+        }
+        setIsAnimating(false);
+        setInstantActiveIndex(null);
+        previousPathRef.current = pathname;
       }
     } else if (currentIndex === -1) {
       // Reset if no matching route
@@ -196,6 +238,117 @@ const NavbarComponent = () => {
       }
     };
   }, [pathname, isAnimating]);
+
+  // Hybrid animation function that tries rubber band first, then falls back
+  const tryRubberBandAnimation = (startElement: HTMLElement, endElement: HTMLElement) => {
+    const isProduction = process.env.NODE_ENV === 'production';
+    let animationTimeout: NodeJS.Timeout;
+    let fallbackTimeout: NodeJS.Timeout;
+    
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🎯 Starting hybrid animation approach (Production:', isProduction, ')');
+    }
+    
+    // Set a timeout to fallback if rubber band doesn't work
+    fallbackTimeout = setTimeout(() => {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('⏰ Rubber band animation timeout, falling back to simple animation');
+      }
+      // Clear any pending rubber band animation
+      if (animationTimeout) {
+        clearTimeout(animationTimeout);
+      }
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      // Use simple animation as fallback
+      performSimpleAnimation(startElement, endElement);
+    }, isProduction ? 2000 : 3000); // Shorter timeout in production
+    
+    // Try the rubber band animation
+    try {
+      // Ensure elements are properly measured
+      requestAnimationFrame(() => {
+        const startPos = getElementPosition(startElement);
+        const endPos = getElementPosition(endElement);
+        
+        // Debug logging
+        if (process.env.NODE_ENV === 'development') {
+          console.log('📍 Element positions:', { startPos, endPos });
+        }
+        
+        // Validate positions before proceeding
+        if (startPos.x === 0 && startPos.y === 0 && endPos.x === 0 && endPos.y === 0) {
+          // Fallback: skip animation if positions are invalid
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('❌ Invalid positions, falling back to simple animation');
+          }
+          clearTimeout(fallbackTimeout);
+          performSimpleAnimation(startElement, endElement);
+          return;
+        }
+        
+        setTargetPosition(endPos);
+        setFlowingBadgePosition(startPos);
+        
+        // Start rubber band animation with a more reliable delay
+        animationTimeout = setTimeout(() => {
+          if (process.env.NODE_ENV === 'development') {
+            console.log('🎬 Starting rubber band animation...');
+          }
+          try {
+            animateRubberBand(startPos, endPos, () => {
+              // Success callback - clear fallback timeout
+              if (process.env.NODE_ENV === 'development') {
+                console.log('✅ Rubber band animation completed successfully!');
+              }
+              clearTimeout(fallbackTimeout);
+            });
+          } catch (error) {
+            if (process.env.NODE_ENV === 'development') {
+              console.warn('💥 Rubber band animation failed, falling back to simple animation:', error);
+            }
+            clearTimeout(fallbackTimeout);
+            performSimpleAnimation(startElement, endElement);
+          }
+        }, isProduction ? 150 : 100); // Slightly longer delay in production
+      });
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('🚨 Error setting up rubber band animation, falling back to simple animation:', error);
+      }
+      clearTimeout(fallbackTimeout);
+      performSimpleAnimation(startElement, endElement);
+    }
+  };
+
+  // Simple animation fallback
+  const performSimpleAnimation = (startElement: HTMLElement, endElement: HTMLElement) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Performing simple animation fallback');
+    }
+    
+    setFlowingBadgePosition(getElementPosition(startElement));
+    
+    setTimeout(() => {
+      const endPos = getElementPosition(endElement);
+      if (endPos.x !== 0 || endPos.y !== 0) {
+        setFlowingBadgePosition(endPos);
+        setTimeout(() => {
+          setFlowingBadgePosition(null);
+          setIsAnimating(false);
+          setInstantActiveIndex(null);
+          previousPathRef.current = pathname;
+        }, 200);
+      } else {
+        // Fallback if position is invalid
+        setFlowingBadgePosition(null);
+        setIsAnimating(false);
+        setInstantActiveIndex(null);
+        previousPathRef.current = pathname;
+      }
+    }, 50);
+  };
 
   // Animation state management
   useEffect(() => {

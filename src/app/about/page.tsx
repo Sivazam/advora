@@ -93,7 +93,7 @@ export default function AboutPage() {
           breadcrumbItems={[
             { label: "About" }
           ]}
-          imageUrl="https://plus.unsplash.com/premium_photo-1679784204532-b816d1b26ab2?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8VGF4JTIwc2VydmljZXN8ZW58MHx8MHx8fDA%3D?w=1920&h=1080&fit=crop&crop=center&q=80"
+          imageUrl="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YWJvdXQlMjB1c3xlbnwwfHwwfHx8Mg%3D%3D?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
 
         {/* Director Section */}
@@ -208,7 +208,7 @@ export default function AboutPage() {
               >
                 <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 h-full">
                   <CardHeader>
-                    <div className="flex items-center space-x-3 mb-4">
+                    <div className="flex items-center space-x-3 pt-6">
                       <div className="w-12 h-12 bg-[#916f2a] rounded-xl flex items-center justify-center">
                         <MissionIcon className="w-6 h-6 text-white" />
                       </div>
@@ -250,7 +250,7 @@ export default function AboutPage() {
               >
                 <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 h-full">
                   <CardHeader>
-                    <div className="flex items-center space-x-3 mb-4">
+                    <div className="flex items-center space-x-3 pt-6">
                       <div className="w-12 h-12 bg-[#916f2a] rounded-xl flex items-center justify-center">
                         <VisionIcon className="w-6 h-6 text-white" />
                       </div>
@@ -266,7 +266,7 @@ export default function AboutPage() {
                       between complex tax regulations and business growth opportunities.
                     </p>
                     <div className="mt-6 space-y-3">
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-3 ">
                         <Star className="h-4 w-4 text-brand-600 dark:text-brand-400 flex-shrink-0" />
                         <span style={{ color: '#424242' }}>Global Leadership</span>
                       </div>
@@ -315,7 +315,7 @@ export default function AboutPage() {
                 >
                   <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 h-full text-center hover:shadow-xl transition-all duration-300">
                     <CardHeader>
-                      <div className="w-16 h-16 mx-auto mb-4 bg-[#916f2a] rounded-2xl flex items-center justify-center">
+                      <div className="w-16 h-16 mx-auto mb-4 mt-4 bg-[#916f2a] rounded-2xl flex items-center justify-center">
                         <value.icon className="w-8 h-8 text-white" />
                       </div>
                       <CardTitle className="text-xl font-semibold" style={{ color: '#424242' }}>
