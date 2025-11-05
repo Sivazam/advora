@@ -93,7 +93,7 @@ export default function ContactPage() {
           breadcrumbItems={[
             { label: "Contact" }
           ]}
-          imageUrl="https://images.unsplash.com/photo-1740560051533-3acef26ace95?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y29udGFjdCUyMHVzfGVufDB8fDB8fHwy?w=1920&h=1080&fit=crop&crop=bottom&q=80"
+          imageUrl="https://images.unsplash.com/photo-1499159058454-75067059248a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGNvbnRhY3QlMjB1c3xlbnwwfHwwfHx8Mg%3D%3D?w=1920&h=1080&fit=crop&crop=center&q=80"
         />
 
         {/* Simple USP Banner */}
