@@ -30,7 +30,9 @@ export default function ServiceCard({
       viewport={{ once: true }}
       className="group"
     >
-      <div className="h-full overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:scale-105 border-0 rounded-2xl bg-white flex flex-col">
+      {/* <div className="h-full overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group-hover:scale-105 border-0 rounded-2xl bg-white flex flex-col"> */}
+      <div className="h-full overflow-hidden shadow-lg transition-all duration-500  border-0 rounded-2xl bg-white flex flex-col">
+
         {/* Image Section */}
         <div className="relative h-48 overflow-hidden rounded-t-2xl flex-shrink-0">
           <motion.img
