@@ -93,7 +93,7 @@ export default function FAQPage() {
       id: 'q8',
       category: 'general',
       question: 'What makes Advora Services different from other tax services?',
-      answer: 'We differentiate ourselves through personalized service, expertise in both US and Indian tax systems, competitive pricing, and a commitment to client education. Our director, Ram Chowdhary, brings over 15 years of experience and a client-centric approach to every engagement.',
+      answer: 'We differentiate ourselves through personalized service, expertise in both US and Indian tax systems, competitive pricing, and a commitment to client education. Our director, Ram Chowdhary, brings over 5 years of experience and a client-centric approach to every engagement.',
       icon: Star
     },
     {

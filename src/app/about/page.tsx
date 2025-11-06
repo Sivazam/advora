@@ -175,7 +175,7 @@ export default function AboutPage() {
                     <div className="space-y-3">
                       <div className="flex items-center space-x-3">
                         <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span style={{ color: '#424242' }}>15+ Years in Tax & Business Services</span>
+                        <span style={{ color: '#424242' }}>5+ Years in Tax & Business Services</span>
                       </div>
                       <div className="flex items-center space-x-3">
                         <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />

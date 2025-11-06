@@ -350,7 +350,7 @@ export default function Home() {
                           <div>
                             <h5 className="font-semibold font-raleway" style={{ color: '#424242' }}>Expertise</h5>
                             <p className="text-sm font-raleway" style={{ color: '#424242' }}>
-                              Over 15 years of experience in taxation and business consulting
+                              Over 5+ years of experience in taxation and business consulting
                             </p>
                           </div>
                         </div>
