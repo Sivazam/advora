@@ -412,8 +412,9 @@ const NavbarComponent = () => {
               </div>
               <div className="ml-3 leading-tight">
                 <div>
-                  <span className="text-xl font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
-                  <span className="text-sm font-raleway group-hover:text-brand-500 transition-colors duration-300 leading-none block" style={{ color: '#424242' }}>Services</span>
+                  <span className="text-2xl font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
+                  <div className="my-0.5 h-px w-full" style={{ backgroundColor: '#916f2a' }}></div>
+                  <span className="text-sm font-raleway group-hover:text-brand-500 transition-colors duration-300 leading-none block text-center" style={{ color: '#424242' }}>Services</span>
                 </div>
               </div>
             </Link>
@@ -513,8 +514,11 @@ const NavbarComponent = () => {
         }}
       >
         <div className="flex items-center justify-between px-4 py-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
+          {/* Empty div for balance */}
+          <div className="w-10 h-10"></div>
+
+          {/* Logo - Centered with 3% left offset */}
+          <Link href="/" className="flex items-center space-x-3 group absolute left-[47%] transform -translate-x-1/2">
             <div
               className="w-9 h-9 rounded-lg overflow-hidden bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center border border-brand-200 shadow-md"
             >
@@ -525,12 +529,15 @@ const NavbarComponent = () => {
               />
             </div>
             <div className="leading-tight">
-              <span className="text-lg font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
-              <span className="text-sm font-raleway group-hover:text-brand-500 transition-colors duration-300 leading-none block" style={{ color: '#424242' }}>Services</span>
+              <div>
+                <span className="text-xl font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
+                <div className="my-0.5 h-px w-full" style={{ backgroundColor: '#916f2a' }}></div>
+                <span className="text-sm font-raleway group-hover:text-brand-500 transition-colors duration-300 leading-none block text-center" style={{ color: '#424242' }}>Services</span>
+              </div>
             </div>
           </Link>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle - Right Side */}
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <Button
               variant="ghost"

@@ -67,7 +67,7 @@ export default function ContactPage() {
   const contactInfo = [
     {
       title: 'USA Office',
-      address: '1103 Hidden Ridge APT 1012, Irving, Texas, 75038',
+      address: '1103 Hidden Ridge, Texas, 75038',
       phone: '+1 (502) 718-0460',
       email: 'usa@advoraservices.com',
       hours: 'Mon-Fri: 9:00 AM - 6:00 PM EST',
@@ -75,7 +75,7 @@ export default function ContactPage() {
     },
     {
       title: 'India Office',
-      address: 'Plot No 19, 1st floor, Power Nagar, Power Nagar Park Road, Moosapet, Hyderabad, 500018',
+      address: 'Plot no 22, vivek apartments, lal bunglow Road, Ameerpet, Hyderabad, 500018',
       phone: '+91-9491941299',
       email: 'india@advoraservices.com',
       hours: 'Mon-Sat: 10:00 AM - 7:00 PM IST',

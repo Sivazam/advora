@@ -97,7 +97,7 @@ export default function AboutPage() {
         />
 
         {/* Director Section */}
-        <section className="py-20" style={{ backgroundColor: '#f7f4c8' }}>
+        <section className="py-16" style={{ backgroundColor: '#f7f4c8' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="max-w-6xl mx-auto"
@@ -106,7 +106,7 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-6">
                   <div className="flex flex-col items-center text-center lg:text-left">
                     <motion.div
                       className="w-48 h-48 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 overflow-hidden"
@@ -208,7 +208,7 @@ export default function AboutPage() {
               >
                 <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 h-full">
                   <CardHeader>
-                    <div className="flex items-center space-x-3 pt-6">
+                    <div className="flex items-center justify-center space-x-3 pt-6">
                       <div className="w-12 h-12 bg-[#916f2a] rounded-xl flex items-center justify-center">
                         <MissionIcon className="w-6 h-6 text-white" />
                       </div>
@@ -218,7 +218,7 @@ export default function AboutPage() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-lg leading-relaxed font-luxury-body" style={{ color: '#424242' }}>
+                    <p className="text-lg leading-relaxed font-luxury-body text-justify" style={{ color: '#424242' }}>
                       To provide exceptional tax and business services that empower our clients to achieve 
                       their financial goals. We are committed to delivering accurate, timely, and 
                       cost-effective solutions while maintaining the highest standards of integrity 
@@ -250,7 +250,7 @@ export default function AboutPage() {
               >
                 <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 h-full">
                   <CardHeader>
-                    <div className="flex items-center space-x-3 pt-6">
+                    <div className="flex items-center justify-center space-x-3 pt-6">
                       <div className="w-12 h-12 bg-[#916f2a] rounded-xl flex items-center justify-center">
                         <VisionIcon className="w-6 h-6 text-white" />
                       </div>
@@ -260,7 +260,7 @@ export default function AboutPage() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-lg leading-relaxed font-luxury-body" style={{ color: '#424242' }}>
+                    <p className="text-lg leading-relaxed font-luxury-body text-justify" style={{ color: '#424242' }}>
                       To be the leading tax and business services provider recognized for our expertise, 
                       innovation, and unwavering commitment to client success. We aim to bridge the gap 
                       between complex tax regulations and business growth opportunities.
@@ -468,9 +468,6 @@ export default function AboutPage() {
               {/* Mobile Timeline */}
               <div className="md:hidden">
                 <div className="relative">
-                  {/* Vertical line for mobile */}
-                  <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-brand-600 to-brand-400"></div>
-                  
                   {timeline.map((item, index) => (
                     <motion.div
                       key={item.year}
@@ -478,31 +475,13 @@ export default function AboutPage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      className="relative mb-8"
+                      className="relative mb-8 flex justify-center"
                     >
-                      {/* Timeline dot for mobile */}
-                      <motion.div
-                        className="absolute left-6 w-5 h-5 bg-brand-600 rounded-full border-4 border-white dark:border-gray-800 z-10"
-                        whileHover={{ scale: 1.2 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      />
-                      
-                      {/* Year badge for mobile */}
-                      <div className="ml-16 mb-3">
-                        <motion.span
-                          className="inline-block px-3 py-1 bg-[#916f2a] text-white rounded-full text-sm font-bold"
-                          whileHover={{ scale: 1.05 }}
-                          transition={{ type: "spring", stiffness: 300 }}
-                        >
-                          {item.year}
-                        </motion.span>
-                      </div>
-                      
-                      {/* Card for mobile */}
+                      {/* Card for mobile - Centered */}
                       <motion.div
                         whileHover={{ scale: 1.02, y: -2 }}
                         transition={{ type: "spring", stiffness: 300 }}
-                        className="ml-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700"
+                        className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 w-full max-w-md"
                       >
                         <div className="relative h-40 overflow-hidden">
                           <img
@@ -511,6 +490,9 @@ export default function AboutPage() {
                             className="w-full h-full object-cover"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                          <div className="absolute bottom-3 left-3">
+                            <span className="text-2xl font-bold text-white">{item.year}</span>
+                          </div>
                         </div>
                         <div className="p-4">
                           <h3 className="text-lg font-semibold mb-2" style={{ color: '#424242' }}>

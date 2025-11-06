@@ -51,7 +51,7 @@ export default function FAQPage() {
       id: 'q2',
       category: 'general',
       question: 'Do you provide services in both USA & India?',
-      answer: 'Yes, we proudly serve clients in both the USA and India. We have offices in Irving, Texas, and Hyderabad, India, with teams familiar with the tax laws and business regulations of both countries.',
+      answer: 'Yes, we proudly serve clients in both the USA and India. We have offices in Texas, and Hyderabad, India, with teams familiar with the tax laws and business regulations of both countries.',
       icon: Globe
     },
     {

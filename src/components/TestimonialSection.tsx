@@ -3,7 +3,11 @@
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star, Quote } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 interface Testimonial {
   id: number;
@@ -73,7 +77,17 @@ const testimonials: Testimonial[] = [
 ];
 
 export default function TestimonialSection() {
-  const [isPaused, setIsPaused] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -86,12 +100,15 @@ export default function TestimonialSection() {
     ));
   };
 
-  const renderTestimonialCard = (testimonial: Testimonial, index: number) => (
+  const renderTestimonialCard = (testimonial: Testimonial) => (
     <motion.div
-      key={`${testimonial.id}-${index}`}
-      className="flex-shrink-0 w-80 mx-4"
+      key={testimonial.id}
+      className="h-full select-none"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.02 }}
-      transition={{ duration: 0.3 }}
+      style={{ height: '100%' }}
     >
       <Card className="h-full bg-white shadow-lg hover:shadow-2xl transition-all duration-500 border-0 overflow-hidden group">
         <CardContent className="p-6 flex flex-col h-full">
@@ -110,24 +127,17 @@ export default function TestimonialSection() {
           </div>
 
           {/* Content */}
-          <p className="mb-6 leading-relaxed flex-1 font-raleway" style={{ color: '#424242' }}>
+          <p className="mb-6 leading-relaxed flex-1 font-raleway select-none" style={{ color: '#424242' }}>
             "{testimonial.content}"
           </p>
 
           {/* Author Info */}
-          <div className="flex items-center space-x-4 mt-auto">
-            <motion.img
-              src={testimonial.image}
-              alt={testimonial.name}
-              className="w-12 h-12 rounded-full object-cover"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            />
+          <div className="mt-auto">
             <div>
-              <h4 className="font-semibold font-raleway-heading" style={{ color: '#424242' }}>
+              <h4 className="font-semibold font-raleway-heading select-none" style={{ color: '#424242' }}>
                 {testimonial.name}
               </h4>
-              <p className="text-sm font-raleway" style={{ color: '#424242' }}>
+              <p className="text-sm font-raleway select-none" style={{ color: '#424242' }}>
                 {testimonial.role} at {testimonial.company}
               </p>
             </div>
@@ -137,9 +147,12 @@ export default function TestimonialSection() {
     </motion.div>
   );
 
+  // Create duplicated testimonials for infinite loop effect
+  const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials, ...testimonials];
+
   return (
-    <section className="py-20 pb-24 overflow-hidden" style={{ backgroundColor: '#f7f4c8' }}>
-      <div className="container mx-auto px-4">
+    <section className="py-20 pb-24 overflow-hidden w-full" style={{ backgroundColor: '#f7f4c8' }}>
+      <div className="w-full max-w-full px-4">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -158,41 +171,73 @@ export default function TestimonialSection() {
           </p>
         </motion.div>
 
-        {/* Scrolling Testimonials */}
-        <div 
-          className="relative mb-16 overflow-hidden"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {/* Single Row - Left to Right */}
-          <div
-            className="flex py-4"
+        {/* Swiper Carousel - Full width */}
+        <div className="relative mb-16" style={{ width: '100vw', marginLeft: 'calc(-50vw + 50%)' }}>
+          <Swiper
+            modules={[Autoplay, Pagination]}
+            spaceBetween={32}
+            slidesPerView={1}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                spaceBetween: 24
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 32
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 32
+              },
+              1280: {
+                slidesPerView: 3,
+                spaceBetween: 32
+              }
+            }}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true
+            }}
+            loop={true}
+            loopAdditionalSlides={4}
+            allowTouchMove={true}
+            grabCursor={true}
+            simulateTouch={true}
+            touchEventsTarget="container"
+            resistance={true}
+            resistanceRatio={0.85}
+            pagination={{
+              clickable: true,
+              dynamicBullets: true,
+              dynamicMainBullets: 3
+            }}
+            speed={600}
+            effect="slide"
+            className="testimonial-swiper"
             style={{
-              animation: `scroll-left 60s linear infinite`,
-              animationPlayState: isPaused ? 'paused' : 'running'
+              padding: '1rem 0',
+              overflow: 'visible'
             }}
           >
-            {testimonials.map((testimonial, index) => renderTestimonialCard(testimonial, index))}
-            {/* Duplicate for seamless loop */}
-            {testimonials.map((testimonial, index) => renderTestimonialCard(testimonial, index + testimonials.length))}
-          </div>
+            {duplicatedTestimonials.map((testimonial, index) => (
+              <SwiperSlide key={`${testimonial.id}-${index}`} style={{ height: 'auto' }}>
+                {renderTestimonialCard(testimonial)}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          
+          {/* Custom Navigation Buttons - REMOVED */}
+          {/* Navigation arrows removed as requested */}
+          
+          {/* Mobile Swipe Hint - REMOVED */}
+          {/* Swipe hint text removed as requested */}
         </div>
-
-        {/* Add CSS animation keyframes */}
-        <style jsx>{`
-          @keyframes scroll-left {
-            from {
-              transform: translateX(0);
-            }
-            to {
-              transform: translateX(-50%);
-            }
-          }
-        `}</style>
 
         {/* Additional Stats */}
         <motion.div
-          className="mt-8 text-center"
+          className="flex justify-center items-center w-full mt-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -216,6 +261,52 @@ export default function TestimonialSection() {
           </div>
         </motion.div>
       </div>
+
+      {/* Custom Swiper Styles */}
+      <style jsx global>{`
+        .testimonial-swiper {
+          padding: 1rem 4rem !important;
+        }
+        
+        .testimonial-swiper .swiper-slide {
+          height: auto !important;
+        }
+        
+        .testimonial-swiper .swiper-pagination {
+          bottom: -2rem !important;
+        }
+        
+        .testimonial-swiper .swiper-pagination-bullet {
+          background: #424242 !important;
+          opacity: 0.3 !important;
+        }
+        
+        .testimonial-swiper .swiper-pagination-bullet-active {
+          background: #424242 !important;
+          opacity: 1 !important;
+        }
+        
+        .testimonial-swiper .swiper-button-prev,
+        .testimonial-swiper .swiper-button-next {
+          display: none !important;
+        }
+        
+        /* Hide scrollbar */
+        .testimonial-swiper::-webkit-scrollbar {
+          display: none;
+        }
+        
+        .testimonial-swiper {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        
+        @media (max-width: 768px) {
+          .testimonial-swiper {
+            padding: 1rem 1rem !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

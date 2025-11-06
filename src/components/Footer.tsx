@@ -32,8 +32,8 @@ export default function Footer() {
               <div className="flex items-start space-x-2">
                 <MapPin className="h-4 w-4 mt-0.5 text-brand-200" />
                 <span>
-                  1103 Hidden Ridge APT 1012<br />
-                  Irving, Texas, 75038
+                  1103 Hidden Ridge<br />
+                  Texas, 75038
                 </span>
               </div>
               <div className="flex items-center space-x-2">
@@ -53,8 +53,8 @@ export default function Footer() {
               <div className="flex items-start space-x-2">
                 <MapPin className="h-4 w-4 mt-0.5 text-brand-200" />
                 <span>
-                  Plot No 19, 1st floor, Power Nagar<br />
-                  Power Nagar Park Road, Moosapet<br />
+                  Plot no 22, vivek apartments<br />
+                  lal bunglow Road, Ameerpet<br />
                   Hyderabad, 500018
                 </span>
               </div>
