@@ -100,7 +100,7 @@ export default function FAQPage() {
       id: 'q9',
       category: 'contact',
       question: 'How can I reach customer support?',
-      answer: 'You can reach our customer support team through multiple channels: phone (USA: +1 (502) 718-0460, India: +91-9491941299), email (usa@advoraservices.com or india@advoraservices.com), or through our website\'s contact form. We\'re available during business hours and typically respond within 24 hours.',
+      answer: 'You can reach our customer support team through multiple channels: phone (USA: +1 (502) 718-0460, India: +91-9493395299), email (usa@advoraservices.com or india@advoraservices.com), or through our website\'s contact form. We\'re available during business hours and typically respond within 24 hours.',
       icon: Phone
     },
     {

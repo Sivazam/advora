@@ -76,7 +76,7 @@ export default function ContactPage() {
     {
       title: 'India Office',
       address: 'Plot no 22, vivek apartments, lal bunglow Road, Ameerpet, Hyderabad, 500018',
-      phone: '+91-9491941299',
+      phone: '+91-9493395299',
       email: 'india@advoraservices.com',
       hours: 'Mon-Sat: 10:00 AM - 7:00 PM IST',
       icon: Building
@@ -338,7 +338,7 @@ export default function ContactPage() {
                       </div>
                       <h3 className="text-xl font-semibold mb-2 text-white">Call Us</h3>
                       <p className="text-white mb-2">USA: +1 (502) 718-0460</p>
-                      <p className="text-white">India: +91-9491941299</p>
+                      <p className="text-white">India: +91-9493395299</p>
                     </div>
                     
                     <div>

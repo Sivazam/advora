@@ -7,20 +7,20 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center overflow-hidden">
-                <img src="/advora-logo.jpg" alt="Advora Services" className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold">Advora Services</h3>
-                <p className="text-sm text-white/80">Tax & Business Solutions</p>
-              </div>
-            </div>
-            <p className="text-sm text-white/80">
-              Your trusted partner in tax filing and business services across the USA and India.
-            </p>
+        <div className="space-y-4">
+        <div className="flex items-center space-x-2">
+          <div className="h-13 w-auto flex items-center justify-center">
+            <img src="/advoraLogoRev.png" alt="Advora Services" className="h-full w-auto object-contain" />
           </div>
+          <div>
+            <h3 className="text-lg font-semibold">Advora Services</h3>
+            <p className="text-sm text-white/80">Tax & Business Solutions</p>
+          </div>
+        </div>
+          <p className="text-sm text-white/80">
+            Your trusted partner in tax filing and business services across the USA and India.
+          </p>
+        </div>
 
           {/* USA Office */}
           <div className="space-y-4">
@@ -60,7 +60,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-brand-200" />
-                <span>+91-9491941299</span>
+                <span>+91-9493395299</span>
               </div>
             </div>
           </div>

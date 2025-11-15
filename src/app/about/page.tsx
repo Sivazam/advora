@@ -106,92 +106,92 @@ export default function AboutPage() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-6">
-                  <div className="flex flex-col items-center text-center lg:text-left">
-                    <motion.div
-                      className="w-48 h-48 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mb-6 overflow-hidden"
-                      initial={{ scale: 0.8, opacity: 0 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      transition={{ duration: 0.6 }}
-                      viewport={{ once: true }}
-                    >
-                      <img 
-                        src="/advora-logo.jpg" 
-                        alt="Advora Services" 
-                        className="w-full h-full object-cover"
-                      />
-                    </motion.div>
-                    
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
-                      viewport={{ once: true }}
-                    >
-                      <h2 className="text-3xl font-bold mb-2 font-luxury-heading" style={{ color: '#424242' }}>
-                         Ram Chowdhary
-                      </h2>
-                      <p className="text-xl text-brand-600 dark:text-brand-400 font-medium mb-4 font-luxury-body">
-                        Director & Founder
-                      </p>
-                      
-                      <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6">
-                        <span className="px-3 py-1 bg-[#916f2a] text-white rounded-full text-sm font-medium">
-                          Tax Expert
-                        </span>
-                        <span className="px-3 py-1 bg-[#916f2a] text-white rounded-full text-sm font-medium">
-                          Business Consultant
-                        </span>
-                        <span className="px-3 py-1 bg-[#916f2a] text-white rounded-full text-sm font-medium">
-                          Strategic Advisor
-                        </span>
-                      </div>
-                    </motion.div>
-                  </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-6">
+              <div className="flex flex-col items-center text-center lg:text-left">
+                <motion.div
+                  className="w-48 h-48 flex items-center justify-center mb-6"
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                >
+                  <img 
+                    src="/advoraLogoRev.png" 
+                    alt="Advora Services" 
+                    className="w-full h-full object-contain"
+                  />
+                </motion.div>
+                
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  <h2 className="text-3xl font-bold mb-2 font-luxury-heading" style={{ color: '#424242' }}>
+                    Ram Chowdhary
+                  </h2>
+                  <p className="text-xl text-brand-600 dark:text-brand-400 font-medium mb-4 font-luxury-body">
+                    Director & Founder
+                  </p>
                   
-                  <motion.div
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    viewport={{ once: true }}
-                    className="space-y-6"
-                  >
-                    <div>
-                      <h3 className="text-2xl font-bold mb-4" style={{ color: '#424242' }}>
-                        Leadership & Vision
-                      </h3>
-                      <p className="mb-4" style={{ color: '#424242' }}>
-                        Ram Chowdhary brings over a decade of expertise in taxation and business services. 
-                        His leadership has been instrumental in establishing Advora Services as a trusted 
-                        partner for businesses and individuals across the USA and India.
-                      </p>
-                      <p style={{ color: '#424242' }}>
-                        With a deep understanding of international tax laws and business regulations, 
-                        Ram Chowdhary has successfully guided numerous clients through complex tax situations 
-                        and business challenges.
-                      </p>
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span style={{ color: '#424242' }}>5+ Years in Tax & Business Services</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span style={{ color: '#424242' }}>Expert in US & Indian Tax Systems</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span style={{ color: '#424242' }}>1000+ Satisfied Clients</span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <span style={{ color: '#424242' }}>Strategic Business Advisor</span>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <div className="flex flex-wrap justify-center lg:justify-start gap-2 mb-6">
+                    <span className="px-3 py-1 bg-[#916f2a] text-white rounded-full text-sm font-medium">
+                      Tax Expert
+                    </span>
+                    <span className="px-3 py-1 bg-[#916f2a] text-white rounded-full text-sm font-medium">
+                      Business Consultant
+                    </span>
+                    <span className="px-3 py-1 bg-[#916f2a] text-white rounded-full text-sm font-medium">
+                      Strategic Advisor
+                    </span>
+                  </div>
+                </motion.div>
+              </div>
+              
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="space-y-6"
+              >
+                <div>
+                  <h3 className="text-2xl font-bold mb-4" style={{ color: '#424242' }}>
+                    Leadership & Vision
+                  </h3>
+                  <p className="mb-4" style={{ color: '#424242' }}>
+                    Ram Chowdhary brings over a decade of expertise in taxation and business services. 
+                    His leadership has been instrumental in establishing Advora Services as a trusted 
+                    partner for businesses and individuals across the USA and India.
+                  </p>
+                  <p style={{ color: '#424242' }}>
+                    With a deep understanding of international tax laws and business regulations, 
+                    Ram Chowdhary has successfully guided numerous clients through complex tax situations 
+                    and business challenges.
+                  </p>
                 </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
+                    <span style={{ color: '#424242' }}>5+ Years in Tax & Business Services</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
+                    <span style={{ color: '#424242' }}>Expert in US & Indian Tax Systems</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
+                    <span style={{ color: '#424242' }}>1000+ Satisfied Clients</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
+                    <span style={{ color: '#424242' }}>Strategic Business Advisor</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
             </motion.div>
           </div>
         </section>

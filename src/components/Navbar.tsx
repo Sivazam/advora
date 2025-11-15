@@ -401,15 +401,15 @@ const NavbarComponent = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center group">
-              <div
-                className="w-10 h-10 rounded-lg overflow-hidden bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center border border-brand-200 shadow-md"
-              >
-                <img 
-                  src="/advora-logo.jpg" 
-                  alt="Advora Services" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className="h-14 md:h-20">
+            <img 
+              src="/advoraLogoRev.png"  
+              alt="Advora Services" 
+              className="h-full w-auto object-contain"
+              loading="eager"
+              style={{ imageRendering: 'crisp-edges' }}
+            />
+          </div>
               <div className="ml-3 leading-tight">
                 <div>
                   <span className="text-2xl font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
@@ -519,15 +519,14 @@ const NavbarComponent = () => {
 
           {/* Logo - Centered with 3% left offset */}
           <Link href="/" className="flex items-center space-x-3 group absolute left-[47%] transform -translate-x-1/2">
-            <div
-              className="w-9 h-9 rounded-lg overflow-hidden bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center border border-brand-200 shadow-md"
-            >
-              <img 
-                src="/advora-logo.jpg" 
-                alt="Advora Services" 
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <div className="h-16 md:h-18">
+          <img 
+            src="/advoraLogoRev.png" 
+            alt="Advora Services" 
+            className="h-full w-auto object-contain"
+            loading="eager"
+          />
+        </div>
             <div className="leading-tight">
               <div>
                 <span className="text-xl font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>

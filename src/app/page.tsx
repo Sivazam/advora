@@ -264,15 +264,13 @@ export default function Home() {
                       transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
                       viewport={{ once: true }}
                     >
-                      <div
-                        className="w-64 h-64 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center mb-8 shadow-2xl overflow-hidden"
-                      >
-                        <img 
-                          src="/advora-logo.jpg" 
-                          alt="Advora Services" 
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
+                     <div className="w-64 h-64 flex items-center justify-center mb-8">
+                      <img 
+                        src="/advoraLogoRev.png" 
+                        alt="Advora Services" 
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                       
                       <div className="space-y-4">
                         <h3 className="text-3xl font-bold font-raleway-heading" style={{ color: '#424242' }}>
