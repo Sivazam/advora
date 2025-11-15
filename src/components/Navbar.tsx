@@ -386,7 +386,7 @@ const NavbarComponent = () => {
   return (
     <>
       {/* Desktop Navbar */}
-      <motion.nav 
+<motion.nav 
         className="hidden md:block fixed z-50 top-6 left-0 right-0"
         initial={!hasAnimated ? { y: -100, opacity: 0 } : false}
         animate={!hasAnimated ? { y: 0, opacity: 1 } : false}
@@ -396,12 +396,12 @@ const NavbarComponent = () => {
         }}
       >
         <div
-          className="relative mx-auto bg-white/95 backdrop-blur-md border border-gray-200/50 rounded-full px-8 py-4 shadow-2xl max-w-5xl"
+          className="relative mx-auto bg-white/95 backdrop-blur-md border border-gray-200/50 rounded-full px-8 py-2.5 shadow-2xl max-w-5xl"
         >
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center group">
-            <div className="h-14 md:h-20">
+            <div className="h-12 md:h-16">
             <img 
               src="/advoraLogoRev.png"  
               alt="Advora Services" 
@@ -412,9 +412,9 @@ const NavbarComponent = () => {
           </div>
               <div className="ml-3 leading-tight">
                 <div>
-                  <span className="text-2xl font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
+                  <span className="text-xl font-black font-raleway-heading group-hover:text-brand-600 transition-colors duration-300 uppercase" style={{ fontWeight: 800, color: '#424242' }}>Advora</span>
                   <div className="my-0.5 h-px w-full" style={{ backgroundColor: '#916f2a' }}></div>
-                  <span className="text-sm font-raleway group-hover:text-brand-500 transition-colors duration-300 leading-none block text-center" style={{ color: '#424242' }}>Services</span>
+                  <span className="text-xs font-raleway group-hover:text-brand-500 transition-colors duration-300 leading-none block text-center" style={{ color: '#424242' }}>Services</span>
                 </div>
               </div>
             </Link>
@@ -425,7 +425,7 @@ const NavbarComponent = () => {
                 <div key={item.name} ref={el => navRefs.current[index] = el}>
                   <Link href={item.href} prefetch={true} onClick={() => handleNavigation(item.href)}>
                     <motion.div
-                      className="relative px-5 py-3 rounded-full text-sm font-medium overflow-hidden group"
+                      className="relative px-5 py-2.5 rounded-full text-sm font-medium overflow-hidden group"
                       initial={!hasAnimated ? { opacity: 0, y: -20 } : false}
                       animate={!hasAnimated ? { opacity: 1, y: 0 } : false}
                       transition={{ 
@@ -459,14 +459,14 @@ const NavbarComponent = () => {
                         <div
                           className="absolute inset-0 bg-gradient-to-r from-[#916f2a] to-[#7a5d24] rounded-full shadow-lg flex items-center justify-center"
                         >
-                          <span className="text-white font-bold font-raleway-accent text-base">
+                          <span className="text-white font-bold font-raleway-accent text-sm">
                             {item.name}
                           </span>
                         </div>
                       )}
                       
                       {/* Text (shown when not active) */}
-                      <span className={`relative z-10 font-raleway-accent text-base font-semibold transition-all duration-0 ${
+                      <span className={`relative z-10 font-raleway-accent text-sm font-semibold transition-all duration-0 ${
                         instantActiveIndex === index
                           ? 'opacity-0 pointer-events-none'
                           : pathname === item.href
@@ -495,7 +495,7 @@ const NavbarComponent = () => {
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#916f2a] to-[#7a5d24] rounded-full shadow-lg flex items-center justify-center">
-              <span className="text-white font-bold font-raleway-accent text-base">
+              <span className="text-white font-bold font-raleway-accent text-sm">
                 {navItems[instantActiveIndex !== null ? instantActiveIndex : navItems.findIndex(item => item.href === pathname)]?.name}
               </span>
             </div>

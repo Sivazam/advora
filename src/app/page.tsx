@@ -263,14 +263,27 @@ export default function Home() {
                       whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                       transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
                       viewport={{ once: true }}
-                    >
-                     <div className="w-64 h-64 flex items-center justify-center mb-8">
-                      <img 
-                        src="/advoraLogoRev.png" 
-                        alt="Advora Services" 
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
+                    > 
+                  <div className="w-64 h-64 flex items-center justify-center mb-8">
+                    <img 
+                      src="/advoraLogoRev.png" 
+                      alt="Advora Services" 
+                      className="w-full h-full object-contain"
+                      style={{ filter: 'drop-shadow(0 5px 7px rgba(145, 110, 42, 0.7)' }}
+                    />
+                  </div>
+
+
+{/* <div className="flex items-center justify-center mb-8">
+  <div className="w-80 h-80 bg-white rounded-full flex items-center justify-center p-4" style={{ aspectRatio: '1/1' }}>
+    <img 
+      src="/advoraLogoRev.png" 
+      alt="Advora Services" 
+      className="w-full h-full object-contain"
+    />
+  </div>
+</div> */}
+
                       
                       <div className="space-y-4">
                         <h3 className="text-3xl font-bold font-raleway-heading" style={{ color: '#424242' }}>

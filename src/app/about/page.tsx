@@ -109,17 +109,18 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-6">
               <div className="flex flex-col items-center text-center lg:text-left">
                 <motion.div
-                  className="w-48 h-48 flex items-center justify-center mb-6"
+                  className="w-64 h-64 flex items-center justify-center mb-8"
                   initial={{ scale: 0.8, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
                 >
-                  <img 
-                    src="/advoraLogoRev.png" 
-                    alt="Advora Services" 
-                    className="w-full h-full object-contain"
-                  />
+                 <img 
+                      src="/advoraLogoRev.png" 
+                      alt="Advora Services" 
+                      className="w-full h-full object-contain"
+                      style={{ filter: 'drop-shadow(0 5px 7px rgba(145, 110, 42, 0.7)' }}
+                    />
                 </motion.div>
                 
                 <motion.div
@@ -127,6 +128,8 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                   viewport={{ once: true }}
+                  className="text-center"
+
                 >
                   <h2 className="text-3xl font-bold mb-2 font-luxury-heading" style={{ color: '#424242' }}>
                     Ram Chowdhary
