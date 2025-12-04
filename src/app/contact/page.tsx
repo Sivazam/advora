@@ -352,11 +352,11 @@ export default function ContactPage() {
                         </a>
                       </p>
 
-                      <p className="text-white">
+                      {/* <p className="text-white">
                         <a href="mailto:info@advoraservices.com" className="text-white">
                           info@advoraservices.com
                         </a>
-                      </p>
+                      </p> */}
                     </div>
                     
                     <div>
