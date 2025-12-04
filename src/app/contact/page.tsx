@@ -69,7 +69,7 @@ export default function ContactPage() {
       title: 'USA Office',
       address: '1103 Hidden Ridge, Texas, 75038',
       phone: '+1 (502) 718-0460',
-      email: 'usa@advoraservices.com',
+      email: 'info@advoraservices.com',
       hours: 'Mon-Fri: 9:00 AM - 6:00 PM EST',
       icon: Globe
     },
@@ -77,7 +77,7 @@ export default function ContactPage() {
       title: 'India Office',
       address: 'Plot no 22, vivek apartments, lal bunglow Road, Ameerpet, Hyderabad, 500018',
       phone: '+91-9493395299',
-      email: 'india@advoraservices.com',
+      email: 'info@advoraservices.com',
       hours: 'Mon-Sat: 10:00 AM - 7:00 PM IST',
       icon: Building
     }
@@ -346,8 +346,17 @@ export default function ContactPage() {
                         <Mail className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="text-xl font-semibold mb-2 text-white">Email Us</h3>
-                      <p className="text-white mb-2">usa@advoraservices.com</p>
-                      <p className="text-white">india@advoraservices.com</p>
+                      <p className="text-white mb-2">
+                        <a href="mailto:info@advoraservices.com" className="text-white">
+                          info@advoraservices.com
+                        </a>
+                      </p>
+
+                      <p className="text-white">
+                        <a href="mailto:info@advoraservices.com" className="text-white">
+                          info@advoraservices.com
+                        </a>
+                      </p>
                     </div>
                     
                     <div>

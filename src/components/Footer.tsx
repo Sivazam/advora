@@ -97,7 +97,9 @@ export default function Footer() {
             <div className="flex items-center space-x-2 text-sm text-white/80">
               <span>Built by</span>
               <Link 
-                href="#" 
+                href="https://wa.me/919014882779?text=Hi%20Harte%20Labs%20%E2%80%94%20I%20am%20reaching%20out%20regarding%20a%20software%20requirement" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-brand-200 hover:text-brand-100 font-bold transition-colors"
               >
                 Harte Labs
