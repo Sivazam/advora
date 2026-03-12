@@ -144,13 +144,15 @@ export default function ContactPage() {
                         </div>
                       </div>
                       
-                      <div className="flex items-center space-x-3">
-                        <Phone className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
-                        <div>
-                          <h4 className="font-medium mb-1" style={{ color: '#424242' }}>Phone</h4>
-                          <p style={{ color: '#424242' }}>{info.phone}</p>
+                      {info.phone && (
+                        <div className="flex items-center space-x-3">
+                          <Phone className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />
+                          <div>
+                            <h4 className="font-medium mb-1" style={{ color: '#424242' }}>Phone</h4>
+                            <p style={{ color: '#424242' }}>{info.phone}</p>
+                          </div>
                         </div>
-                      </div>
+                      )}
                       
                       <div className="flex items-center space-x-3">
                         <Mail className="h-5 w-5 text-brand-600 dark:text-brand-400 flex-shrink-0" />

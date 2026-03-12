@@ -37,7 +37,7 @@ export default function Footer() {
                 </span>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4 text-brand-200" />
+                {/* <Phone className="h-4 w-4 text-brand-200" /> */}
                 {/* <span>+1 (502) 718-0460</span> */}
               </div>
             </div>
