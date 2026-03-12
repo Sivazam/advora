@@ -68,7 +68,7 @@ export default function ContactPage() {
     {
       title: 'USA Office',
       address: '1103 Hidden Ridge, Texas, 75038',
-      phone: '+1 (502) 718-0460',
+      phone: '',
       email: 'info@advoraservices.com',
       hours: 'Mon-Fri: 9:00 AM - 6:00 PM EST',
       icon: Globe
@@ -337,7 +337,7 @@ export default function ContactPage() {
                         <Phone className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="text-xl font-semibold mb-2 text-white">Call Us</h3>
-                      <p className="text-white mb-2">USA: +1 (502) 718-0460</p>
+                      {/* <p className="text-white mb-2">USA: +1 (502) 718-0460</p> */}
                       <p className="text-white">India: +91-9493395299</p>
                     </div>
                     
