@@ -114,13 +114,15 @@ export default function ConnectPage() {
 
           {/* Logo & Avatar */}
           <div className="relative mx-auto w-24 h-24 mb-4 flex items-center justify-center bg-white rounded-2xl shadow-md p-2 border border-amber-100">
-            <Image
-              src="/navLogo.png"
+            <img
+              src="/navLogo.webp"
               alt="Advora Services Logo"
               width={80}
               height={80}
-              className="object-contain"
-              priority
+              className="w-full h-full object-contain"
+              loading="eager"
+              // @ts-ignore
+              fetchPriority="high"
             />
           </div>
 
