@@ -1,7 +1,16 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Globe, MapPin, Phone, Building } from 'lucide-react';
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === '/connect' || pathname === '/info') {
+    return null;
+  }
+
   return (
     <footer className="bg-brand-600 text-white mt-20">
       <div className="container mx-auto px-4 py-12">

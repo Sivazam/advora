@@ -1,8 +1,15 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 export default function WhatsAppFloating() {
+  const pathname = usePathname();
+
+  if (pathname === '/connect' || pathname === '/info') {
+    return null;
+  }
+
   const phoneNumber = "+919493395299";
   const message = encodeURIComponent("Hi Advora, My Query is ");
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;

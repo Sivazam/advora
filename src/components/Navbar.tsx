@@ -383,6 +383,10 @@ const NavbarComponent = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  if (pathname === '/connect' || pathname === '/info') {
+    return null;
+  }
+
   return (
     <>
       {/* Desktop Navbar */}
