@@ -5,9 +5,6 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // Optimize for faster development
   experimental: {
     optimizeCss: true,
