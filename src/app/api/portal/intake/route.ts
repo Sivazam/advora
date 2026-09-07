@@ -8,6 +8,7 @@ import {
   syncDocumentToFirestore,
   syncAuditLogToFirestore,
   getLiveUserByPhone,
+  ensureDefaultTaxYears,
 } from '@/lib/firestoreSync';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -74,20 +75,8 @@ export async function POST(req: Request) {
     // Sync user to Firestore
     await syncUserToFirestore(user);
 
-    // 2. Ensure Tax Year Section exists
-    try {
-      await db.taxYearSection.upsert({
-        where: { userId_year: { userId: user.id, year: taxYear } },
-        update: {},
-        create: {
-          userId: user.id,
-          year: taxYear,
-          isDefault: true,
-        },
-      });
-    } catch (dbErr) {
-      console.warn('SQLite taxYearSection notice:', dbErr);
-    }
+    // 2. Ensure default 3 tax years exist (e.g. 2026, 2025, 2024)
+    await ensureDefaultTaxYears(user.id, taxYear);
 
     // 3. Create or find Tax Application
     let application: any = {

@@ -444,3 +444,77 @@ export async function deleteApplicationFromFirestore(appId: string) {
     console.error('Error deleting application from Firestore:', error);
   }
 }
+
+/**
+ * Ensures a client has the last 3 tax years initialized (e.g. 2026, 2025, 2024),
+ * plus any specifically requested year.
+ */
+export async function ensureDefaultTaxYears(userId: string, activeYear?: string) {
+  const currentYear = new Date().getFullYear();
+  const targetYears = [
+    currentYear.toString(),
+    (currentYear - 1).toString(),
+    (currentYear - 2).toString(),
+  ];
+
+  if (activeYear && /^\d{4}$/.test(activeYear) && !targetYears.includes(activeYear)) {
+    targetYears.push(activeYear);
+  }
+
+  // Sort descending
+  targetYears.sort((a, b) => parseInt(b) - parseInt(a));
+
+  for (const year of targetYears) {
+    // 1. Ensure taxYearSection exists in SQLite
+    try {
+      await db.taxYearSection.upsert({
+        where: { userId_year: { userId, year } },
+        update: {},
+        create: {
+          userId,
+          year,
+          isDefault: year === (activeYear || currentYear.toString()),
+        },
+      });
+    } catch (e) {
+      console.warn(`SQLite taxYearSection notice for ${year}:`, e);
+    }
+
+    // 2. Ensure taxApplication exists in SQLite
+    let app: any = null;
+    try {
+      app = await db.taxApplication.findUnique({
+        where: { userId_taxYear: { userId, taxYear: year } },
+      });
+      if (!app) {
+        app = await db.taxApplication.create({
+          data: {
+            userId,
+            taxYear: year,
+            status: 'INITIATED',
+          },
+        });
+      }
+    } catch (e) {
+      console.warn(`SQLite taxApplication notice for ${year}:`, e);
+    }
+
+    // 3. Ensure taxApplication exists in Firestore
+    if (app) {
+      await syncApplicationToFirestore(app).catch(() => {});
+    } else {
+      await adminFirestore.collection('tax_applications').doc(`${userId}_${year}`).set(
+        {
+          id: `${userId}_${year}`,
+          userId,
+          taxYear: year,
+          status: 'INITIATED',
+          updatedAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+        },
+        { merge: true }
+      ).catch(() => {});
+    }
+  }
+}
+

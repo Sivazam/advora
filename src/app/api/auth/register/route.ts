@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { createSessionToken } from '@/lib/auth';
-import { syncUserToFirestore, syncApplicationToFirestore, syncAuditLogToFirestore, getLiveUserByPhone } from '@/lib/firestoreSync';
+import { syncUserToFirestore, syncApplicationToFirestore, syncAuditLogToFirestore, getLiveUserByPhone, ensureDefaultTaxYears } from '@/lib/firestoreSync';
 import { notifyAdmins } from '@/lib/notifications';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -79,25 +79,8 @@ export async function POST(req: Request) {
     // Sync to Firestore
     await syncUserToFirestore(user);
 
-    // 2. Ensure TaxYearSection exists
-    try {
-      await db.taxYearSection.upsert({
-        where: {
-          userId_year: {
-            userId: user.id,
-            year: selectedYear,
-          },
-        },
-        update: {},
-        create: {
-          userId: user.id,
-          year: selectedYear,
-          isDefault: true,
-        },
-      });
-    } catch (dbErr) {
-      console.warn('SQLite taxYearSection upsert notice:', dbErr);
-    }
+    // 2. Ensure default 3 tax years exist (e.g. 2026, 2025, 2024)
+    await ensureDefaultTaxYears(user.id, selectedYear);
 
     // 3. Ensure TaxApplication exists
     let application: any = {

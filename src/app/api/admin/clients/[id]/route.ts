@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { getLiveUser, getLiveApplication } from '@/lib/firestoreSync';
+import { getLiveUser, getLiveApplication, ensureDefaultTaxYears } from '@/lib/firestoreSync';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,6 +19,9 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     // 1. Sync live status & application details from Firestore
     await getLiveUser(id);
     await getLiveApplication(id, selectedYear);
+
+    // 2. Ensure default 3 tax years (e.g. 2026, 2025, 2024) exist for this client
+    await ensureDefaultTaxYears(id, selectedYear);
 
     const client = await db.user.findUnique({
       where: { id },
@@ -51,18 +54,6 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
 
     if (!client) {
       return NextResponse.json({ error: 'Client not found' }, { status: 404 });
-    }
-
-    // Ensure selected tax year section exists
-    const hasYear = client.taxYears.some((t) => t.year === selectedYear);
-    if (!hasYear) {
-      await db.taxYearSection.create({
-        data: {
-          userId: client.id,
-          year: selectedYear,
-          isDefault: false,
-        },
-      }).catch(() => {});
     }
 
     // Find or create active application for selected year
