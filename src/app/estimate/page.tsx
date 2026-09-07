@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -32,6 +32,13 @@ export default function GeneralPublicEstimatePage() {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
   const [referenceId, setReferenceId] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    try {
+      setIsLoggedIn(!!localStorage.getItem('advora_session_role'));
+    } catch (e) {}
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValidationError(null);
@@ -115,11 +122,11 @@ export default function GeneralPublicEstimatePage() {
           <span>Back to Home</span>
         </Link>
         <Link
-          href="/portal"
+          href={isLoggedIn ? "/portal/client" : "/portal"}
           className="text-[11px] font-bold text-amber-900 hover:underline flex items-center gap-1"
         >
           <Shield className="w-3.5 h-3.5 text-amber-800" />
-          <span>Client Portal Login</span>
+          <span>{isLoggedIn ? "Go to Portal →" : "Client Portal Login"}</span>
         </Link>
       </div>
 

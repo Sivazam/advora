@@ -32,9 +32,62 @@ const NavbarComponent = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [targetPosition, setTargetPosition] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [instantActiveIndex, setInstantActiveIndex] = useState<number | null>(null);
+  const [sessionUser, setSessionUser] = useState<{ role?: string; firstName?: string } | null>(null);
   const navRefs = useRef<(HTMLDivElement | null)[]>([]);
   const previousPathRef = useRef(pathname);
   const animationRef = useRef<number | null>(null);
+
+  // Synchronize authentication session state for dynamic portal button
+  useEffect(() => {
+    // 1. Instant check from localStorage to prevent layout flicker
+    try {
+      const cachedRole = localStorage.getItem('advora_session_role');
+      const cachedName = localStorage.getItem('advora_session_name');
+      if (cachedRole) {
+        setSessionUser({ role: cachedRole, firstName: cachedName || undefined });
+      }
+    } catch (e) {}
+
+    // 2. Validate against server session
+    const checkSession = async () => {
+      try {
+        const res = await fetch('/api/auth/session', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          if (data?.authenticated && data?.user) {
+            setSessionUser(data.user);
+            try {
+              localStorage.setItem('advora_session_role', data.user.role || 'CLIENT');
+              if (data.user.firstName) {
+                localStorage.setItem('advora_session_name', data.user.firstName);
+              }
+            } catch (e) {}
+            return;
+          }
+        }
+        // Not authenticated
+        setSessionUser(null);
+        try {
+          localStorage.removeItem('advora_session_role');
+          localStorage.removeItem('advora_session_name');
+        } catch (e) {}
+      } catch (e) {}
+    };
+
+    checkSession();
+
+    // Listen to custom auth events and cross-tab storage changes
+    const handleAuthChange = () => {
+      checkSession();
+    };
+
+    window.addEventListener('advora_auth_change', handleAuthChange);
+    window.addEventListener('storage', handleAuthChange);
+    return () => {
+      window.removeEventListener('advora_auth_change', handleAuthChange);
+      window.removeEventListener('storage', handleAuthChange);
+    };
+  }, [pathname]);
 
   const handleNavigation = (href: string) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -387,6 +440,12 @@ const NavbarComponent = () => {
     return null;
   }
 
+  const isUserLoggedIn = !!sessionUser;
+  const portalHref = isUserLoggedIn
+    ? (sessionUser?.role === 'SUPER_ADMIN' || sessionUser?.role === 'ADMIN' ? '/portal/admin' : '/portal/client')
+    : '/portal';
+  const portalLabel = isUserLoggedIn ? 'Go to Portal' : 'Portal Login';
+
   return (
     <>
       {/* Desktop Navbar */}
@@ -497,14 +556,17 @@ const NavbarComponent = () => {
                   </motion.div>
                 </Link>
 
-                <Link href="/portal" onClick={() => handleNavigation('/portal')}>
+                <Link href={portalHref} onClick={() => handleNavigation(portalHref)}>
                   <motion.div
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.96 }}
                     className="gradient-brand text-white text-xs font-bold px-4 py-2 rounded-full shadow-md hover:shadow-lg flex items-center gap-1.5 transition-all border border-amber-300/40 cursor-pointer"
                   >
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Portal Login</span>
+                    <span>{portalLabel}</span>
+                    {isUserLoggedIn && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
+                    )}
                   </motion.div>
                 </Link>
               </div>
@@ -660,17 +722,17 @@ const NavbarComponent = () => {
                     </motion.div>
                   </Link>
 
-                  <Link href="/portal" onClick={() => handleNavigation('/portal')} prefetch={true}>
+                  <Link href={portalHref} onClick={() => handleNavigation(portalHref)} prefetch={true}>
                     <motion.div
                       whileTap={{ scale: 0.98 }}
                       className="gradient-brand text-white rounded-xl p-3 flex items-center justify-between shadow-md font-bold text-sm"
                     >
                       <div className="flex items-center gap-2">
                         <ShieldCheck className="w-4 h-4 text-amber-200" />
-                        <span>Client & Admin Portal</span>
+                        <span>{isUserLoggedIn ? 'My Tax Portal' : 'Client & Admin Portal'}</span>
                       </div>
-                      <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-semibold">
-                        Login →
+                      <span className="text-xs bg-white/20 px-2.5 py-0.5 rounded-full font-semibold">
+                        {isUserLoggedIn ? 'Go to Portal →' : 'Login →'}
                       </span>
                     </motion.div>
                   </Link>

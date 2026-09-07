@@ -50,21 +50,39 @@ export default function PortalLandingPage() {
 
   // Check active session on initial page mount
   useEffect(() => {
+    let isMounted = true;
     fetch('/api/auth/session', { cache: 'no-store' })
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
+        if (!isMounted) return;
         if (data?.authenticated && data?.user) {
-          if (data.user.role === 'SUPER_ADMIN' || data.user.role === 'ADMIN') {
-            router.replace('/portal/admin');
-          } else {
-            router.replace('/portal/client');
-          }
+          try {
+            localStorage.setItem('advora_session_role', data.user.role || 'CLIENT');
+            if (data.user.firstName) {
+              localStorage.setItem('advora_session_name', data.user.firstName);
+            }
+            window.dispatchEvent(new Event('advora_auth_change'));
+          } catch (e) {}
+          const target = (data.user.role === 'SUPER_ADMIN' || data.user.role === 'ADMIN')
+            ? '/portal/admin'
+            : '/portal/client';
+          window.location.replace(target);
         } else {
+          try {
+            localStorage.removeItem('advora_session_role');
+            localStorage.removeItem('advora_session_name');
+            window.dispatchEvent(new Event('advora_auth_change'));
+          } catch (e) {}
           setCheckingSession(false);
         }
       })
-      .catch(() => setCheckingSession(false));
-  }, [router]);
+      .catch(() => {
+        if (isMounted) setCheckingSession(false);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Step 1: Send OTP
   const handleSendOtp = async (e: React.FormEvent) => {
@@ -127,7 +145,14 @@ export default function PortalLandingPage() {
         setStep('REGISTER');
         setSuccessMessage('Phone verified. Please enter your profile details.');
       } else {
-        router.push(data.redirectUrl || '/portal/client');
+        try {
+          localStorage.setItem('advora_session_role', data.user?.role || 'CLIENT');
+          if (data.user?.firstName) {
+            localStorage.setItem('advora_session_name', data.user.firstName);
+          }
+          window.dispatchEvent(new Event('advora_auth_change'));
+        } catch (e) {}
+        window.location.replace(data.redirectUrl || '/portal/client');
       }
     } catch (err: any) {
       setErrorMessage(err.message || 'Invalid or expired verification code.');
@@ -164,7 +189,13 @@ export default function PortalLandingPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Registration failed.');
 
-      router.push(data.redirectUrl || '/portal/client');
+      try {
+        localStorage.setItem('advora_session_role', 'CLIENT');
+        localStorage.setItem('advora_session_name', firstName.trim());
+        window.dispatchEvent(new Event('advora_auth_change'));
+      } catch (e) {}
+
+      window.location.replace(data.redirectUrl || '/portal/client');
     } catch (err: any) {
       setErrorMessage(err.message || 'Could not complete registration. Please try again.');
     } finally {

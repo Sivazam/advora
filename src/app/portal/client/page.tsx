@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import {
   FileText,
   Download,
@@ -22,6 +23,7 @@ import {
   Loader2,
   Trash2,
   RotateCcw,
+  Home,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -77,7 +79,12 @@ function ClientPortalContent() {
 
       if (!res.ok) {
         if (res.status === 401) {
-          router.push('/portal');
+          try {
+            localStorage.removeItem('advora_session_role');
+            localStorage.removeItem('advora_session_name');
+            window.dispatchEvent(new Event('advora_auth_change'));
+          } catch (e) {}
+          window.location.replace('/portal');
           return;
         }
         throw new Error('Failed to load portal data');
@@ -121,9 +128,11 @@ function ClientPortalContent() {
       const body = payload.notification?.body || 'You have a new message from your tax advisor.';
       setLiveToast({ title, body });
       fetchDashboardData(activeYear);
-    }).then((unsub) => {
-      unsubFcm = unsub;
-    });
+    })
+      .then((unsub) => {
+        unsubFcm = unsub;
+      })
+      .catch(() => {});
 
     return () => {
       clearInterval(livePoller);
@@ -174,8 +183,13 @@ function ClientPortalContent() {
 
   // Handle Logout
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/portal');
+    try {
+      localStorage.removeItem('advora_session_role');
+      localStorage.removeItem('advora_session_name');
+      window.dispatchEvent(new Event('advora_auth_change'));
+    } catch (e) {}
+    await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
+    window.location.replace('/portal');
   };
 
   // Handle Add Tax Year
@@ -401,6 +415,31 @@ function ClientPortalContent() {
     );
   }
 
+  if (!data) {
+    return (
+      <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-4">
+        <div className="text-center space-y-3">
+          <Loader2 className="w-8 h-8 text-slate-800 animate-spin mx-auto" />
+          <p className="text-xs font-semibold text-slate-600">Loading your workspace...</p>
+          <div className="pt-2 flex justify-center gap-2">
+            <Link href="/">
+              <Button size="sm" variant="outline" className="text-xs border-stone-300">
+                Back to Home
+              </Button>
+            </Link>
+            <Button
+              onClick={() => fetchDashboardData(activeYear)}
+              size="sm"
+              className="bg-slate-900 text-white text-xs"
+            >
+              Retry
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // PENDING APPROVAL VIEW (ADMIN GATE)
   if (data?.user?.status === 'PENDING_APPROVAL') {
     return (
@@ -430,16 +469,25 @@ function ClientPortalContent() {
           </div>
 
           <div className="pt-2 flex gap-2">
+            <Link href="/" className="w-1/3">
+              <Button
+                variant="outline"
+                className="w-full text-xs font-medium border-stone-300 h-9 rounded-lg flex items-center justify-center gap-1"
+              >
+                <Home className="w-3.5 h-3.5" />
+                <span>Home</span>
+              </Button>
+            </Link>
             <Button
               onClick={() => fetchDashboardData(activeYear)}
-              className="w-1/2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold h-9 rounded-lg"
+              className="w-1/3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold h-9 rounded-lg"
             >
               Check Status
             </Button>
             <Button
               variant="outline"
               onClick={handleLogout}
-              className="w-1/2 text-xs font-medium border-stone-300 h-9 rounded-lg"
+              className="w-1/3 text-xs font-medium border-stone-300 h-9 rounded-lg"
             >
               Sign Out
             </Button>
@@ -592,6 +640,18 @@ function ClientPortalContent() {
                 </div>
               )}
             </div>
+
+            <Link href="/">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-stone-300 text-slate-700 hover:bg-stone-100 rounded-lg text-xs flex items-center gap-1.5 h-8"
+                title="Return to Main Website"
+              >
+                <Home className="w-3.5 h-3.5" />
+                <span>Site Home</span>
+              </Button>
+            </Link>
 
             <Button
               onClick={handleLogout}

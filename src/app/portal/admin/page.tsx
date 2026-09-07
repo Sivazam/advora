@@ -32,6 +32,7 @@ import {
   RotateCcw,
   Bell,
   Loader2,
+  Home,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -90,7 +91,12 @@ function AdminPortalContent() {
       const res = await fetch(`/api/admin/clients?status=${statusFilter}&search=${encodeURIComponent(searchQuery)}`);
       if (!res.ok) {
         if (res.status === 401 || res.status === 403) {
-          router.push('/portal');
+          try {
+            localStorage.removeItem('advora_session_role');
+            localStorage.removeItem('advora_session_name');
+            window.dispatchEvent(new Event('advora_auth_change'));
+          } catch (e) {}
+          window.location.replace('/portal');
           return;
         }
         throw new Error('Failed to fetch clients');
@@ -482,8 +488,13 @@ function AdminPortalContent() {
 
   // Logout
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/portal');
+    try {
+      localStorage.removeItem('advora_session_role');
+      localStorage.removeItem('advora_session_name');
+      window.dispatchEvent(new Event('advora_auth_change'));
+    } catch (e) {}
+    await fetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
+    window.location.replace('/portal');
   };
 
   const statusOptions = [
@@ -617,6 +628,18 @@ function AdminPortalContent() {
                 </div>
               )}
             </div>
+
+            <Link href="/">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-amber-400/40 text-amber-950 hover:bg-amber-100 rounded-xl text-xs flex items-center gap-1.5"
+                title="Return to Main Website"
+              >
+                <Home className="w-3.5 h-3.5" />
+                <span>Site Home</span>
+              </Button>
+            </Link>
 
             <Button
               onClick={handleLogout}
