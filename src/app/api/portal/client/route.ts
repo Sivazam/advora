@@ -89,6 +89,14 @@ export async function GET(req: Request) {
       orderBy: { year: 'desc' },
     });
 
+    const currentYear = new Date().getFullYear();
+    const defaultYears = [currentYear.toString(), (currentYear - 1).toString(), (currentYear - 2).toString()];
+    const yearsSet = new Set<string>(defaultYears);
+    if (selectedYear && /^\d{4}$/.test(selectedYear)) yearsSet.add(selectedYear);
+    allTaxYears.forEach((t) => yearsSet.add(t.year));
+
+    const combinedYears = Array.from(yearsSet).sort((a, b) => parseInt(b) - parseInt(a));
+
     return NextResponse.json({
       user: {
         id: user.id,
@@ -99,7 +107,7 @@ export async function GET(req: Request) {
         status: user.status,
         role: user.role,
       },
-      taxYears: allTaxYears.map((t) => t.year),
+      taxYears: combinedYears,
       activeYear: selectedYear,
       application: {
         id: application.id,

@@ -97,6 +97,14 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       orderBy: { year: 'desc' },
     });
 
+    const currentYear = new Date().getFullYear();
+    const defaultYears = [currentYear.toString(), (currentYear - 1).toString(), (currentYear - 2).toString()];
+    const yearsSet = new Set<string>(defaultYears);
+    if (selectedYear && /^\d{4}$/.test(selectedYear)) yearsSet.add(selectedYear);
+    allTaxYears.forEach((t) => yearsSet.add(t.year));
+
+    const combinedYears = Array.from(yearsSet).sort((a, b) => parseInt(b) - parseInt(a));
+
     return NextResponse.json({
       client: {
         id: client.id,
@@ -110,7 +118,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
         createdAt: client.createdAt,
         updatedAt: client.updatedAt,
       },
-      taxYears: allTaxYears.map((t) => t.year),
+      taxYears: combinedYears,
       activeYear: selectedYear,
       activeApplication: activeApp,
       documents: {

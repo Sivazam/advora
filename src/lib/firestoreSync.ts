@@ -464,6 +464,29 @@ export async function ensureDefaultTaxYears(userId: string, activeYear?: string)
   // Sort descending
   targetYears.sort((a, b) => parseInt(b) - parseInt(a));
 
+  // Ensure user exists in SQLite first so foreign key constraints succeed
+  try {
+    const exists = await db.user.findUnique({ where: { id: userId } });
+    if (!exists) {
+      const liveUser = await getLiveUser(userId);
+      if (liveUser) {
+        await db.user.create({
+          data: {
+            id: userId,
+            phone: liveUser.phone || '',
+            firstName: liveUser.firstName || 'User',
+            lastName: liveUser.lastName || '',
+            role: liveUser.role || 'CLIENT',
+            status: liveUser.status || 'PENDING_APPROVAL',
+            email: liveUser.email || null,
+          },
+        }).catch(() => {});
+      }
+    }
+  } catch (e) {
+    console.warn('User prep for tax years warning:', e);
+  }
+
   for (const year of targetYears) {
     // 1. Ensure taxYearSection exists in SQLite
     try {
