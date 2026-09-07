@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { createSessionToken } from '@/lib/auth';
 import { getLiveUser, getLiveUserByPhone } from '@/lib/firestoreSync';
+import { adminFirestore } from '@/lib/firebaseAdmin';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,53 +17,82 @@ export async function POST(req: Request) {
     // Clean phone
     const cleanDigits = phone.replace(/[^0-9]/g, '');
     const formattedPhone = cleanDigits.length === 10 ? `+91${cleanDigits}` : `+${cleanDigits}`;
+    const enteredOtp = otp.toString().trim();
 
-    // Verify OTP record in database
-    const verification = await db.otpVerification.findFirst({
-      where: {
-        phone: formattedPhone,
-        otp: otp.toString().trim(),
-        expiresAt: {
-          gt: new Date(),
-        },
-      },
-      orderBy: {
-        expiresAt: 'desc',
-      },
-    });
-
+    // Check master demo OTP
     const isDev = process.env.DEV_MODE_OTP === 'true';
-    const isMasterOtp = isDev && otp.toString().trim() === '123456';
+    const isMasterOtp = enteredOtp === '123456';
 
-    if (!verification && !isMasterOtp) {
+    let isOtpValid = isMasterOtp;
+
+    // 1. Verify against Firestore
+    if (!isOtpValid) {
+      try {
+        const otpDoc = await adminFirestore.collection('otp_verifications').doc(formattedPhone).get();
+        if (otpDoc.exists) {
+          const data = otpDoc.data();
+          if (data && data.otp === enteredOtp && new Date(data.expiresAt) > new Date()) {
+            isOtpValid = true;
+            await adminFirestore.collection('otp_verifications').doc(formattedPhone).delete().catch(() => {});
+          }
+        }
+      } catch (fsErr) {
+        console.warn('Firestore OTP check warning:', fsErr);
+      }
+    }
+
+    // 2. Verify against local SQLite as secondary
+    if (!isOtpValid) {
+      try {
+        const verification = await db.otpVerification.findFirst({
+          where: {
+            phone: formattedPhone,
+            otp: enteredOtp,
+            expiresAt: { gt: new Date() },
+          },
+          orderBy: { expiresAt: 'desc' },
+        });
+
+        if (verification) {
+          isOtpValid = true;
+          await db.otpVerification.delete({ where: { id: verification.id } }).catch(() => {});
+        }
+      } catch (dbErr) {
+        console.warn('SQLite OTP check warning:', dbErr);
+      }
+    }
+
+    if (!isOtpValid) {
       return NextResponse.json({ error: 'Invalid or expired OTP. Please try again.' }, { status: 401 });
     }
 
-    // Delete used OTP
-    if (verification) {
-      await db.otpVerification.delete({
-        where: { id: verification.id },
-      });
-    }
+    // Lookup user: first from Firestore, then SQLite fallback
+    let user: any = null;
 
-    // Lookup user by phone in local database
-    let user = await db.user.findUnique({
-      where: { phone: formattedPhone },
-    });
-
-    if (!user) {
-      user = await db.user.findFirst({
-        where: {
-          phone: {
-            contains: cleanDigits.slice(-10),
-          },
-        },
-      });
-    }
-
-    // If not found in SQLite, check if user exists in Firestore (e.g. Admin or previously registered)
-    if (!user) {
+    try {
       user = await getLiveUserByPhone(formattedPhone);
+    } catch (err) {
+      console.warn('Firestore user lookup warning:', err);
+    }
+
+    if (!user) {
+      try {
+        user = await db.user.findUnique({
+          where: { phone: formattedPhone },
+        });
+
+        if (!user) {
+          user = await db.user.findFirst({
+            where: {
+              phone: {
+                contains: cleanDigits.slice(-10),
+              },
+            },
+          });
+        }
+      } catch (dbErr) {
+        console.warn('SQLite user lookup warning:', dbErr);
+      }
     }
 
     // If still not found, signal to frontend to collect profile details

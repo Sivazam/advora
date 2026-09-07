@@ -59,30 +59,44 @@ export async function getLiveUserByPhone(phone: string) {
       const doc = snapshot.docs[0];
       const fsUser: any = doc.data();
 
-      const user = await db.user.upsert({
-        where: { id: doc.id },
-        update: {
-          phone: fsUser.phone || formattedPhone,
-          status: fsUser.status || 'PENDING_APPROVAL',
-          firstName: fsUser.firstName || 'User',
-          lastName: fsUser.lastName || '',
-          role: fsUser.role || 'CLIENT',
-          email: fsUser.email || null,
-          fcmToken: fsUser.fcmToken || undefined,
-        },
-        create: {
-          id: doc.id,
-          phone: fsUser.phone || formattedPhone,
-          email: fsUser.email || null,
-          firstName: fsUser.firstName || 'User',
-          lastName: fsUser.lastName || '',
-          role: fsUser.role || 'CLIENT',
-          status: fsUser.status || 'PENDING_APPROVAL',
-          fcmToken: fsUser.fcmToken || null,
-        },
-      });
+      let user = null;
+      try {
+        user = await db.user.upsert({
+          where: { id: doc.id },
+          update: {
+            phone: fsUser.phone || formattedPhone,
+            status: fsUser.status || 'PENDING_APPROVAL',
+            firstName: fsUser.firstName || 'User',
+            lastName: fsUser.lastName || '',
+            role: fsUser.role || 'CLIENT',
+            email: fsUser.email || null,
+            fcmToken: fsUser.fcmToken || undefined,
+          },
+          create: {
+            id: doc.id,
+            phone: fsUser.phone || formattedPhone,
+            email: fsUser.email || null,
+            firstName: fsUser.firstName || 'User',
+            lastName: fsUser.lastName || '',
+            role: fsUser.role || 'CLIENT',
+            status: fsUser.status || 'PENDING_APPROVAL',
+            fcmToken: fsUser.fcmToken || null,
+          },
+        });
+      } catch (upsertErr) {
+        console.warn('Local SQLite upsert notice (using Firestore record):', upsertErr);
+      }
 
-      return user;
+      return user || {
+        id: doc.id,
+        phone: fsUser.phone || formattedPhone,
+        email: fsUser.email || null,
+        firstName: fsUser.firstName || 'User',
+        lastName: fsUser.lastName || '',
+        role: fsUser.role || 'CLIENT',
+        status: fsUser.status || 'PENDING_APPROVAL',
+        fcmToken: fsUser.fcmToken || null,
+      };
     }
   } catch (err) {
     console.error('Error finding user by phone in Firestore:', err);

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { sendOtpSms } from '@/lib/sms';
+import { adminFirestore } from '@/lib/firebaseAdmin';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,18 +26,35 @@ export async function POST(req: Request) {
     const otp = isDev ? '123456' : Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes expiry
 
-    // Save/update OTP record in database
-    await db.otpVerification.deleteMany({
-      where: { phone: formattedPhone },
-    });
-
-    await db.otpVerification.create({
-      data: {
+    // Save OTP to Firestore (shared globally across all serverless function instances)
+    try {
+      await adminFirestore.collection('otp_verifications').doc(formattedPhone).set({
         phone: formattedPhone,
+        cleanDigits,
         otp,
-        expiresAt,
-      },
-    });
+        expiresAt: expiresAt.toISOString(),
+        createdAt: new Date().toISOString(),
+      });
+    } catch (fsErr) {
+      console.warn('Firestore OTP save warning:', fsErr);
+    }
+
+    // Also attempt local SQLite if accessible, without breaking if serverless filesystem differs
+    try {
+      await db.otpVerification.deleteMany({
+        where: { phone: formattedPhone },
+      });
+
+      await db.otpVerification.create({
+        data: {
+          phone: formattedPhone,
+          otp,
+          expiresAt,
+        },
+      });
+    } catch (dbErr) {
+      console.warn('SQLite OTP save warning (relying on Firestore):', dbErr);
+    }
 
     // Dispatch SMS
     const smsResult = await sendOtpSms(formattedPhone, otp);

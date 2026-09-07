@@ -13,23 +13,48 @@ export async function GET() {
     }
 
     // Sync live from Firestore
-    await getLiveUser(session.userId);
+    const liveUser = await getLiveUser(session.userId).catch(() => null);
 
-    const user = await db.user.findUnique({
-      where: { id: session.userId },
-      select: {
-        id: true,
-        phone: true,
-        email: true,
-        firstName: true,
-        lastName: true,
-        role: true,
-        status: true,
-      },
-    });
+    let user: any = null;
+    try {
+      user = await db.user.findUnique({
+        where: { id: session.userId },
+        select: {
+          id: true,
+          phone: true,
+          email: true,
+          firstName: true,
+          lastName: true,
+          role: true,
+          status: true,
+        },
+      });
+    } catch (e) {
+      console.warn('SQLite session lookup skipped, using session/Firestore:', e);
+    }
 
     if (!user) {
-      return NextResponse.json({ authenticated: false }, { status: 401 });
+      if (liveUser) {
+        user = {
+          id: session.userId,
+          phone: liveUser.phone || session.phone,
+          email: liveUser.email || null,
+          firstName: liveUser.firstName || session.firstName,
+          lastName: liveUser.lastName || session.lastName,
+          role: liveUser.role || session.role,
+          status: liveUser.status || session.status,
+        };
+      } else {
+        user = {
+          id: session.userId,
+          phone: session.phone,
+          email: null,
+          firstName: session.firstName,
+          lastName: session.lastName,
+          role: session.role,
+          status: session.status,
+        };
+      }
     }
 
     return NextResponse.json({

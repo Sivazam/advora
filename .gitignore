@@ -48,6 +48,7 @@ prompt
 
 server.log
 *.db
+!prisma/dev.db
 *.db-journal
 public/uploads/*
 public/test.png
