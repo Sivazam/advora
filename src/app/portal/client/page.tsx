@@ -658,7 +658,7 @@ function ClientPortalContent() {
         )}
 
         {/* Institutional Top Header Bar */}
-        <div className="bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="relative z-50 bg-white rounded-xl p-4 sm:p-5 shadow-sm border border-stone-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex items-center space-x-3.5">
             <div className="w-11 h-11 rounded-lg bg-white p-1 border border-stone-200 flex items-center justify-center shrink-0">
               <img src="/navLogo.webp" alt="Advora" className="w-full h-full object-contain" />
@@ -684,7 +684,7 @@ function ClientPortalContent() {
           {/* Right Actions: Notifications & Logout */}
           <div className="flex items-center space-x-2 self-end md:self-auto">
             {/* Notification Bell */}
-            <div className="relative">
+            <div className="relative z-50">
               <button
                 onClick={() => setShowNotifMenu(!showNotifMenu)}
                 className="p-2 rounded-lg bg-stone-100 hover:bg-stone-200 text-slate-700 transition-colors relative"
@@ -698,33 +698,39 @@ function ClientPortalContent() {
 
               {/* Notification Popover */}
               {showNotifMenu && (
-                <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-lg border border-stone-200 p-3 z-50 text-xs space-y-2">
-                  <div className="flex justify-between items-center font-bold text-slate-800 border-b border-stone-100 pb-2">
-                    <span>Recent Updates</span>
-                    <span className="text-[10px] text-slate-400">Activity</span>
-                  </div>
-                  <div className="max-h-56 overflow-y-auto space-y-1.5">
-                    {data?.notifications?.length ? (
-                      data.notifications.map((n: any) => (
-                        <div
-                          key={n.id}
-                          onClick={() => handleNotificationClick(n)}
-                          className="p-2 bg-stone-50 hover:bg-stone-100/90 rounded-lg border border-stone-200/60 cursor-pointer space-y-0.5 transition-colors"
-                        >
-                          <div className="flex justify-between items-center">
-                            <p className="font-semibold text-slate-900 text-xs truncate">{n.title}</p>
-                            <span className="text-[9px] text-slate-400 font-mono">
-                              {new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </span>
+                <>
+                  <div
+                    className="fixed inset-0 z-[60]"
+                    onClick={() => setShowNotifMenu(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-72 bg-white rounded-xl shadow-2xl border border-stone-300 p-3 z-[70] text-xs space-y-2">
+                    <div className="flex justify-between items-center font-bold text-slate-800 border-b border-stone-100 pb-2">
+                      <span>Recent Updates</span>
+                      <span className="text-[10px] text-slate-400">Activity</span>
+                    </div>
+                    <div className="max-h-56 overflow-y-auto space-y-1.5">
+                      {data?.notifications?.length ? (
+                        data.notifications.map((n: any) => (
+                          <div
+                            key={n.id}
+                            onClick={() => handleNotificationClick(n)}
+                            className="p-2 bg-stone-50 hover:bg-stone-100/90 rounded-lg border border-stone-200/60 cursor-pointer space-y-0.5 transition-colors"
+                          >
+                            <div className="flex justify-between items-center">
+                              <p className="font-semibold text-slate-900 text-xs truncate">{n.title}</p>
+                              <span className="text-[9px] text-slate-400 font-mono">
+                                {new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            </div>
+                            <p className="text-slate-600 text-[11px] line-clamp-2">{n.message}</p>
                           </div>
-                          <p className="text-slate-600 text-[11px] line-clamp-2">{n.message}</p>
-                        </div>
-                      ))
-                    ) : (
-                      <p className="text-slate-400 py-3 text-center">No new notifications</p>
-                    )}
+                        ))
+                      ) : (
+                        <p className="text-slate-400 py-3 text-center">No new notifications</p>
+                      )}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
 

@@ -553,7 +553,7 @@ function AdminPortalContent() {
         )}
 
         {/* Admin Header */}
-        <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-lg border border-amber-200/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="relative z-50 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-lg border border-amber-200/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 rounded-xl bg-white p-1.5 shadow-sm border border-amber-100 flex items-center justify-center shrink-0">
               <img src="/navLogo.webp" alt="Advora" className="w-full h-full object-contain" />
@@ -571,7 +571,7 @@ function AdminPortalContent() {
 
           <div className="flex items-center space-x-3">
             {/* Admin Notifications Bell */}
-            <div className="relative">
+            <div className="relative z-50">
               <button
                 onClick={() => {
                   setShowAdminNotifMenu(!showAdminNotifMenu);
@@ -588,7 +588,12 @@ function AdminPortalContent() {
 
               {/* Notification Popover */}
               {showAdminNotifMenu && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-amber-200 p-3 z-50 text-xs space-y-2">
+                <>
+                  <div
+                    className="fixed inset-0 z-[60]"
+                    onClick={() => setShowAdminNotifMenu(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-amber-300 p-3 z-[70] text-xs space-y-2">
                   <div className="flex justify-between items-center font-bold text-gray-900 border-b border-gray-100 pb-2">
                     <span>Client Inquiries & Alerts</span>
                     <button
@@ -626,6 +631,7 @@ function AdminPortalContent() {
                     )}
                   </div>
                 </div>
+              </>
               )}
             </div>
 
