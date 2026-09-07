@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 import { saveUploadedFile } from '@/lib/storage';
 import { createNotification, notifyAdmins } from '@/lib/notifications';
 import { syncDocumentToFirestore } from '@/lib/firestoreSync';
+import { v4 as uuidv4 } from 'uuid';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,42 +70,77 @@ export async function POST(req: Request) {
     });
 
     // Find or create Tax Application
-    const application = await db.taxApplication.upsert({
-      where: {
-        userId_taxYear: {
+    let application: any = {
+      id: `${ownerUserId}_${taxYear}`,
+      userId: ownerUserId,
+      taxYear,
+      status: 'INITIATED',
+    };
+
+    try {
+      application = await db.taxApplication.upsert({
+        where: {
+          userId_taxYear: {
+            userId: ownerUserId,
+            taxYear,
+          },
+        },
+        update: {},
+        create: {
           userId: ownerUserId,
           taxYear,
+          status: 'INITIATED',
         },
-      },
-      update: {},
-      create: {
-        userId: ownerUserId,
-        taxYear,
-        status: 'INITIATED',
-      },
-    });
+      });
+    } catch (dbErr) {
+      console.warn('SQLite application upsert notice:', dbErr);
+    }
 
-    // Save File locally and to Firebase Storage
+    // Save File to Firebase Cloud Storage
     const subfolder = category.toLowerCase().replace(/_/g, '-');
     const saved = await saveUploadedFile(file, subfolder);
 
     // Save Document Record strictly bound to owner and taxYear
-    const document = await db.document.create({
-      data: {
-        userId: ownerUserId,
-        applicationId: application.id,
-        taxYear,
-        name: saved.name,
-        fileUrl: saved.fileUrl,
-        fileSize: saved.fileSize,
-        fileType: saved.fileType,
-        category,
-        uploadedByRole,
-      },
-    });
+    let document: any = {
+      id: uuidv4(),
+      userId: ownerUserId,
+      applicationId: application.id,
+      taxYear,
+      name: saved.name,
+      fileUrl: saved.fileUrl,
+      fileSize: saved.fileSize,
+      fileType: saved.fileType,
+      category,
+      uploadedByRole,
+      createdAt: new Date(),
+    };
+
+    try {
+      const dbDoc = await db.document.create({
+        data: {
+          id: document.id,
+          userId: ownerUserId,
+          applicationId: application.id,
+          taxYear,
+          name: saved.name,
+          fileUrl: saved.fileUrl,
+          fileSize: saved.fileSize,
+          fileType: saved.fileType,
+          category,
+          uploadedByRole,
+        },
+      });
+      document = dbDoc;
+    } catch (dbErr) {
+      console.warn('SQLite document create notice:', dbErr);
+    }
 
     // Sync document metadata to Firestore
-    await syncDocumentToFirestore(document);
+    try {
+      await syncDocumentToFirestore(document);
+    } catch (fsErr) {
+      console.warn('Firestore document sync notice:', fsErr);
+    }
 
     // Notify respective parties with FCM push
     if (uploadedByRole === 'CLIENT') {

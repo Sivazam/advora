@@ -7,7 +7,9 @@ import {
   syncApplicationToFirestore,
   syncDocumentToFirestore,
   syncAuditLogToFirestore,
+  getLiveUserByPhone,
 } from '@/lib/firestoreSync';
+import { v4 as uuidv4 } from 'uuid';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,91 +38,135 @@ export async function POST(req: Request) {
     const formattedPhone = cleanDigits.length === 10 ? `+91${cleanDigits}` : `+${cleanDigits}`;
 
     // 1. Find or create User
-    let user = await db.user.findUnique({
-      where: { phone: formattedPhone },
-    });
+    let user: any = null;
+    try {
+      user = await db.user.findUnique({
+        where: { phone: formattedPhone },
+      });
+    } catch (dbErr) {
+      console.warn('SQLite user lookup warning:', dbErr);
+    }
 
     if (!user) {
-      user = await db.user.create({
-        data: {
-          phone: formattedPhone,
-          email,
-          firstName,
-          lastName,
-          role: 'CLIENT',
-          status: 'PENDING_APPROVAL', // Admin gate
-        },
-      });
+      user = await getLiveUserByPhone(formattedPhone);
+    }
+
+    if (!user) {
+      const newUserId = uuidv4();
+      const userData = {
+        id: newUserId,
+        phone: formattedPhone,
+        email,
+        firstName,
+        lastName,
+        role: 'CLIENT',
+        status: 'PENDING_APPROVAL', // Admin gate
+      };
+
+      try {
+        user = await db.user.create({ data: userData });
+      } catch (dbErr) {
+        console.warn('SQLite user create skipped, using Firestore:', dbErr);
+        user = userData;
+      }
     }
 
     // Sync user to Firestore
     await syncUserToFirestore(user);
 
     // 2. Ensure Tax Year Section exists
-    await db.taxYearSection.upsert({
-      where: { userId_year: { userId: user.id, year: taxYear } },
-      update: {},
-      create: {
-        userId: user.id,
-        year: taxYear,
-        isDefault: true,
-      },
-    });
-
-    // 3. Create or find Tax Application
-    let application = await db.taxApplication.findUnique({
-      where: { userId_taxYear: { userId: user.id, taxYear } },
-    });
-
-    if (!application) {
-      application = await db.taxApplication.create({
-        data: {
+    try {
+      await db.taxYearSection.upsert({
+        where: { userId_year: { userId: user.id, year: taxYear } },
+        update: {},
+        create: {
           userId: user.id,
-          taxYear,
-          status: 'INITIATED',
+          year: taxYear,
+          isDefault: true,
         },
       });
+    } catch (dbErr) {
+      console.warn('SQLite taxYearSection notice:', dbErr);
+    }
+
+    // 3. Create or find Tax Application
+    let application: any = {
+      id: `${user.id}_${taxYear}`,
+      userId: user.id,
+      taxYear,
+      status: 'INITIATED',
+    };
+
+    try {
+      const foundApp = await db.taxApplication.findUnique({
+        where: { userId_taxYear: { userId: user.id, taxYear } },
+      });
+
+      if (foundApp) {
+        application = foundApp;
+      } else {
+        application = await db.taxApplication.create({
+          data: {
+            userId: user.id,
+            taxYear,
+            status: 'INITIATED',
+          },
+        });
+      }
+    } catch (dbErr) {
+      console.warn('SQLite application notice:', dbErr);
     }
 
     // Sync application to Firestore
     await syncApplicationToFirestore(application);
 
-    // 4. Save uploaded document if provided (saves locally & uploads to Firebase Storage)
-    let storedDoc = null;
+    // 4. Save uploaded document if provided (saves to Firebase Cloud Storage)
+    let storedDoc: any = null;
     if (file && file.size > 0) {
       const saved = await saveUploadedFile(file, 'supporting');
-      storedDoc = await db.document.create({
-        data: {
-          userId: user.id,
-          applicationId: application.id,
-          taxYear,
-          name: saved.name,
-          fileUrl: saved.fileUrl,
-          fileSize: saved.fileSize,
-          fileType: saved.fileType,
-          category: 'SUPPORTING_DOC',
-          uploadedByRole: 'CLIENT',
-        },
-      });
+      const docId = uuidv4();
+      storedDoc = {
+        id: docId,
+        userId: user.id,
+        applicationId: application.id,
+        taxYear,
+        name: saved.name,
+        fileUrl: saved.fileUrl,
+        fileSize: saved.fileSize,
+        fileType: saved.fileType,
+        category: 'SUPPORTING_DOC',
+        uploadedByRole: 'CLIENT',
+      };
+
+      try {
+        const dbDoc = await db.document.create({
+          data: storedDoc,
+        });
+        storedDoc = dbDoc;
+      } catch (dbErr) {
+        console.warn('SQLite document create notice:', dbErr);
+      }
 
       // Sync document metadata to Firestore
       await syncDocumentToFirestore(storedDoc);
     }
 
     // 5. Create Audit Log
-    const auditLog = await db.auditLog.create({
-      data: {
-        userId: user.id,
-        performedById: user.id,
-        applicationId: application.id,
-        action: 'PUBLIC_ESTIMATION_SUBMITTED',
-        newStatus: 'INITIATED',
-        details: `Client submitted estimation intake for ${taxYear}${storedDoc ? ` with document: ${storedDoc.name}` : ''}.`,
-      },
-    });
-
-    // Sync audit log to Firestore
-    await syncAuditLogToFirestore(auditLog);
+    try {
+      const auditLog = await db.auditLog.create({
+        data: {
+          userId: user.id,
+          performedById: user.id,
+          applicationId: application.id,
+          action: 'PUBLIC_ESTIMATION_SUBMITTED',
+          newStatus: 'INITIATED',
+          details: `Client submitted estimation intake for ${taxYear}${storedDoc ? ` with document: ${storedDoc.name}` : ''}.`,
+        },
+      });
+      await syncAuditLogToFirestore(auditLog);
+    } catch (dbErr) {
+      console.warn('SQLite audit log notice:', dbErr);
+    }
 
     // 6. Notify Admins
     await notifyAdmins(

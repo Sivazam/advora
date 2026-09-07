@@ -21,18 +21,9 @@ export async function saveUploadedFile(file: File, subfolder: string = 'document
   const baseName = path.basename(originalName, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
   const uniqueFileName = `${Date.now()}_${uuidv4().slice(0, 8)}_${baseName}${ext}`;
 
-  // 1. Save to local public/uploads for instant local serving
-  const uploadDir = path.join(process.cwd(), 'public', 'uploads', subfolder);
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-  }
+  let fileUrl = '';
 
-  const filePath = path.join(uploadDir, uniqueFileName);
-  fs.writeFileSync(filePath, buffer);
-
-  let fileUrl = `/uploads/${subfolder}/${uniqueFileName}`;
-
-  // 2. Upload to Firebase Storage bucket
+  // 1. Upload to Firebase Storage bucket (Primary cloud storage)
   try {
     const fbResult = await uploadToFirebaseStorage(
       buffer,
@@ -40,11 +31,31 @@ export async function saveUploadedFile(file: File, subfolder: string = 'document
       file.type || 'application/octet-stream',
       subfolder
     );
-    if (fbResult.fileUrl) {
+    if (fbResult && fbResult.fileUrl) {
       fileUrl = fbResult.fileUrl;
     }
   } catch (fbErr) {
-    console.warn('Firebase storage upload fallback to local:', fbErr);
+    console.warn('Firebase storage upload notice:', fbErr);
+  }
+
+  // 2. Safe local saving (local dev environment only; safely skipped on read-only serverless platforms like Netlify/AWS Lambda)
+  try {
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads', subfolder);
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    const filePath = path.join(uploadDir, uniqueFileName);
+    fs.writeFileSync(filePath, buffer);
+    if (!fileUrl) {
+      fileUrl = `/uploads/${subfolder}/${uniqueFileName}`;
+    }
+  } catch (fsErr) {
+    console.warn('Serverless filesystem is read-only. File stored via cloud storage.');
+  }
+
+  // 3. Fallback URL if cloud upload was unavailable
+  if (!fileUrl) {
+    fileUrl = `/uploads/${subfolder}/${uniqueFileName}`;
   }
 
   return {

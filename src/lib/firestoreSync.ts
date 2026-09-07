@@ -233,20 +233,24 @@ export async function uploadToFirebaseStorage(
 
     const bucket = adminStorage.bucket();
     const storageFile = bucket.file(storagePath);
+    const downloadToken = uuidv4();
 
     await storageFile.save(fileBuffer, {
       contentType,
       resumable: false,
       metadata: {
-        originalName,
-        uploadedAt: new Date().toISOString(),
+        contentType,
+        metadata: {
+          originalName,
+          uploadedAt: new Date().toISOString(),
+          firebaseStorageDownloadTokens: downloadToken,
+        },
       },
     });
 
-    // Make the file publicly accessible or signed URL
     await storageFile.makePublic().catch(() => {});
 
-    const fileUrl = `https://storage.googleapis.com/${bucket.name}/${storagePath}`;
+    const fileUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(storagePath)}?alt=media&token=${downloadToken}`;
 
     return { fileUrl, storagePath };
   } catch (error) {
