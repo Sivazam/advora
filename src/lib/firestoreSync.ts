@@ -450,6 +450,21 @@ export async function deleteApplicationFromFirestore(appId: string) {
  * plus any specifically requested year.
  */
 export async function ensureDefaultTaxYears(userId: string, activeYear?: string) {
+  // Fast-path: if default tax years already exist in local DB, skip heavy network round-trips
+  try {
+    const existingCount = await db.taxYearSection.count({ where: { userId } });
+    if (existingCount >= 3) {
+      if (activeYear && /^\d{4}$/.test(activeYear)) {
+        const hasActive = await db.taxYearSection.findUnique({
+          where: { userId_year: { userId, year: activeYear } },
+        });
+        if (hasActive) return;
+      } else {
+        return;
+      }
+    }
+  } catch (e) {}
+
   const currentYear = new Date().getFullYear();
   const targetYears = [
     currentYear.toString(),

@@ -15,12 +15,12 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const selectedYear = searchParams.get('year') || new Date().getFullYear().toString();
 
-    // 1. Sync user and application live from Firestore
-    await getLiveUser(session.userId);
-    await getLiveApplication(session.userId, selectedYear);
-
-    // 2. Ensure default 3 tax years (e.g. 2026, 2025, 2024) exist for this client
-    await ensureDefaultTaxYears(session.userId, selectedYear);
+    // 1. Concurrently reconcile live user, application, and tax years
+    await Promise.all([
+      getLiveUser(session.userId),
+      getLiveApplication(session.userId, selectedYear),
+      ensureDefaultTaxYears(session.userId, selectedYear),
+    ]);
 
     // 3. Fetch fresh user data with all tax years
     const user = await db.user.findUnique({

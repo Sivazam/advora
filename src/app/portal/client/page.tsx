@@ -68,10 +68,24 @@ function ClientPortalContent() {
   const [liveToast, setLiveToast] = useState<{ title: string; body: string } | null>(null);
   const [showNotifMenu, setShowNotifMenu] = useState(false);
 
+  // Cache of tax year data for instant zero-latency switching
+  const yearCacheRef = React.useRef<Record<string, { application: any; documents: any }>>({});
+  const [isSwitchingYear, setIsSwitchingYear] = useState(false);
+  const activeYearRef = React.useRef(activeYear);
+
+  useEffect(() => {
+    activeYearRef.current = activeYear;
+  }, [activeYear]);
+
   // Fetch Dashboard Data strictly by taxYear without browser caching
-  const fetchDashboardData = async (year: string) => {
+  const fetchDashboardData = async (year: string, isInitial = false) => {
     try {
-      setLoading(true);
+      if (isInitial) {
+        setLoading(true);
+      } else if (!yearCacheRef.current[year]) {
+        setIsSwitchingYear(true);
+      }
+
       const res = await fetch(`/api/portal/client?year=${year}`, {
         cache: 'no-store',
         headers: { 'Cache-Control': 'no-cache' },
@@ -91,34 +105,88 @@ function ClientPortalContent() {
       }
 
       const json = await res.json();
-      setData(json);
+
+      // Store in memory cache for instant future switches
+      yearCacheRef.current[json.activeYear] = {
+        application: json.application,
+        documents: json.documents,
+      };
+
+      setData((prev: any) => ({
+        ...prev,
+        ...json,
+      }));
       setActiveYear(json.activeYear);
+      activeYearRef.current = json.activeYear;
     } catch (error) {
       console.error('Portal data error:', error);
     } finally {
-      setLoading(false);
+      if (isInitial) setLoading(false);
+      setIsSwitchingYear(false);
     }
   };
 
-  // Initial load, background poller, and FCM notification listener
+  // Preload other available tax years silently in background for instant zero-latency switching
   useEffect(() => {
-    fetchDashboardData(yearParam);
+    if (!data?.taxYears?.length) return;
+    const otherYears = data.taxYears.filter((y: string) => y !== activeYear && !yearCacheRef.current[y]);
+    if (otherYears.length === 0) return;
+
+    let isMounted = true;
+    const preloadYears = async () => {
+      for (const y of otherYears) {
+        if (!isMounted) break;
+        try {
+          const res = await fetch(`/api/portal/client?year=${y}`, { cache: 'no-store' });
+          if (res.ok) {
+            const fresh = await res.json();
+            yearCacheRef.current[y] = {
+              application: fresh.application,
+              documents: fresh.documents,
+            };
+          }
+        } catch (e) {}
+      }
+    };
+    preloadYears();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [data?.taxYears]);
+
+  // Initial load, background poller, and FCM notification listener (runs once on mount)
+  useEffect(() => {
+    fetchDashboardData(yearParam, true);
     requestAndRegisterFcmToken().catch(() => {});
 
-    // Silent background poller (every 3.5s) for real-time chat replies and live status updates
+    // Silent background poller (every 4.5s) for real-time chat replies and live status updates
     const livePoller = setInterval(() => {
-      fetch(`/api/portal/client?year=${activeYear}`, {
+      const currentYr = activeYearRef.current;
+      fetch(`/api/portal/client?year=${currentYr}`, {
         cache: 'no-store',
         headers: { 'Cache-Control': 'no-cache' },
       })
         .then((res) => (res.ok ? res.json() : null))
         .then((fresh) => {
-          if (fresh) {
-            setData((prev: any) => ({ ...prev, ...fresh }));
+          if (fresh && fresh.activeYear === activeYearRef.current) {
+            yearCacheRef.current[currentYr] = {
+              application: fresh.application,
+              documents: fresh.documents,
+            };
+            setData((prev: any) => ({
+              ...prev,
+              user: fresh.user,
+              taxYears: fresh.taxYears,
+              tickets: fresh.tickets,
+              notifications: fresh.notifications,
+              application: fresh.application,
+              documents: fresh.documents,
+            }));
           }
         })
         .catch(() => {});
-    }, 3500);
+    }, 4500);
 
     // Foreground FCM push notification listener
     let unsubFcm: any;
@@ -127,7 +195,7 @@ function ClientPortalContent() {
       const title = payload.notification?.title || 'Tax Preparation Update';
       const body = payload.notification?.body || 'You have a new message from your tax advisor.';
       setLiveToast({ title, body });
-      fetchDashboardData(activeYear);
+      fetchDashboardData(activeYearRef.current, false);
     })
       .then((unsub) => {
         unsubFcm = unsub;
@@ -138,7 +206,7 @@ function ClientPortalContent() {
       clearInterval(livePoller);
       if (typeof unsubFcm === 'function') unsubFcm();
     };
-  }, [yearParam, activeYear]);
+  }, []);
 
   // Ensure page remains at top upon dashboard load
   useEffect(() => {
@@ -172,13 +240,32 @@ function ClientPortalContent() {
     }
   }, [data?.tickets, selectedTicketId]);
 
-  // Handle switching tax years cleanly with URL sync
+  // Handle switching tax years cleanly with URL sync & instant cache response
   const handleYearSwitch = (year: string) => {
+    if (year === activeYear) return;
+
+    // 1. Immediately activate tab with 0ms latency
     setActiveYear(year);
+    activeYearRef.current = year;
     if (typeof window !== 'undefined') {
       window.history.pushState(null, '', `/portal/client?year=${year}`);
     }
-    fetchDashboardData(year);
+
+    // 2. If cached, apply immediately with 0ms delay!
+    const cached = yearCacheRef.current[year];
+    if (cached) {
+      setData((prev: any) => ({
+        ...prev,
+        activeYear: year,
+        application: cached.application,
+        documents: cached.documents,
+      }));
+      // Silently revalidate in background
+      fetchDashboardData(year, false);
+    } else {
+      // First-time load for this year
+      fetchDashboardData(year, false);
+    }
   };
 
   // Handle Logout
