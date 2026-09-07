@@ -149,9 +149,50 @@ function AdminPortalContent() {
         const yr = yearPrompt.trim();
         setActiveYear(yr);
         fetchClientDetail(clientDetail.client.id, yr);
+        fetchClients();
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  // Delete an unnecessary tax year for the selected client
+  const handleDeleteYearForClient = async (yearToDelete: string) => {
+    if (!clientDetail?.client?.id) return;
+    if (clientDetail.taxYears?.length <= 1) {
+      alert('Cannot delete the only remaining tax year for this client.');
+      return;
+    }
+    const confirmed = confirm(
+      `Are you sure you want to delete Tax Year ${yearToDelete} for this client? Any filing records and documents under ${yearToDelete} will be permanently removed.`
+    );
+    if (!confirmed) return;
+
+    try {
+      const res = await fetch('/api/portal/tax-years', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          year: yearToDelete,
+          targetUserId: clientDetail.client.id,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error || 'Failed to delete tax year.');
+        return;
+      }
+
+      // Switch active year to remaining year if we deleted the currently active year
+      const remaining: string[] = data.remainingYears || clientDetail.taxYears.filter((y: string) => y !== yearToDelete);
+      const nextYear = activeYear === yearToDelete ? remaining[0] || '2026' : activeYear;
+      setActiveYear(nextYear);
+      fetchClientDetail(clientDetail.client.id, nextYear);
+      fetchClients();
+    } catch (err) {
+      console.error('Error deleting tax year:', err);
+      alert('An error occurred while deleting the tax year.');
     }
   };
 
@@ -815,21 +856,43 @@ function AdminPortalContent() {
               </div>
 
               {/* Tax Year Tabs */}
-              <div className="flex items-center gap-2 pt-2">
+              <div className="flex flex-wrap items-center gap-2 pt-2">
                 <span className="text-xs font-bold text-gray-500">Tax Year:</span>
                 {clientDetail.taxYears?.map((yr: string) => (
-                  <button
+                  <div
                     key={yr}
-                    onClick={() => {
-                      setActiveYear(yr);
-                      fetchClientDetail(clientDetail.client.id, yr);
-                    }}
-                    className={`px-3 py-1 rounded-xl text-xs font-bold ${
-                      activeYear === yr ? 'gradient-brand text-white' : 'bg-gray-100 text-gray-700'
+                    className={`inline-flex items-center rounded-xl p-0.5 border transition-all ${
+                      activeYear === yr ? 'bg-amber-800 text-white border-amber-900 shadow-sm' : 'bg-gray-100 text-gray-700 border-gray-200'
                     }`}
                   >
-                    {yr}
-                  </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveYear(yr);
+                        fetchClientDetail(clientDetail.client.id, yr);
+                      }}
+                      className="px-2.5 py-1 text-xs font-bold"
+                    >
+                      {yr}
+                    </button>
+                    {clientDetail.taxYears.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteYearForClient(yr);
+                        }}
+                        className={`p-1 rounded-md transition-colors ${
+                          activeYear === yr
+                            ? 'text-amber-200 hover:text-white hover:bg-amber-700/60'
+                            : 'text-gray-400 hover:text-red-600 hover:bg-red-50'
+                        }`}
+                        title={`Delete Tax Year ${yr} for this client`}
+                      >
+                        <Trash2 className="w-3 h-3" />
+                      </button>
+                    )}
+                  </div>
                 ))}
                 <button
                   onClick={handleAddYearForClient}

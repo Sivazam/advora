@@ -414,3 +414,15 @@ export async function syncTicketToFirestore(ticket: {
     console.error('Error syncing ticket to Firestore:', error);
   }
 }
+
+/**
+ * Delete Tax Application from Firestore 'tax_applications' collection
+ */
+export async function deleteApplicationFromFirestore(appId: string) {
+  try {
+    await adminFirestore.collection('tax_applications').doc(appId).delete();
+    console.log(`🔥 [FIRESTORE SYNC] Deleted tax application from Firestore: ${appId}`);
+  } catch (error) {
+    console.error('Error deleting application from Firestore:', error);
+  }
+}
