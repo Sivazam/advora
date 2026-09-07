@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Prisma schema for Advora Client & Admin Tax Filing Portal
 
 generator client {
   provider = "prisma-client-js"
@@ -14,19 +10,126 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              String         @id @default(uuid())
+  phone           String         @unique
+  email           String?
+  firstName       String
+  lastName        String
+  role            String         @default("CLIENT") // SUPER_ADMIN, ADMIN, CLIENT
+  status          String         @default("PENDING_APPROVAL") // PENDING_APPROVAL, ACTIVE, SUSPENDED
+  fcmToken        String?
+  assignedAdminId String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  taxYears        TaxYearSection[]
+  applications    TaxApplication[]
+  documents       Document[]
+  tickets         SupportTicket[]
+  notifications   Notification[]
+  auditLogs       AuditLog[]     @relation("AuditUser")
+  performedLogs   AuditLog[]     @relation("AuditPerformer")
 }
 
-model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
+model TaxYearSection {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  year      String   // e.g. "2025", "2024", "2023"
+  isDefault Boolean  @default(false)
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@unique([userId, year])
+}
+
+model TaxApplication {
+  id              String         @id @default(uuid())
+  userId          String
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  taxYear         String
+  status          String         @default("INITIATED") // INITIATED, IN_PROGRESS, COMPLETED, PAYMENT_RECEIVED
+  estimatedRefund Float?
+  feeAmount       Float?
+  adminNotes      String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  documents       Document[]
+  auditLogs       AuditLog[]
+
+  @@unique([userId, taxYear])
+}
+
+model Document {
+  id              String           @id @default(uuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationId   String?
+  application     TaxApplication?  @relation(fields: [applicationId], references: [id])
+  taxYear         String
+  name            String
+  fileUrl         String
+  fileSize        Int              // bytes
+  fileType        String           // pdf, image, excel, doc
+  category        String           // ESTIMATE, DRAFT_COPY, FILED_FINAL, SUPPORTING_DOC
+  uploadedByRole  String           // CLIENT, ADMIN, SUPER_ADMIN
+  createdAt       DateTime         @default(now())
+
+  @@index([userId, taxYear])
+}
+
+model SupportTicket {
+  id          String          @id @default(uuid())
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject     String
+  status      String          @default("OPEN") // OPEN, IN_PROGRESS, RESOLVED
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  messages    TicketMessage[]
+}
+
+model TicketMessage {
+  id          String        @id @default(uuid())
+  ticketId    String
+  ticket      SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  senderId    String
+  senderName  String
+  senderRole  String        // CLIENT, ADMIN, SUPER_ADMIN
+  message     String
+  createdAt   DateTime      @default(now())
+}
+
+model AuditLog {
+  id             String          @id @default(uuid())
+  userId         String
+  user           User            @relation("AuditUser", fields: [userId], references: [id], onDelete: Cascade)
+  performedById  String
+  performedBy    User            @relation("AuditPerformer", fields: [performedById], references: [id])
+  applicationId  String?
+  application    TaxApplication? @relation(fields: [applicationId], references: [id])
+  action         String
+  previousStatus String?
+  newStatus      String?
+  details        String?
+  createdAt      DateTime        @default(now())
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  message     String
+  link        String?
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model OtpVerification {
+  id        String   @id @default(uuid())
+  phone     String
+  otp       String
+  expiresAt DateTime
 }

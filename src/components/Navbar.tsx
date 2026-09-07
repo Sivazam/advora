@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, memo, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShieldCheck, LogIn, UploadCloud } from 'lucide-react';
 import { useNavbar } from '@/contexts/NavbarContext';
 
 const navItems = [
@@ -383,7 +383,7 @@ const NavbarComponent = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  if (pathname === '/connect' || pathname === '/info') {
+  if (pathname.startsWith('/connect') || pathname.startsWith('/info') || pathname.startsWith('/portal')) {
     return null;
   }
 
@@ -483,6 +483,31 @@ const NavbarComponent = () => {
                   </Link>
                 </div>
               ))}
+
+              {/* Actions: Get Estimate & Portal Login */}
+              <div className="flex items-center gap-2 pl-3">
+                <Link href="/estimate" onClick={() => handleNavigation('/estimate')}>
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="bg-amber-50/90 hover:bg-amber-100 text-amber-950 text-xs font-bold px-3.5 py-2 rounded-full shadow-xs flex items-center gap-1.5 transition-all border border-amber-300 cursor-pointer"
+                  >
+                    <UploadCloud className="w-3.5 h-3.5 text-amber-800" />
+                    <span>Get Estimate</span>
+                  </motion.div>
+                </Link>
+
+                <Link href="/portal" onClick={() => handleNavigation('/portal')}>
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.96 }}
+                    className="gradient-brand text-white text-xs font-bold px-4 py-2 rounded-full shadow-md hover:shadow-lg flex items-center gap-1.5 transition-all border border-amber-300/40 cursor-pointer"
+                  >
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Portal Login</span>
+                  </motion.div>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -617,6 +642,39 @@ const NavbarComponent = () => {
                     </motion.div>
                   </Link>
                 ))}
+
+                {/* Mobile Estimation & Portal Login Buttons */}
+                <div className="pt-2 border-t border-gray-200/60 mt-2 space-y-2">
+                  <Link href="/estimate" onClick={() => handleNavigation('/estimate')} prefetch={true}>
+                    <motion.div
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-amber-50 border border-amber-300 text-amber-950 rounded-xl p-3 flex items-center justify-between shadow-xs font-bold text-sm"
+                    >
+                      <div className="flex items-center gap-2">
+                        <UploadCloud className="w-4 h-4 text-amber-800" />
+                        <span>Get Free Tax Estimate</span>
+                      </div>
+                      <span className="text-xs bg-amber-200/80 text-amber-900 px-2.5 py-0.5 rounded-full font-bold">
+                        Upload →
+                      </span>
+                    </motion.div>
+                  </Link>
+
+                  <Link href="/portal" onClick={() => handleNavigation('/portal')} prefetch={true}>
+                    <motion.div
+                      whileTap={{ scale: 0.98 }}
+                      className="gradient-brand text-white rounded-xl p-3 flex items-center justify-between shadow-md font-bold text-sm"
+                    >
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck className="w-4 h-4 text-amber-200" />
+                        <span>Client & Admin Portal</span>
+                      </div>
+                      <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full font-semibold">
+                        Login →
+                      </span>
+                    </motion.div>
+                  </Link>
+                </div>
               </div>
             </motion.div>
           )}

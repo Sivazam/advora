@@ -8,6 +8,7 @@ import TopStrip from "@/components/TopStrip";
 import ScrollToTop from "@/components/ScrollToTop";
 import WhatsAppFloating from "@/components/WhatsAppFloating";
 import { NavbarProvider } from "@/contexts/NavbarContext";
+import PwaRegister from "@/components/PwaRegister";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -32,14 +33,20 @@ export const metadata: Metadata = {
     title: "Advora Services",
     description: "Your Trusted Partner in Tax & Business Services",
   },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Advora Services',
+  },
   icons: {
     icon: [
+      { url: '/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512x512.png', sizes: '512x512', type: 'image/png' },
       { url: '/advoraLogoRev.png', sizes: 'any' },
-      { url: '/advoraLogoRev.png', sizes: '16x16', type: 'image/jpeg' },
-      { url: '/advoraLogoRev.png', sizes: '32x32', type: 'image/jpeg' },
     ],
     apple: [
-      { url: '/apple-touch-icon.jpg', sizes: '180x180', type: 'image/jpeg' },
+      { url: '/icon-192x192.png', sizes: '180x180', type: 'image/png' },
     ],
   },
 };
@@ -66,6 +73,7 @@ export default function RootLayout({
           </div>
           <WhatsAppFloating />
           <Toaster />
+          <PwaRegister />
         </NavbarProvider>
       </body>
     </html>

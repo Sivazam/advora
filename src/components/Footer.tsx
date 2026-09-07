@@ -7,7 +7,7 @@ import { Globe, MapPin, Phone, Building } from 'lucide-react';
 export default function Footer() {
   const pathname = usePathname();
 
-  if (pathname === '/connect' || pathname === '/info') {
+  if (pathname.startsWith('/connect') || pathname.startsWith('/info') || pathname.startsWith('/portal')) {
     return null;
   }
 
@@ -93,6 +93,9 @@ export default function Footer() {
               <Link href="/faq" className="block text-sm text-white/80 hover:text-brand-200 transition-colors">
                 FAQ
               </Link>
+              <Link href="/portal" className="block text-sm text-amber-300 font-semibold hover:text-white transition-colors">
+                Client Portal
+              </Link>
             </div>
           </div>
         </div>
@@ -101,7 +104,7 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-white/20">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-4 text-sm text-white/80">
-              <span>© 2025 Advora Services. All rights reserved.</span>
+              <span>© {new Date().getFullYear()} Advora Services. All rights reserved.</span>
             </div>
             <div className="flex items-center space-x-2 text-sm text-white/80">
               <span>Built by</span>
