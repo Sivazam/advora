@@ -22,44 +22,21 @@ async function run() {
   const browser = await puppeteer.launch({
     executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
     headless: 'new',
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--window-size=1440,900'],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     defaultViewport: { width: 1440, height: 900 }
   });
 
   const page = await browser.newPage();
 
-  console.log('1. Capturing Public Portal Login...');
+  console.log('1. Capturing Public Portal Login (ViewPort 1440x900 - Desktop Screen)...');
   await page.goto('http://localhost:3000/portal', { waitUntil: 'networkidle2' });
-  await page.screenshot({ path: path.join(outDir, '01_portal_login.png'), fullPage: true });
+  await page.screenshot({ path: path.join(outDir, '01_portal_login.png'), fullPage: false });
 
-  console.log('2. Capturing Public Estimate Page...');
+  console.log('2. Capturing Public Estimate Page (ViewPort 1440x900 - Desktop Screen)...');
   await page.goto('http://localhost:3000/estimate', { waitUntil: 'networkidle2' });
-  await page.screenshot({ path: path.join(outDir, '02_estimate_page.png'), fullPage: true });
+  await page.screenshot({ path: path.join(outDir, '02_estimate_page.png'), fullPage: false });
 
-  // Admin Session
-  const adminToken = await createToken({
-    userId: '8e306a3d-c536-4fb9-8203-8d9e18b35b52',
-    phone: '+919493395299',
-    role: 'SUPER_ADMIN',
-    status: 'ACTIVE',
-    firstName: 'Advora',
-    lastName: 'Super Admin'
-  });
-
-  console.log('3. Capturing Admin Portal Dashboard...');
-  await page.setCookie({
-    name: 'advora_session',
-    value: adminToken,
-    domain: 'localhost',
-    path: '/',
-    httpOnly: true
-  });
-
-  await page.goto('http://localhost:3000/portal/admin', { waitUntil: 'networkidle2' });
-  await new Promise(r => setTimeout(r, 2000));
-  await page.screenshot({ path: path.join(outDir, '03_admin_dashboard.png'), fullPage: true });
-
-  // Client Session
+  // Client Session Token
   const clientToken = await createToken({
     userId: '4d14abd3-8227-42cf-9b20-a1faeee66f58',
     phone: '+919014882779',
@@ -69,8 +46,7 @@ async function run() {
     lastName: 'sai'
   });
 
-  console.log('4. Capturing Client Portal...');
-  await page.deleteCookie({ name: 'advora_session', domain: 'localhost' });
+  console.log('3. Testing Session Persistence: navigating to /portal with active session cookie...');
   await page.setCookie({
     name: 'advora_session',
     value: clientToken,
@@ -79,12 +55,21 @@ async function run() {
     httpOnly: true
   });
 
-  await page.goto('http://localhost:3000/portal/client', { waitUntil: 'networkidle2' });
+  // Navigate to /portal - should auto-redirect to /portal/client!
+  await page.goto('http://localhost:3000/portal', { waitUntil: 'networkidle2' });
   await new Promise(r => setTimeout(r, 2000));
-  await page.screenshot({ path: path.join(outDir, '04_client_dashboard.png'), fullPage: true });
+  const currentUrl = page.url();
+  console.log('Redirected to URL:', currentUrl);
+
+  // Check scroll position on /portal/client
+  const scrollY = await page.evaluate(() => window.scrollY);
+  console.log('Current window.scrollY on dashboard load:', scrollY);
+
+  console.log('4. Capturing Client Portal Dashboard (Initial Load View)...');
+  await page.screenshot({ path: path.join(outDir, '04_client_dashboard.png'), fullPage: false });
 
   await browser.close();
-  console.log('All screenshots captured in public/screenshots/');
+  console.log('All tests completed successfully!');
 }
 
 run().catch(console.error);

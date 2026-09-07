@@ -383,7 +383,7 @@ const NavbarComponent = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  if (pathname.startsWith('/connect') || pathname.startsWith('/info') || pathname.startsWith('/portal')) {
+  if (pathname.startsWith('/connect') || pathname.startsWith('/info') || pathname.startsWith('/portal') || pathname.startsWith('/estimate')) {
     return null;
   }
 

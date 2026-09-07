@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 export default function WhatsAppFloating() {
   const pathname = usePathname();
 
-  if (pathname.startsWith('/connect') || pathname.startsWith('/info') || pathname.startsWith('/portal')) {
+  if (pathname.startsWith('/connect') || pathname.startsWith('/info') || pathname.startsWith('/portal') || pathname.startsWith('/estimate')) {
     return null;
   }
 

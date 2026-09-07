@@ -15,6 +15,8 @@ import {
   Shield,
   Loader2,
   ArrowLeft,
+  Phone,
+  User,
 } from 'lucide-react';
 
 const ALLOWED_EXTENSIONS = ['.pdf', '.png', '.jpg', '.jpeg', '.xlsx', '.xls', '.docx', '.doc'];
@@ -40,13 +42,13 @@ export default function GeneralPublicEstimatePage() {
     const isAllowed = ALLOWED_EXTENSIONS.some((ext) => fileName.endsWith(ext));
 
     if (!isAllowed) {
-      setValidationError('The selected file type is not supported. Please upload a supported document (PDF, PNG, JPG, Excel, Word).');
+      setValidationError('Supported file formats: PDF, PNG, JPG, Excel, Word.');
       setSelectedFile(null);
       return;
     }
 
     if (file.size > MAX_FILE_SIZE_BYTES) {
-      setValidationError('The selected file exceeds the maximum allowed file size of 25MB.');
+      setValidationError('File exceeds the maximum limit of 25MB.');
       setSelectedFile(null);
       return;
     }
@@ -58,25 +60,19 @@ export default function GeneralPublicEstimatePage() {
     e.preventDefault();
     setValidationError(null);
 
-    // Validation Rules
-    if (!firstName.trim()) {
-      setValidationError('Please enter your first name.');
-      return;
-    }
-
-    if (!lastName.trim()) {
-      setValidationError('Please enter your last name.');
+    if (!firstName.trim() || !lastName.trim()) {
+      setValidationError('Please enter both your first and last name.');
       return;
     }
 
     const cleanDigits = phone.replace(/[^0-9]/g, '');
     if (cleanDigits.length < 10) {
-      setValidationError('Please enter a valid phone number.');
+      setValidationError('Please enter a valid 10-digit mobile number.');
       return;
     }
 
     if (!selectedFile) {
-      setValidationError('Please upload a document to continue.');
+      setValidationError('Please select a tax document to upload.');
       return;
     }
 
@@ -108,80 +104,98 @@ export default function GeneralPublicEstimatePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FBFBFA] text-slate-900 py-12 px-4 sm:px-6 lg:px-8 flex flex-col justify-between">
-      <div className="max-w-md mx-auto w-full space-y-6">
+    <div className="min-h-screen bg-[#FBFBFA] text-slate-900 flex flex-col justify-between py-4 px-4 sm:px-6">
+      {/* Top Bar Navigation */}
+      <div className="w-full max-w-xl mx-auto flex items-center justify-between pt-1">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-600 hover:text-stone-900 transition-colors bg-white/80 hover:bg-white px-3 py-1.5 rounded-full border border-stone-200/80 shadow-2xs"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Back to Home</span>
+        </Link>
+        <Link
+          href="/portal"
+          className="text-[11px] font-bold text-amber-900 hover:underline flex items-center gap-1"
+        >
+          <Shield className="w-3.5 h-3.5 text-amber-800" />
+          <span>Client Portal Login</span>
+        </Link>
+      </div>
 
+      {/* Main Content Area (Compact zero-scroll desktop layout) */}
+      <div className="w-full max-w-md mx-auto my-auto space-y-3.5">
         {/* Brand Header */}
-        <div className="text-center space-y-3">
-          <div className="mx-auto w-14 h-14 flex items-center justify-center bg-white rounded-xl shadow-sm border border-stone-200 p-2">
+        <div className="text-center space-y-1.5">
+          <div className="mx-auto w-11 h-11 flex items-center justify-center bg-white rounded-xl shadow-2xs border border-stone-200 p-1.5">
             <img
               src="/navLogo.webp"
               alt="Advora Services"
-              width={48}
-              height={48}
+              width={40}
+              height={40}
               className="object-contain"
+              loading="eager"
             />
           </div>
-
           <div>
-            <span className="text-[10px] font-bold tracking-wider uppercase text-amber-900 bg-amber-50 px-2.5 py-0.5 rounded border border-amber-200">
+            <span className="text-[10px] font-bold tracking-wider uppercase text-amber-900 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 inline-block">
               Tax Estimation Portal
             </span>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 mt-2 font-raleway">
+            <h1 className="text-xl font-bold tracking-tight text-slate-900 mt-1 font-raleway">
               Submit Information for Estimation
             </h1>
-            <p className="text-xs text-slate-600 max-w-sm mx-auto mt-1">
+            <p className="text-xs text-slate-500 max-w-xs mx-auto mt-0.5 leading-snug">
               Upload your tax records to receive a complimentary refund calculation and quote from our licensed CPAs.
             </p>
           </div>
         </div>
 
         {/* Estimation Card */}
-        <Card className="bg-white border-stone-200 shadow-sm">
-          <CardHeader className="pb-3 border-b border-stone-100">
-            <CardTitle className="text-base font-bold text-slate-900">
+        <Card className="bg-white border-stone-200 shadow-sm rounded-2xl overflow-hidden">
+          <CardHeader className="px-5 py-3.5 border-b border-stone-100 bg-stone-50/60">
+            <CardTitle className="text-sm font-bold text-slate-900">
               Personal Information & Document
             </CardTitle>
-            <CardDescription className="text-xs text-slate-500">
+            <CardDescription className="text-xs text-slate-500 mt-0.5">
               Mandatory fields are marked with *. Single-page instant submission.
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="pt-5">
+          <CardContent className="p-5">
             {submittedSuccess ? (
-              /* Success View on Same Page */
-              <div className="text-center space-y-4 py-4">
-                <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 border border-emerald-200">
+              /* Success View */
+              <div className="text-center space-y-3 py-3">
+                <div className="w-11 h-11 bg-emerald-50 rounded-full flex items-center justify-center mx-auto text-emerald-700 border border-emerald-200">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <div className="space-y-1.5">
-                  <h2 className="text-lg font-bold text-slate-900">
-                    Your estimation is in progress.
+                <div className="space-y-1">
+                  <h2 className="text-base font-bold text-slate-900">
+                    Your estimation is in progress!
                   </h2>
                   <p className="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
-                    We have received your information and document successfully. Our preparation desk will calculate your estimate and send details to your mobile number.
+                    We have received your tax records. Your account has been initialized and our tax preparers are reviewing your documents.
                   </p>
                 </div>
 
                 {referenceId && (
-                  <div className="bg-stone-50 p-3 rounded-lg border border-stone-200 inline-block text-xs font-mono text-slate-700">
+                  <div className="bg-stone-50 px-3.5 py-1.5 rounded-xl border border-stone-200 inline-block text-xs font-mono text-slate-700">
                     Reference ID: <strong className="text-slate-900">{referenceId}</strong>
                   </div>
                 )}
 
                 <div className="pt-2">
                   <Link href="/portal">
-                    <Button variant="outline" className="text-xs h-9 border-stone-300">
-                      Sign in to Client Portal
+                    <Button className="text-xs h-10 w-full bg-slate-900 hover:bg-slate-800 text-white rounded-xl shadow-xs">
+                      Sign In with Your Phone to Track Status →
                     </Button>
                   </Link>
                 </div>
               </div>
             ) : (
               /* Form */
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-3">
                 {validationError && (
-                  <div className="p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 text-xs text-red-700">
+                  <div className="p-2.5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2 text-xs text-red-700">
                     <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
                     <span>{validationError}</span>
                   </div>
@@ -189,84 +203,85 @@ export default function GeneralPublicEstimatePage() {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs font-medium text-slate-700">First Name *</Label>
+                    <Label className="text-xs font-semibold text-slate-700">First Name *</Label>
                     <Input
                       placeholder="First Name"
                       value={firstName}
                       onChange={(e) => setFirstName(e.target.value)}
-                      className="text-xs h-9 bg-white border-stone-300"
+                      className="text-xs h-10 bg-white border-stone-300 rounded-xl focus:border-slate-900"
                       required
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs font-medium text-slate-700">Last Name *</Label>
+                    <Label className="text-xs font-semibold text-slate-700">Last Name *</Label>
                     <Input
                       placeholder="Last Name"
                       value={lastName}
                       onChange={(e) => setLastName(e.target.value)}
-                      className="text-xs h-9 bg-white border-stone-300"
+                      className="text-xs h-10 bg-white border-stone-300 rounded-xl focus:border-slate-900"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1">
-                  <Label className="text-xs font-medium text-slate-700">Phone Number *</Label>
-                  <Input
-                    type="tel"
-                    placeholder="Enter 10-digit mobile number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="text-xs h-9 bg-white border-stone-300 font-mono"
-                    required
-                  />
+                  <Label className="text-xs font-semibold text-slate-700">Phone Number *</Label>
+                  <div className="relative">
+                    <Phone className="w-4 h-4 absolute left-3.5 top-3 text-slate-400" />
+                    <Input
+                      type="tel"
+                      placeholder="Enter 10-digit mobile number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="pl-10 text-xs h-10 bg-white border-stone-300 rounded-xl focus:border-slate-900 font-mono tracking-wide"
+                      required
+                    />
+                  </div>
                 </div>
 
-                {/* Document Upload Area */}
-                <div className="space-y-1 pt-1">
-                  <Label className="text-xs font-medium text-slate-700">Upload Document *</Label>
-                  <div className="border border-dashed border-stone-300 hover:border-slate-500 rounded-lg p-4 bg-stone-50/50 text-center relative cursor-pointer transition-colors">
+                <div className="space-y-1">
+                  <Label className="text-xs font-semibold text-slate-700">Upload Document *</Label>
+                  <div className="relative border-2 border-dashed border-stone-300 hover:border-amber-400/80 bg-stone-50/50 hover:bg-amber-50/30 rounded-xl p-3.5 text-center transition-all cursor-pointer group">
                     <input
                       type="file"
-                      id="estimate-file-upload"
                       onChange={handleFileChange}
-                      className="hidden"
-                      accept=".pdf,.png,.jpg,.jpeg,.xlsx,.xls,.doc,.docx"
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      accept=".pdf,.png,.jpg,.jpeg,.xlsx,.xls,.docx,.doc"
                     />
-                    <label htmlFor="estimate-file-upload" className="cursor-pointer block">
-                      <UploadCloud className="w-6 h-6 text-slate-400 mx-auto mb-1.5" />
+                    <div className="space-y-1 pointer-events-none">
+                      <UploadCloud className="w-6 h-6 text-stone-400 group-hover:text-amber-800 mx-auto transition-colors" />
                       {selectedFile ? (
-                        <div className="space-y-0.5">
-                          <p className="text-xs font-semibold text-emerald-800 flex items-center justify-center gap-1">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                            {selectedFile.name} uploaded successfully
-                          </p>
-                          <p className="text-[10px] text-slate-500 font-mono">
-                            {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready for submission
-                          </p>
+                        <div className="flex items-center justify-center gap-1.5 text-xs font-bold text-amber-950">
+                          <FileText className="w-3.5 h-3.5 text-amber-800" />
+                          <span className="truncate max-w-[200px]">{selectedFile.name}</span>
+                          <span className="text-[10px] text-stone-400 font-mono">
+                            ({(selectedFile.size / 1024).toFixed(0)} KB)
+                          </span>
                         </div>
                       ) : (
-                        <div className="space-y-0.5">
-                          <p className="text-xs font-medium text-slate-700">
-                            Click to select tax document (PDF, PNG, JPG, Excel, Word)
+                        <>
+                          <p className="text-xs font-semibold text-slate-800">
+                            Click to select tax document
                           </p>
-                          <p className="text-[10px] text-slate-400">Maximum file size: 25MB</p>
-                        </div>
+                          <p className="text-[10px] text-slate-400">
+                            PDF, PNG, JPG, Excel, Word (Max 25MB)
+                          </p>
+                        </>
                       )}
-                    </label>
+                    </div>
                   </div>
                 </div>
 
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs h-10 rounded-lg shadow-sm mt-2"
+                  className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs h-10 rounded-xl shadow-xs transition-all mt-1"
                 >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Submitting for Estimation...
+                      Uploading & Processing...
                     </>
                   ) : (
                     'Submit / Get Estimation'
@@ -274,19 +289,20 @@ export default function GeneralPublicEstimatePage() {
                 </Button>
               </form>
             )}
+
+            <div className="pt-3 mt-3 border-t border-stone-100 text-center">
+              <span className="text-xs text-slate-500">
+                Already submitted or have an account?{' '}
+                <Link href="/portal" className="text-amber-900 font-bold hover:underline">
+                  Sign In to Client Portal →
+                </Link>
+              </span>
+            </div>
           </CardContent>
         </Card>
 
-        {/* Navigation Link to Portal */}
-        <div className="text-center text-xs text-slate-500">
-          Already a client?{' '}
-          <Link href="/portal" className="font-semibold text-slate-900 hover:underline">
-            Sign In to Client Portal
-          </Link>
-        </div>
-
-        {/* Security Footnote */}
-        <div className="text-center text-[11px] text-slate-400 flex items-center justify-center gap-3 pt-2">
+        {/* Security & Trust Footnote */}
+        <div className="text-center text-[11px] text-slate-400 flex items-center justify-center gap-3 pt-0.5">
           <span className="flex items-center gap-1">
             <Lock className="w-3 h-3 text-slate-400" /> 256-Bit SSL Encrypted
           </span>
@@ -295,7 +311,11 @@ export default function GeneralPublicEstimatePage() {
             <Shield className="w-3 h-3 text-slate-400" /> Authorized IRS e-file Provider
           </span>
         </div>
+      </div>
 
+      {/* Global Copyright */}
+      <div className="text-center text-[11px] text-slate-400 pb-1">
+        © {new Date().getFullYear()} Advora Services. All rights reserved.
       </div>
     </div>
   );

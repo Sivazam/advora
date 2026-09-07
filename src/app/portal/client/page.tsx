@@ -59,7 +59,7 @@ function ClientPortalContent() {
   const [chatReplyText, setChatReplyText] = useState('');
   const [isSendingChatReply, setIsSendingChatReply] = useState(false);
   const [isEndingChat, setIsEndingChat] = useState(false);
-  const chatBottomRef = React.useRef<HTMLDivElement>(null);
+  const messagesBoxRef = React.useRef<HTMLDivElement>(null);
   const chatInputRef = React.useRef<HTMLInputElement>(null);
 
   // Live Toast for incoming messages & notifications dropdown
@@ -131,7 +131,14 @@ function ClientPortalContent() {
     };
   }, [yearParam, activeYear]);
 
-  // Hash deep link scroll listener on load
+  // Ensure page remains at top upon dashboard load
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash !== '#advisor-chat') {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
+  // Hash deep link scroll listener on load (only if URL explicitly has #advisor-chat)
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hash === '#advisor-chat') {
       setTimeout(() => {
@@ -140,6 +147,8 @@ function ClientPortalContent() {
           chatEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
         setIsCreatingNewChat(false);
+        // Clear hash so subsequent page actions and reloads don't jump to chat
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
         setTimeout(() => {
           chatInputRef.current?.focus();
         }, 300);
@@ -147,10 +156,10 @@ function ClientPortalContent() {
     }
   }, [loading]);
 
-  // Auto-scroll chat to bottom when tickets update
+  // Auto-scroll ONLY the messages box internally without scrolling the browser window
   useEffect(() => {
-    if (chatBottomRef.current) {
-      chatBottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (messagesBoxRef.current) {
+      messagesBoxRef.current.scrollTop = messagesBoxRef.current.scrollHeight;
     }
   }, [data?.tickets, selectedTicketId]);
 
@@ -1230,7 +1239,10 @@ function ClientPortalContent() {
                     </div>
 
                     {/* Messages Scroll Container */}
-                    <div className="flex-1 min-h-[220px] max-h-72 overflow-y-auto space-y-2.5 p-3 bg-stone-50/70 rounded-xl border border-stone-200/80">
+                    <div
+                      ref={messagesBoxRef}
+                      className="flex-1 min-h-[220px] max-h-72 overflow-y-auto space-y-2.5 p-3 bg-stone-50/70 rounded-xl border border-stone-200/80"
+                    >
                       {displayedTicket.messages?.map((m: any) => {
                         const isClient = m.senderRole === 'CLIENT';
                         return (
@@ -1254,7 +1266,6 @@ function ClientPortalContent() {
                           </div>
                         );
                       })}
-                      <div ref={chatBottomRef} />
                     </div>
 
                     {/* Footer: Quick Chat Input OR Reopen Action Banner */}
@@ -1293,7 +1304,6 @@ function ClientPortalContent() {
                           onChange={(e) => setChatReplyText(e.target.value)}
                           disabled={isSendingChatReply}
                           className="h-9 text-xs border-stone-300 rounded-lg flex-1 bg-white focus:border-slate-900"
-                          autoFocus
                         />
                         <Button
                           type="submit"

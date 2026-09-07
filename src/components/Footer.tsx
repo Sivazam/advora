@@ -7,7 +7,7 @@ import { Globe, MapPin, Phone, Building } from 'lucide-react';
 export default function Footer() {
   const pathname = usePathname();
 
-  if (pathname.startsWith('/connect') || pathname.startsWith('/info') || pathname.startsWith('/portal')) {
+  if (pathname.startsWith('/connect') || pathname.startsWith('/info') || pathname.startsWith('/portal') || pathname.startsWith('/estimate')) {
     return null;
   }
 

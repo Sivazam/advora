@@ -1,16 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 
 export default function ScrollToTop() {
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
-      // Show button when user scrolls down more than 300px
       if (window.pageYOffset > 300) {
         setIsVisible(true);
       } else {
@@ -28,6 +29,10 @@ export default function ScrollToTop() {
       behavior: 'smooth'
     });
   };
+
+  if (pathname.startsWith('/portal') || pathname.startsWith('/estimate')) {
+    return null;
+  }
 
   return (
     <AnimatePresence>
