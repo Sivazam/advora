@@ -4,6 +4,8 @@ import { db } from '@/lib/db';
 import { createNotification } from '@/lib/notifications';
 import { syncApplicationToFirestore, syncAuditLogToFirestore, syncUserToFirestore } from '@/lib/firestoreSync';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const session = await getSession();

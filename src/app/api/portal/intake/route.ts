@@ -9,6 +9,8 @@ import {
   syncAuditLogToFirestore,
 } from '@/lib/firestoreSync';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();

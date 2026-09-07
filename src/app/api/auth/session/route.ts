@@ -3,6 +3,8 @@ import { getSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { getLiveUser } from '@/lib/firestoreSync';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const session = await getSession();
