@@ -100,6 +100,7 @@ export async function POST(req: Request) {
         },
         update: {},
         create: {
+          id: `${user.id}_${selectedYear}`,
           userId: user.id,
           taxYear: selectedYear,
           status: 'INITIATED',
@@ -172,7 +173,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 24 * 30, // 30 days (matches JWT)
     });
 
     return response;

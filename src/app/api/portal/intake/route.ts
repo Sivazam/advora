@@ -96,6 +96,7 @@ export async function POST(req: Request) {
       } else {
         application = await db.taxApplication.create({
           data: {
+            id: `${user.id}_${taxYear}`,
             userId: user.id,
             taxYear,
             status: 'INITIATED',

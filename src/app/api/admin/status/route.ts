@@ -33,6 +33,7 @@ export async function POST(req: Request) {
     if (!application) {
       application = await db.taxApplication.create({
         data: {
+          id: `${userId}_${taxYear}`,
           userId,
           taxYear,
           status: newStatus,

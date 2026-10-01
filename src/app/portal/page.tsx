@@ -496,14 +496,14 @@ export default function PortalLandingPage() {
                         <SelectValue placeholder="Select Tax Year" />
                       </SelectTrigger>
                       <SelectContent className="bg-white border-stone-200 rounded-xl">
-                        <SelectItem value="2026" className="text-xs">
-                          2026 Tax Year (Current Year / Advance Estimate)
+                        <SelectItem value={currentYearStr} className="text-xs">
+                          {currentYearStr} Tax Year (Current Year / Advance Estimate)
                         </SelectItem>
-                        <SelectItem value="2025" className="text-xs">
-                          2025 Tax Year (Filing Return Year)
+                        <SelectItem value={(parseInt(currentYearStr) - 1).toString()} className="text-xs">
+                          {parseInt(currentYearStr) - 1} Tax Year (Filing Return Year)
                         </SelectItem>
-                        <SelectItem value="2024" className="text-xs">
-                          2024 Tax Year (Prior Year Filing)
+                        <SelectItem value={(parseInt(currentYearStr) - 2).toString()} className="text-xs">
+                          {parseInt(currentYearStr) - 2} Tax Year (Prior Year Filing)
                         </SelectItem>
                       </SelectContent>
                     </Select>

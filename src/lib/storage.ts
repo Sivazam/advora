@@ -53,9 +53,9 @@ export async function saveUploadedFile(file: File, subfolder: string = 'document
     console.warn('Serverless filesystem is read-only. File stored via cloud storage.');
   }
 
-  // 3. Fallback URL if cloud upload was unavailable
+  // 3. Ensure a valid file URL was obtained; fail gracefully instead of returning broken local URLs
   if (!fileUrl) {
-    fileUrl = `/uploads/${subfolder}/${uniqueFileName}`;
+    throw new Error('File storage is temporarily unavailable. Please retry your upload.');
   }
 
   return {

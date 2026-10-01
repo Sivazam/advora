@@ -2,8 +2,13 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { createNotification } from '@/lib/notifications';
-import { sendOtpSms } from '@/lib/sms';
-import { syncUserToFirestore, syncAuditLogToFirestore } from '@/lib/firestoreSync';
+import {
+  syncUserToFirestore,
+  syncAuditLogToFirestore,
+  syncClientsFromFirestore,
+  ensureDefaultTaxYears,
+  getLiveUserByPhone,
+} from '@/lib/firestoreSync';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +22,9 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const statusFilter = searchParams.get('status'); // PENDING_APPROVAL, INITIATED, IN_PROGRESS, COMPLETED, PAYMENT_RECEIVED, ALL
     const searchQuery = searchParams.get('search')?.toLowerCase() || '';
+
+    // Sync all clients from Firestore so cold-start containers have latest users
+    await syncClientsFromFirestore().catch(() => {});
 
     // Fetch clients
     const clients = await db.user.findMany({
@@ -57,6 +65,29 @@ export async function GET(req: Request) {
       orderBy: { updatedAt: 'desc' },
     });
 
+    // Ensure all clients display at least the last 3 tax years (e.g. 2026, 2025, 2024)
+    const currentYear = new Date().getFullYear();
+    const defaultYears = [currentYear.toString(), (currentYear - 1).toString(), (currentYear - 2).toString()];
+
+    const formattedClients = clients.map((client) => {
+      const yearsSet = new Set<string>(defaultYears);
+      client.taxYears?.forEach((t) => yearsSet.add(t.year));
+      client.applications?.forEach((a) => yearsSet.add(a.taxYear));
+      const combinedYears = Array.from(yearsSet)
+        .sort((a, b) => parseInt(b) - parseInt(a))
+        .map((year) => ({
+          id: `${client.id}_${year}`,
+          userId: client.id,
+          year,
+          isDefault: year === currentYear.toString(),
+        }));
+
+      return {
+        ...client,
+        taxYears: combinedYears,
+      };
+    });
+
     // Summary counts for dashboard badges
     const totalClients = await db.user.count({ where: { role: 'CLIENT' } });
     const pendingApprovalCount = await db.user.count({ where: { role: 'CLIENT', status: 'PENDING_APPROVAL' } });
@@ -65,7 +96,7 @@ export async function GET(req: Request) {
     const paymentReceivedCount = await db.taxApplication.count({ where: { status: 'PAYMENT_RECEIVED' } });
 
     return NextResponse.json({
-      clients,
+      clients: formattedClients,
       stats: {
         totalClients,
         pendingApprovalCount,
@@ -117,6 +148,11 @@ export async function PATCH(req: Request) {
       });
 
       if (duplicate) {
+        return NextResponse.json({ error: 'Another user already exists with this phone number.' }, { status: 400 });
+      }
+
+      const fsDuplicate = await getLiveUserByPhone(formattedPhone);
+      if (fsDuplicate && fsDuplicate.id !== userId) {
         return NextResponse.json({ error: 'Another user already exists with this phone number.' }, { status: 400 });
       }
     }
@@ -182,6 +218,9 @@ export async function POST(req: Request) {
 
     // Sync approved user to Firestore
     await syncUserToFirestore(user);
+
+    // Initialize default tax years for the newly approved client
+    await ensureDefaultTaxYears(userId).catch(() => {});
 
     // Create Audit Log
     const auditLog = await db.auditLog.create({

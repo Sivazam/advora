@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { createNotification, notifyAdmins } from '@/lib/notifications';
+import { getLiveTickets, syncTicketToFirestore } from '@/lib/firestoreSync';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,6 +20,9 @@ export async function GET(req: Request) {
     if ((session.role === 'ADMIN' || session.role === 'SUPER_ADMIN') && targetUserId) {
       userId = targetUserId;
     }
+
+    // Reconcile tickets from Firestore if local SQLite container is fresh
+    await getLiveTickets(userId).catch(() => {});
 
     const tickets = await db.supportTicket.findMany({
       where: { userId },
@@ -65,6 +69,11 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: 'Ticket not found' }, { status: 404 });
       }
 
+      // IDOR Permission check: clients can only reply to their own tickets
+      if (session.role === 'CLIENT' && ticket.userId !== session.userId) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      }
+
       await db.ticketMessage.create({
         data: {
           ticketId: ticket.id,
@@ -75,13 +84,23 @@ export async function POST(req: Request) {
         },
       });
 
-      await db.supportTicket.update({
+      const updatedTicket = await db.supportTicket.update({
         where: { id: ticket.id },
         data: {
           status: session.role === 'CLIENT' ? 'OPEN' : 'IN_PROGRESS',
           updatedAt: new Date(),
         },
+        include: {
+          messages: {
+            orderBy: { createdAt: 'asc' },
+          },
+        },
       });
+
+      ticket = updatedTicket;
+
+      // Replicate ticket and message history to Firestore
+      await syncTicketToFirestore(updatedTicket).catch(() => {});
 
       // Send notifications
       if (session.role === 'CLIENT') {
@@ -122,7 +141,13 @@ export async function POST(req: Request) {
             ],
           },
         },
+        include: {
+          messages: true,
+        },
       });
+
+      // Replicate new ticket to Firestore
+      await syncTicketToFirestore(ticket).catch(() => {});
 
       if (session.role === 'CLIENT') {
         await notifyAdmins(
@@ -178,7 +203,14 @@ export async function PATCH(req: Request) {
         status: targetStatus,
         updatedAt: new Date(),
       },
+      include: {
+        messages: {
+          orderBy: { createdAt: 'asc' },
+        },
+      },
     });
+
+    await syncTicketToFirestore(updated).catch(() => {});
 
     // Notify parties on status change
     if (targetStatus === 'OPEN') {

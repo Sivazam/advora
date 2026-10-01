@@ -37,6 +37,7 @@ function ClientPortalContent() {
   const yearParam = searchParams.get('year') || new Date().getFullYear().toString();
 
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [data, setData] = useState<any | null>(null);
   const [activeYear, setActiveYear] = useState(yearParam);
   const [showAddYearModal, setShowAddYearModal] = useState(false);
@@ -80,6 +81,7 @@ function ClientPortalContent() {
   // Fetch Dashboard Data strictly by taxYear without browser caching
   const fetchDashboardData = async (year: string, isInitial = false) => {
     try {
+      setLoadError(null);
       if (isInitial) {
         setLoading(true);
       } else if (!yearCacheRef.current[year]) {
@@ -118,8 +120,9 @@ function ClientPortalContent() {
       }));
       setActiveYear(json.activeYear);
       activeYearRef.current = json.activeYear;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Portal data error:', error);
+      setLoadError(error?.message || 'Unable to connect to portal server. Please retry.');
     } finally {
       if (isInitial) setLoading(false);
       setIsSwitchingYear(false);
@@ -505,24 +508,31 @@ function ClientPortalContent() {
   if (!data) {
     return (
       <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-4">
-        <div className="text-center space-y-3">
-          <Loader2 className="w-8 h-8 text-slate-800 animate-spin mx-auto" />
-          <p className="text-xs font-semibold text-slate-600">Loading your workspace...</p>
+        <Card className="max-w-sm w-full bg-white border-stone-200 shadow-sm p-6 text-center space-y-4">
+          <div className="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center mx-auto text-amber-800 border border-amber-200">
+            <AlertCircle className="w-6 h-6" />
+          </div>
+          <div className="space-y-1.5">
+            <h3 className="text-base font-bold text-slate-900">Portal Data Unavailable</h3>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              {loadError || 'We could not connect to your tax portal session. Please verify your connection and retry.'}
+            </p>
+          </div>
           <div className="pt-2 flex justify-center gap-2">
-            <Link href="/">
-              <Button size="sm" variant="outline" className="text-xs border-stone-300">
-                Back to Home
+            <Link href="/" className="w-1/2">
+              <Button size="sm" variant="outline" className="w-full text-xs border-stone-300">
+                Home
               </Button>
             </Link>
             <Button
-              onClick={() => fetchDashboardData(activeYear)}
+              onClick={() => fetchDashboardData(activeYear, true)}
               size="sm"
-              className="bg-slate-900 text-white text-xs"
+              className="w-1/2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold"
             >
               Retry
             </Button>
           </div>
-        </div>
+        </Card>
       </div>
     );
   }
@@ -1216,7 +1226,7 @@ function ClientPortalContent() {
             const pastTickets = allTickets.filter((t: any) => t.status !== 'OPEN' && t.status !== 'IN_PROGRESS');
 
             // Determine active displayed ticket
-            let displayedTicket = null;
+            let displayedTicket: any = null;
             if (selectedTicketId) {
               displayedTicket = allTickets.find((t: any) => t.id === selectedTicketId) || null;
             } else if (openTicket) {

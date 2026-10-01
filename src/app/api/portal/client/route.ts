@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { getLiveUser, getLiveApplication, ensureDefaultTaxYears } from '@/lib/firestoreSync';
+import { getLiveUser, getLiveApplication, ensureDefaultTaxYears, getLiveDocuments } from '@/lib/firestoreSync';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,11 +15,12 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const selectedYear = searchParams.get('year') || new Date().getFullYear().toString();
 
-    // 1. Concurrently reconcile live user, application, and tax years
-    await Promise.all([
+    // 1. Concurrently reconcile live user, application, tax years, and documents
+    const [, , , liveDocs] = await Promise.all([
       getLiveUser(session.userId),
       getLiveApplication(session.userId, selectedYear),
       ensureDefaultTaxYears(session.userId, selectedYear),
+      getLiveDocuments(session.userId, selectedYear),
     ]);
 
     // 3. Fetch fresh user data with all tax years
@@ -49,6 +50,7 @@ export async function GET(req: Request) {
     if (!application) {
       application = await db.taxApplication.create({
         data: {
+          id: `${user.id}_${selectedYear}`,
           userId: user.id,
           taxYear: selectedYear,
           status: 'INITIATED',
@@ -57,13 +59,24 @@ export async function GET(req: Request) {
     }
 
     // 4. Strictly fetch documents belonging to THIS USER and THIS SPECIFIC TAX YEAR
-    const yearDocuments = await db.document.findMany({
+    let yearDocuments = await db.document.findMany({
       where: {
         userId: user.id,
         taxYear: selectedYear,
       },
       orderBy: { createdAt: 'desc' },
     });
+
+    // Merge live Firestore documents if local SQLite was out of sync or empty
+    if (liveDocs && liveDocs.length > 0) {
+      const existingIds = new Set(yearDocuments.map((d) => d.id));
+      for (const ld of liveDocs) {
+        if (!existingIds.has(ld.id)) {
+          yearDocuments.push(ld);
+        }
+      }
+      yearDocuments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
 
     // 5. Fetch Support Tickets
     const tickets = await db.supportTicket.findMany({

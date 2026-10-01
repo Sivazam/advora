@@ -87,6 +87,7 @@ export async function POST(req: Request) {
         },
         update: {},
         create: {
+          id: `${ownerUserId}_${taxYear}`,
           userId: ownerUserId,
           taxYear,
           status: 'INITIATED',

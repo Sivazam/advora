@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { syncApplicationToFirestore } from '@/lib/firestoreSync';
+import { syncApplicationToFirestore, syncAuditLogToFirestore } from '@/lib/firestoreSync';
 
 export const dynamic = 'force-dynamic';
 
@@ -46,6 +46,7 @@ export async function POST(req: Request) {
       },
       update: {},
       create: {
+        id: `${userId}_${year.toString()}`,
         userId,
         taxYear: year.toString(),
         status: 'INITIATED',
@@ -137,14 +138,15 @@ export async function DELETE(req: Request) {
     });
 
     // 3. Log Audit
-    await db.auditLog.create({
+    const auditLog = await db.auditLog.create({
       data: {
         userId: targetUserId,
-        performerId: session.userId,
+        performedById: session.userId,
         action: 'TAX_YEAR_DELETED',
         details: `Tax Year ${yearStr} deleted by administrator ${session.firstName} ${session.lastName}.`,
       },
     });
+    await syncAuditLogToFirestore(auditLog).catch(() => {});
 
     // Fetch remaining years
     const remaining = await db.taxYearSection.findMany({

@@ -485,7 +485,7 @@ const NavbarComponent = () => {
             {/* Navigation Links */}
             <div className="flex items-center space-x-2 ml-12">
               {navItems.map((item, index) => (
-                <div key={item.name} ref={el => navRefs.current[index] = el}>
+                <div key={item.name} ref={(el) => { navRefs.current[index] = el; }}>
                   <Link href={item.href} prefetch={true} onClick={() => handleNavigation(item.href)}>
                     <motion.div
                       className="relative px-5 py-2.5 rounded-full text-sm font-medium overflow-hidden group"

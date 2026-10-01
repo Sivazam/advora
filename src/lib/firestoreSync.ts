@@ -12,16 +12,29 @@ export async function getLiveUser(userId: string) {
     if (doc.exists) {
       const fsUser: any = doc.data();
       if (fsUser && fsUser.status) {
-        // Reconcile status in local DB
-        await db.user.update({
+        // Reconcile status in local DB (upsert to ensure user exists on fresh containers)
+        await db.user.upsert({
           where: { id: userId },
-          data: {
+          update: {
             status: fsUser.status,
-            firstName: fsUser.firstName,
-            lastName: fsUser.lastName,
-            role: fsUser.role,
-            phone: fsUser.phone,
+            firstName: fsUser.firstName || 'User',
+            lastName: fsUser.lastName || '',
+            role: fsUser.role || 'CLIENT',
+            phone: fsUser.phone || '',
+            email: fsUser.email || undefined,
             fcmToken: fsUser.fcmToken || undefined,
+            assignedAdminId: fsUser.assignedAdminId || undefined,
+          },
+          create: {
+            id: userId,
+            phone: fsUser.phone || '',
+            firstName: fsUser.firstName || 'User',
+            lastName: fsUser.lastName || '',
+            role: fsUser.role || 'CLIENT',
+            status: fsUser.status || 'PENDING_APPROVAL',
+            email: fsUser.email || null,
+            fcmToken: fsUser.fcmToken || null,
+            assignedAdminId: fsUser.assignedAdminId || null,
           },
         }).catch(() => {});
         return fsUser;
@@ -59,7 +72,7 @@ export async function getLiveUserByPhone(phone: string) {
       const doc = snapshot.docs[0];
       const fsUser: any = doc.data();
 
-      let user = null;
+      let user: any = null;
       try {
         user = await db.user.upsert({
           where: { id: doc.id },
@@ -71,6 +84,7 @@ export async function getLiveUserByPhone(phone: string) {
             role: fsUser.role || 'CLIENT',
             email: fsUser.email || null,
             fcmToken: fsUser.fcmToken || undefined,
+            assignedAdminId: fsUser.assignedAdminId || undefined,
           },
           create: {
             id: doc.id,
@@ -81,6 +95,7 @@ export async function getLiveUserByPhone(phone: string) {
             role: fsUser.role || 'CLIENT',
             status: fsUser.status || 'PENDING_APPROVAL',
             fcmToken: fsUser.fcmToken || null,
+            assignedAdminId: fsUser.assignedAdminId || null,
           },
         });
       } catch (upsertErr) {
@@ -96,6 +111,7 @@ export async function getLiveUserByPhone(phone: string) {
         role: fsUser.role || 'CLIENT',
         status: fsUser.status || 'PENDING_APPROVAL',
         fcmToken: fsUser.fcmToken || null,
+        assignedAdminId: fsUser.assignedAdminId || null,
       };
     }
   } catch (err) {
@@ -144,22 +160,77 @@ export async function syncAdminsFromFirestore() {
 }
 
 /**
+ * Sync all users who have role CLIENT in Firestore into local database
+ */
+export async function syncClientsFromFirestore() {
+  try {
+    const clientsSnap = await adminFirestore
+      .collection('users')
+      .where('role', '==', 'CLIENT')
+      .get();
+
+    for (const doc of clientsSnap.docs) {
+      const data: any = doc.data();
+      await db.user.upsert({
+        where: { id: doc.id },
+        update: {
+          role: 'CLIENT',
+          status: data.status || 'PENDING_APPROVAL',
+          phone: data.phone || '',
+          firstName: data.firstName || 'Client',
+          lastName: data.lastName || '',
+          email: data.email || null,
+          fcmToken: data.fcmToken || undefined,
+          assignedAdminId: data.assignedAdminId || undefined,
+        },
+        create: {
+          id: doc.id,
+          phone: data.phone || '',
+          role: 'CLIENT',
+          status: data.status || 'PENDING_APPROVAL',
+          firstName: data.firstName || 'Client',
+          lastName: data.lastName || '',
+          email: data.email || null,
+          fcmToken: data.fcmToken || null,
+          assignedAdminId: data.assignedAdminId || null,
+        },
+      }).catch(() => {});
+    }
+  } catch (err) {
+    console.error('Error syncing clients from Firestore:', err);
+  }
+}
+
+/**
  * Fetch fresh application details (status, refund, notes) from Firestore
  * and reconcile with local database so console edits reflect immediately.
  */
 export async function getLiveApplication(userId: string, taxYear: string) {
   try {
-    const snapshot = await adminFirestore
-      .collection('tax_applications')
-      .where('userId', '==', userId)
-      .where('taxYear', '==', taxYear)
-      .limit(1)
-      .get();
+    const deterministicId = `${userId}_${taxYear}`;
+    let fsApp: any = null;
+    let docId = deterministicId;
 
-    if (!snapshot.empty) {
-      const doc = snapshot.docs[0];
-      const fsApp: any = doc.data();
+    // 1. Try deterministic primary key first
+    const directDoc = await adminFirestore.collection('tax_applications').doc(deterministicId).get();
+    if (directDoc.exists) {
+      fsApp = directDoc.data();
+    } else {
+      // 2. Fallback query for legacy documents
+      const snapshot = await adminFirestore
+        .collection('tax_applications')
+        .where('userId', '==', userId)
+        .where('taxYear', '==', taxYear)
+        .limit(1)
+        .get();
 
+      if (!snapshot.empty) {
+        fsApp = snapshot.docs[0].data();
+        docId = snapshot.docs[0].id;
+      }
+    }
+
+    if (fsApp) {
       // Reconcile with local SQLite database
       const updated = await db.taxApplication.upsert({
         where: { userId_taxYear: { userId, taxYear } },
@@ -170,7 +241,7 @@ export async function getLiveApplication(userId: string, taxYear: string) {
           adminNotes: fsApp.adminNotes !== undefined ? fsApp.adminNotes : undefined,
         },
         create: {
-          id: doc.id,
+          id: docId,
           userId,
           taxYear,
           status: fsApp.status || 'INITIATED',
@@ -193,13 +264,28 @@ export async function getLiveApplication(userId: string, taxYear: string) {
  */
 export async function saveFcmToken(userId: string, fcmToken: string) {
   try {
-    // 1. Update SQLite
-    await db.user.update({
-      where: { id: userId },
-      data: { fcmToken },
-    });
+    // 1. Ensure user exists locally if on a fresh container
+    const existing = await db.user.findUnique({ where: { id: userId } }).catch(() => null);
+    if (!existing) {
+      await getLiveUser(userId);
+    }
 
-    // 2. Update Firestore
+    // 2. Update SQLite safely
+    await db.user.upsert({
+      where: { id: userId },
+      update: { fcmToken },
+      create: {
+        id: userId,
+        phone: '',
+        firstName: 'User',
+        lastName: '',
+        role: 'CLIENT',
+        status: 'ACTIVE',
+        fcmToken,
+      },
+    }).catch(() => {});
+
+    // 3. Update Firestore
     await adminFirestore.collection('users').doc(userId).set(
       {
         fcmToken,
@@ -271,6 +357,7 @@ export async function syncUserToFirestore(user: {
   role: string;
   status: string;
   fcmToken?: string | null;
+  assignedAdminId?: string | null;
   createdAt?: Date;
   updatedAt?: Date;
 }) {
@@ -285,6 +372,7 @@ export async function syncUserToFirestore(user: {
         role: user.role,
         status: user.status,
         fcmToken: user.fcmToken || null,
+        assignedAdminId: user.assignedAdminId || null,
         updatedAt: new Date().toISOString(),
         createdAt: user.createdAt ? user.createdAt.toISOString() : new Date().toISOString(),
       },
@@ -311,9 +399,10 @@ export async function syncApplicationToFirestore(app: {
   updatedAt?: Date;
 }) {
   try {
-    await adminFirestore.collection('tax_applications').doc(app.id).set(
+    const docId = `${app.userId}_${app.taxYear}`;
+    await adminFirestore.collection('tax_applications').doc(docId).set(
       {
-        id: app.id,
+        id: docId,
         userId: app.userId,
         taxYear: app.taxYear,
         status: app.status,
@@ -325,7 +414,7 @@ export async function syncApplicationToFirestore(app: {
       },
       { merge: true }
     );
-    console.log(`🔥 [FIRESTORE SYNC] Tax Application synced: ${app.id} (${app.taxYear})`);
+    console.log(`🔥 [FIRESTORE SYNC] Tax Application synced: ${docId} (${app.taxYear})`);
   } catch (error) {
     console.error('Error syncing application to Firestore:', error);
   }
@@ -440,6 +529,15 @@ export async function deleteApplicationFromFirestore(appId: string) {
   try {
     await adminFirestore.collection('tax_applications').doc(appId).delete();
     console.log(`🔥 [FIRESTORE SYNC] Deleted tax application from Firestore: ${appId}`);
+
+    // Clean up associated documents in Firestore to prevent orphaned files
+    const docsSnap = await adminFirestore.collection('documents').where('applicationId', '==', appId).get();
+    if (!docsSnap.empty) {
+      const batch = adminFirestore.batch();
+      docsSnap.docs.forEach((d) => batch.delete(d.ref));
+      await batch.commit();
+      console.log(`🔥 [FIRESTORE SYNC] Cleaned up ${docsSnap.size} associated documents for ${appId}`);
+    }
   } catch (error) {
     console.error('Error deleting application from Firestore:', error);
   }
@@ -518,29 +616,47 @@ export async function ensureDefaultTaxYears(userId: string, activeYear?: string)
       console.warn(`SQLite taxYearSection notice for ${year}:`, e);
     }
 
-    // 2. Ensure taxApplication exists in SQLite
+    // 2. Check if taxApplication already exists in SQLite or Firestore to avoid overwriting real status
     let app: any = null;
     try {
       app = await db.taxApplication.findUnique({
         where: { userId_taxYear: { userId, taxYear: year } },
       });
-      if (!app) {
-        app = await db.taxApplication.create({
-          data: {
-            userId,
-            taxYear: year,
-            status: 'INITIATED',
-          },
-        });
+    } catch (e) {}
+
+    let fsApp: any = null;
+    try {
+      const docRef = adminFirestore.collection('tax_applications').doc(`${userId}_${year}`);
+      const snap = await docRef.get();
+      if (snap.exists) {
+        fsApp = snap.data();
       }
-    } catch (e) {
-      console.warn(`SQLite taxApplication notice for ${year}:`, e);
+    } catch (fsErr) {
+      console.warn(`Firestore check error for ${year}:`, fsErr);
     }
 
-    // 3. Ensure taxApplication exists in Firestore
-    if (app) {
-      await syncApplicationToFirestore(app).catch(() => {});
-    } else {
+    const appStatus = fsApp?.status || app?.status || 'INITIATED';
+
+    if (!app) {
+      try {
+        app = await db.taxApplication.create({
+          data: {
+            id: `${userId}_${year}`,
+            userId,
+            taxYear: year,
+            status: appStatus,
+            estimatedRefund: fsApp?.estimatedRefund || null,
+            feeAmount: fsApp?.feeAmount || null,
+            adminNotes: fsApp?.adminNotes || null,
+          },
+        });
+      } catch (e) {
+        console.warn(`SQLite taxApplication notice for ${year}:`, e);
+      }
+    }
+
+    // 3. Only initialize in Firestore if document didn't already exist
+    if (!fsApp) {
       await adminFirestore.collection('tax_applications').doc(`${userId}_${year}`).set(
         {
           id: `${userId}_${year}`,
@@ -555,4 +671,184 @@ export async function ensureDefaultTaxYears(userId: string, activeYear?: string)
     }
   }
 }
+
+/**
+ * Fetch fresh documents for a user and tax year from Firestore
+ * and reconcile them with local database. Returns the documents array.
+ */
+export async function getLiveDocuments(userId: string, taxYear: string) {
+  try {
+    const snapshot = await adminFirestore
+      .collection('documents')
+      .where('userId', '==', userId)
+      .where('taxYear', '==', taxYear)
+      .get();
+
+    if (!snapshot.empty) {
+      const docs: any[] = [];
+      for (const docSnap of snapshot.docs) {
+        const data: any = docSnap.data();
+        const docId = docSnap.id;
+        const createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
+
+        try {
+          const upserted = await db.document.upsert({
+            where: { id: docId },
+            update: {
+              name: data.name || 'Document',
+              fileUrl: data.fileUrl,
+              fileSize: Number(data.fileSize) || 0,
+              fileType: data.fileType || 'pdf',
+              category: data.category || 'SUPPORTING_DOC',
+              uploadedByRole: data.uploadedByRole || 'ADMIN',
+              taxYear: data.taxYear || taxYear,
+              userId,
+            },
+            create: {
+              id: docId,
+              userId,
+              applicationId: data.applicationId || `${userId}_${taxYear}`,
+              taxYear: data.taxYear || taxYear,
+              name: data.name || 'Document',
+              fileUrl: data.fileUrl,
+              fileSize: Number(data.fileSize) || 0,
+              fileType: data.fileType || 'pdf',
+              category: data.category || 'SUPPORTING_DOC',
+              uploadedByRole: data.uploadedByRole || 'ADMIN',
+              createdAt,
+            },
+          });
+          docs.push(upserted);
+        } catch (dbErr) {
+          console.warn(`Local SQLite document upsert notice (${docId}):`, dbErr);
+          docs.push({
+            id: docId,
+            userId,
+            applicationId: data.applicationId || `${userId}_${taxYear}`,
+            taxYear: data.taxYear || taxYear,
+            name: data.name || 'Document',
+            fileUrl: data.fileUrl,
+            fileSize: Number(data.fileSize) || 0,
+            fileType: data.fileType || 'pdf',
+            category: data.category || 'SUPPORTING_DOC',
+            uploadedByRole: data.uploadedByRole || 'ADMIN',
+            createdAt,
+          });
+        }
+      }
+      return docs;
+    }
+  } catch (err) {
+    console.error(`Error reconciling live documents from Firestore (${taxYear}):`, err);
+  }
+  return [];
+}
+
+/**
+ * Fetch fresh support tickets for a user from Firestore and reconcile with local SQLite database
+ */
+export async function getLiveTickets(userId: string) {
+  try {
+    const snapshot = await adminFirestore
+      .collection('support_tickets')
+      .where('userId', '==', userId)
+      .get();
+
+    if (!snapshot.empty) {
+      for (const docSnap of snapshot.docs) {
+        const data: any = docSnap.data();
+        const ticketId = docSnap.id;
+        const createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
+        const updatedAt = data.updatedAt ? new Date(data.updatedAt) : new Date();
+
+        await db.supportTicket.upsert({
+          where: { id: ticketId },
+          update: {
+            subject: data.subject || 'Inquiry',
+            status: data.status || 'OPEN',
+            updatedAt,
+          },
+          create: {
+            id: ticketId,
+            userId,
+            subject: data.subject || 'Inquiry',
+            status: data.status || 'OPEN',
+            createdAt,
+            updatedAt,
+          },
+        }).catch(() => {});
+
+        if (Array.isArray(data.messages)) {
+          for (const msg of data.messages) {
+            if (!msg.id) continue;
+            await db.ticketMessage.upsert({
+              where: { id: msg.id },
+              update: {
+                message: msg.message || '',
+              },
+              create: {
+                id: msg.id,
+                ticketId,
+                senderId: msg.senderId || userId,
+                senderName: msg.senderName || 'User',
+                senderRole: msg.senderRole || 'CLIENT',
+                message: msg.message || '',
+                createdAt: msg.createdAt ? new Date(msg.createdAt) : new Date(),
+              },
+            }).catch(() => {});
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.error(`Error reconciling live tickets from Firestore (${userId}):`, err);
+  }
+}
+
+/**
+ * Fetch fresh in-app notifications for a user from Firestore and reconcile with local SQLite database
+ */
+export async function getLiveNotifications(userId: string) {
+  try {
+    let snap;
+    try {
+      snap = await adminFirestore
+        .collection('notifications')
+        .where('userId', '==', userId)
+        .orderBy('createdAt', 'desc')
+        .limit(25)
+        .get();
+    } catch (orderErr) {
+      // Fallback if composite index on (userId, createdAt) is not yet active in Firestore
+      snap = await adminFirestore
+        .collection('notifications')
+        .where('userId', '==', userId)
+        .limit(25)
+        .get();
+    }
+
+    for (const doc of snap.docs) {
+      const data: any = doc.data();
+      await db.notification.upsert({
+        where: { id: doc.id },
+        update: {
+          isRead: data.isRead ?? false,
+        },
+        create: {
+          id: doc.id,
+          userId,
+          title: data.title || '',
+          message: data.message || '',
+          link: data.link || null,
+          isRead: data.isRead ?? false,
+          createdAt: data.createdAt ? new Date(data.createdAt) : new Date(),
+        },
+      }).catch(() => {});
+    }
+  } catch (err) {
+    console.warn('Error syncing notifications from Firestore:', err);
+  }
+}
+
+
 

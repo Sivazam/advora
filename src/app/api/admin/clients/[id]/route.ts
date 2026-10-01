@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { getLiveUser, getLiveApplication, ensureDefaultTaxYears } from '@/lib/firestoreSync';
+import { getLiveUser, getLiveApplication, ensureDefaultTaxYears, getLiveDocuments } from '@/lib/firestoreSync';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,11 +16,12 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     const { searchParams } = new URL(req.url);
     const selectedYear = searchParams.get('year') || new Date().getFullYear().toString();
 
-    // 1. Concurrently reconcile live status, application details, and tax years
-    await Promise.all([
+    // 1. Concurrently reconcile live status, application details, tax years, and documents
+    const [, , , liveDocs] = await Promise.all([
       getLiveUser(id),
       getLiveApplication(id, selectedYear),
       ensureDefaultTaxYears(id, selectedYear),
+      getLiveDocuments(id, selectedYear),
     ]);
 
     const client = await db.user.findUnique({
@@ -69,6 +70,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     if (!activeApp) {
       activeApp = await db.taxApplication.create({
         data: {
+          id: `${client.id}_${selectedYear}`,
           userId: client.id,
           taxYear: selectedYear,
           status: 'INITIATED',
@@ -77,13 +79,24 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     }
 
     // Strictly fetch documents for THIS specific tax year
-    const yearDocuments = await db.document.findMany({
+    let yearDocuments = await db.document.findMany({
       where: {
         userId: client.id,
         taxYear: selectedYear,
       },
       orderBy: { createdAt: 'desc' },
     });
+
+    // Merge live Firestore documents if local SQLite was out of sync or empty
+    if (liveDocs && liveDocs.length > 0) {
+      const existingIds = new Set(yearDocuments.map((d) => d.id));
+      for (const ld of liveDocs) {
+        if (!existingIds.has(ld.id)) {
+          yearDocuments.push(ld);
+        }
+      }
+      yearDocuments.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    }
 
     // Fetch list of all admins for assignment dropdown
     const staffAdmins = await db.user.findMany({

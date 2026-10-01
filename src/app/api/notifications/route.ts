@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { getLiveNotifications } from '@/lib/firestoreSync';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,6 +11,9 @@ export async function GET() {
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    // Reconcile in-app notifications from Firestore for multi-container parity
+    await getLiveNotifications(session.userId).catch(() => {});
 
     const notifications = await db.notification.findMany({
       where: { userId: session.userId },
@@ -38,14 +42,35 @@ export async function PATCH(req: Request) {
         where: { userId: session.userId, isRead: false },
         data: { isRead: true },
       });
+      try {
+        const { adminFirestore } = await import('@/lib/firebaseAdmin');
+        const unreadSnap = await adminFirestore
+          .collection('notifications')
+          .where('userId', '==', session.userId)
+          .where('isRead', '==', false)
+          .get();
+        if (!unreadSnap.empty) {
+          const batch = adminFirestore.batch();
+          unreadSnap.docs.forEach((doc) => {
+            batch.update(doc.ref, { isRead: true });
+          });
+          await batch.commit();
+        }
+      } catch (e) {
+        console.warn('Firestore markAllAsRead sync notice:', e);
+      }
       return NextResponse.json({ success: true });
     }
 
     if (id) {
-      await db.notification.update({
-        where: { id },
+      await db.notification.updateMany({
+        where: { id, userId: session.userId },
         data: { isRead: true },
       });
+      try {
+        const { adminFirestore } = await import('@/lib/firebaseAdmin');
+        await adminFirestore.collection('notifications').doc(id).set({ isRead: true }, { merge: true });
+      } catch (e) {}
       return NextResponse.json({ success: true });
     }
 
